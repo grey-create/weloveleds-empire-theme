@@ -1,0 +1,208 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "static-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_3jjn7C": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "vendor",
+          "disabled": true,
+          "settings": {}
+        },
+        "key_details_kY7UcA": {
+          "type": "key_details",
+          "settings": {
+            "icon": "none",
+            "title": "Key Specifications",
+            "text": "<p><strong>Width: </strong>{{ product.metafields.custom.style_size | metafield_text }}<strong> </strong>|<strong> Voltage: </strong>{{ product.metafields.custom.voltage | metafield_text }}<strong> </strong>| <strong>LEDs: </strong>{{ product.metafields.custom.no_of_leds.value }}/m | <strong>Power: </strong>{{ product.metafields.custom.wattage.value }}<strong> </strong>|<strong> Cut: </strong>Every<strong> </strong>{{ product.metafields.custom.cut_points.value }}</p>",
+            "text_color": "#1d1d1d",
+            "icon_color": "#1d1d1d",
+            "background_color": "#f5f3ed"
+          }
+        },
+        "79776505-9c5f-47a2-8410-5d2a1ecdf311": {
+          "type": "key_details",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p><strong>Warranty: </strong>{{ product.metafields.custom.warranty.value }}<strong> </strong>|<strong> Lumens: </strong>{{ product.metafields.custom.lumens.value }}<strong> </strong>|<strong> Chip: </strong>{{ product.metafields.custom.chip.value }}<strong> </strong>| <strong>IP Rating: </strong>{{ product.metafields.custom.ip_rating | metafield_text }} {{ product.metafields.custom.ip_description | metafield_tag }}</p>",
+            "text_color": "#000000",
+            "icon_color": "#000000",
+            "background_color": "#e7ecff"
+          }
+        },
+        "key_details_PXyMJc": {
+          "type": "key_details",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p><strong>IP Rating: </strong>{{ product.metafields.custom.ip_rating | metafield_text }} -</p>",
+            "text_color": "#1d1d1d",
+            "icon_color": "#1d1d1d",
+            "background_color": "#f5f3ed"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "enable_local_pickup": false,
+            "show_gift_card_recipient_form": false
+          }
+        },
+        "4f51c07c-d634-4a3a-a5a8-f0ca24b534d4": {
+          "type": "shopify://apps/klarna-on-site-messaging/blocks/app-block/b95936a9-74b6-4a95-8103-6a1b6459c25e",
+          "settings": {
+            "data_key": "credit-promotion-badge",
+            "theme": "light",
+            "topPadding": "0",
+            "bottomPadding": "0",
+            "messagePrefix": ""
+          }
+        },
+        "c6d93684-4a4c-46cd-afc3-c837e0a32024": {
+          "type": "key_details",
+          "disabled": true,
+          "settings": {
+            "icon": "icon-delivery-package",
+            "title": "Delivery time",
+            "text": "<p>Use this text to share information about your product and policies with your customers.</p>",
+            "text_color": "#1d1d1d",
+            "icon_color": "#1d1d1d",
+            "background_color": "#f5f3ed"
+          }
+        },
+        "description": {
+          "type": "description",
+          "disabled": true,
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "disabled": true,
+          "settings": {}
+        },
+        "afcbfdfc-0c1e-46d3-b993-0a1367127a94": {
+          "type": "collapsible-tab",
+          "disabled": true,
+          "settings": {
+            "collapsible_tab_heading": "Specifics",
+            "collapsible_tab_text": ""
+          }
+        },
+        "70a7f99f-5132-4807-ad4e-14ffb9ddb27f": {
+          "type": "tabs",
+          "settings": {
+            "show_product_description": true,
+            "show_tabs_below_product_gallery": true,
+            "tab_heading_1": "What's Included",
+            "tab_text_1": "{{ product.metafields.custom.what_s_included | metafield_tag }}",
+            "tab_heading_2": "Other Info",
+            "tab_text_2": "{{ product.metafields.custom.other_info | metafield_tag }}",
+            "tab_heading_3": "Downloads",
+            "tab_text_3": "{{ product.metafields.custom.downloads | metafield_tag }}"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "judge_me_reviews_preview_badge_3jjn7C",
+        "vendor",
+        "key_details_kY7UcA",
+        "79776505-9c5f-47a2-8410-5d2a1ecdf311",
+        "key_details_PXyMJc",
+        "price",
+        "form",
+        "4f51c07c-d634-4a3a-a5a8-f0ca24b534d4",
+        "c6d93684-4a4c-46cd-afc3-c837e0a32024",
+        "description",
+        "share",
+        "afcbfdfc-0c1e-46d3-b993-0a1367127a94",
+        "70a7f99f-5132-4807-ad4e-14ffb9ddb27f"
+      ],
+      "custom_css": [],
+      "settings": {
+        "gallery_aspect_ratio": "natural",
+        "gallery_image_crop": false,
+        "gallery_thumbnail_position": "below",
+        "gallery_video_autoplay": true,
+        "gallery_video_looping": true,
+        "gallery_hover_zoom": "disabled",
+        "gallery_click_to_zoom": "always"
+      }
+    },
+    "recommendations": {
+      "type": "static-product-recommendations",
+      "settings": {
+        "show_product_recommendations": true,
+        "product_recommendations_heading": "You may also like"
+      }
+    },
+    "recently-viewed": {
+      "type": "static-recently-viewed",
+      "custom_css": [
+        "{background-color: #f1f1f1;}"
+      ],
+      "settings": {
+        "enable_recently_viewed_products": true
+      }
+    },
+    "175043002581ac12ba": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_aJEiC9": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_aJEiC9"
+      ],
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "dynamic_custom_liquid_U8Lf7R": {
+      "type": "dynamic-custom-liquid",
+      "custom_css": [
+        ".custom-liquid--container {margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "custom_liquid": "<div style=\"background-color: #e7ecff; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;\">\n  <div class=\"rich-text--container\" style=\"max-width: 1200px; margin: 0 auto; padding: 30px 20px;\">\n    {{ product.metafields.custom.product_description_bottom_html.value }}\n  </div>\n</div>\n\n<style>\n.rich-text--container {\n  font-size: 1.125rem;\n  line-height: 1.5;\n}\n\n.rich-text--container h2 {\n  font-size: 1.5rem;\n  margin-top: 2rem;\n  margin-bottom: 1rem;\n  color: #333;\n}\n\n.rich-text--container h3 {\n  font-size: 1.25rem;\n  margin-top: 1.5rem;\n  margin-bottom: 1rem;\n  color: #333;\n}\n\n.rich-text--container p {\n  margin-bottom: 1rem;\n}\n\n.rich-text--container a {\n  color: #0066cc;\n  text-decoration: none;\n}\n\n.rich-text--container a:hover {\n  text-decoration: underline;\n}\n\n@media (max-width: 768px) {\n  .rich-text--container {\n    font-size: 1rem;\n  }\n  .rich-text--container h2 {\n    font-size: 1.3rem;\n  }\n  .rich-text--container h3 {\n    font-size: 1.15rem;\n  }\n}\n</style>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "recommendations",
+    "recently-viewed",
+    "175043002581ac12ba",
+    "dynamic_custom_liquid_U8Lf7R"
+  ]
+}

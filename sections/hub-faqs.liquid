@@ -1,0 +1,301 @@
+{%- liquid
+  assign faq_sets = collection.metafields.custom.faq_sets.value
+  assign intro = section.settings.intro
+  assign bg_colour = section.settings.bg_colour
+  assign accent_colour = section.settings.accent_colour
+-%}
+
+{%- if faq_sets != blank -%}
+  {%- assign has_content = false -%}
+  {%- for faq_set in faq_sets -%}
+    {%- if faq_set.active and faq_set.faqs -%}
+      {%- assign check_parsed = faq_set.faqs | parse_json -%}
+      {%- if check_parsed and check_parsed.size > 0 -%}
+        {%- assign has_content = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if has_content -%}
+<section class="hub-faqs"
+         data-section-id="{{ section.id }}"
+         style="background: {{ bg_colour }}; --zone-accent: {{ accent_colour }};">
+  <div class="hub-faqs__container">
+    <div class="hub-faqs__card">
+      {%- if intro != blank -%}
+        <p class="hub-faqs__intro">{{ intro | escape }}</p>
+      {%- endif -%}
+
+      <div class="hub-faqs__list">
+        {%- assign idx = 0 -%}
+        {%- for faq_set in faq_sets -%}
+          {%- if faq_set.active and faq_set.faqs -%}
+            {%- assign parsed_faqs = faq_set.faqs | parse_json -%}
+            {%- if parsed_faqs and parsed_faqs.size > 0 -%}
+              {%- for faq in parsed_faqs -%}
+                {%- assign idx = idx | plus: 1 -%}
+                {%- assign answer_id = 'hub-faq-answer-' | append: section.id | append: '-' | append: idx -%}
+                <div class="hub-faqs__item" data-faq-item>
+                  <button type="button"
+                          class="hub-faqs__question"
+                          aria-expanded="false"
+                          aria-controls="{{ answer_id }}"
+                          data-faq-button>
+                    <span class="hub-faqs__question-text">{{ faq.question }}</span>
+                    <span class="hub-faqs__icon" aria-hidden="true">
+                      <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                  <div class="hub-faqs__answer-wrap" id="{{ answer_id }}" data-faq-answer>
+                    <div class="hub-faqs__answer">
+                      {{ faq.answer }}
+                    </div>
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.hub-faqs {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0 1.5rem 4rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.hub-faqs__container {
+  padding-left: var(--hub-rail-pad);
+  padding-right: var(--hub-rail-pad);
+}
+
+/* White card matches comparison-table card treatment */
+.hub-faqs__card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(28, 33, 53, 0.06);
+  padding: 2.5rem;
+  box-shadow: 0 1px 3px rgba(28, 33, 53, 0.04);
+}
+
+.hub-faqs__intro {
+  font-size: 0.9375rem;
+  color: #666;
+  margin: 0 0 1.5rem;
+  line-height: 1.55;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(28, 33, 53, 0.08);
+}
+
+.hub-faqs__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.hub-faqs__item {
+  border-bottom: 1px solid rgba(28, 33, 53, 0.08);
+  border-radius: 8px;
+  margin: 0 -0.75rem;
+  transition: background-color 0.25s ease;
+}
+.hub-faqs__item:last-child {
+  border-bottom: none;
+}
+.hub-faqs__item.is-open {
+  background-color: rgba(217, 70, 239, 0.05);
+  border-bottom-color: transparent;
+}
+/* Use zone accent for the tint */
+.hub-faqs__item.is-open {
+  background-color: color-mix(in srgb, var(--zone-accent, #d946ef) 6%, transparent);
+}
+
+.hub-faqs__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.5rem 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  color: #1c2135;
+  font-family: inherit;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  transition: color 0.2s ease;
+}
+.hub-faqs__question:hover {
+  color: var(--zone-accent, #d946ef);
+}
+.hub-faqs__question:focus-visible {
+  outline: 2px solid var(--zone-accent, #d946ef);
+  outline-offset: -2px;
+  border-radius: 8px;
+}
+.hub-faqs__item.is-open .hub-faqs__question {
+  color: #1c2135;
+}
+
+.hub-faqs__question-text {
+  flex: 1;
+}
+.hub-faqs__icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+.hub-faqs__icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.hub-faqs__item.is-open .hub-faqs__icon {
+  transform: rotate(180deg);
+  color: var(--zone-accent, #d946ef);
+}
+
+/* Answer wrap — height animated */
+.hub-faqs__answer-wrap {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.hub-faqs__answer {
+  padding: 0 0.75rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: #444;
+}
+.hub-faqs__answer > *:first-child { margin-top: 0; }
+.hub-faqs__answer > *:last-child { margin-bottom: 0; }
+.hub-faqs__answer p { margin: 0 0 0.75rem; }
+.hub-faqs__answer p:last-child { margin-bottom: 0; }
+.hub-faqs__answer a {
+  color: var(--zone-accent, #d946ef);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.hub-faqs__answer a:hover {
+  text-decoration: none;
+}
+.hub-faqs__answer ul, .hub-faqs__answer ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.25rem;
+}
+.hub-faqs__answer li {
+  margin-bottom: 0.375rem;
+}
+
+@media (max-width: 749px) {
+  .hub-faqs { padding: 0 1.25rem 2.5rem; }
+  .hub-faqs__container { padding: 0 0.5rem; }
+  .hub-faqs__card { padding: 1.5rem 1.25rem; }
+  .hub-faqs__question { font-size: 1rem; padding: 1.25rem 0.5rem; }
+  .hub-faqs__item { margin: 0 -0.5rem; }
+  .hub-faqs__answer { padding: 0 0.5rem 1.25rem; font-size: 0.9375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hub-faqs__answer-wrap,
+  .hub-faqs__icon,
+  .hub-faqs__item,
+  .hub-faqs__question { transition: none; }
+}
+</style>
+
+<script>
+(function() {
+  function initFaqs(root) {
+    var items = root.querySelectorAll('[data-faq-item]');
+    items.forEach(function(item) {
+      if (item.dataset.faqInitialized === 'true') return;
+      item.dataset.faqInitialized = 'true';
+
+      var button = item.querySelector('[data-faq-button]');
+      var answer = item.querySelector('[data-faq-answer]');
+      if (!button || !answer) return;
+
+      button.addEventListener('click', function() {
+        var isOpen = item.classList.contains('is-open');
+
+        if (isOpen) {
+          // Closing: set current height, then animate to 0
+          var currentHeight = answer.scrollHeight;
+          answer.style.height = currentHeight + 'px';
+          // Force reflow so the browser registers the explicit height
+          answer.offsetHeight;
+          requestAnimationFrame(function() {
+            answer.style.height = '0px';
+            item.classList.remove('is-open');
+            button.setAttribute('aria-expanded', 'false');
+          });
+        } else {
+          // Opening: measure target, animate to it, then clear inline style
+          var targetHeight = answer.scrollHeight;
+          item.classList.add('is-open');
+          button.setAttribute('aria-expanded', 'true');
+          answer.style.height = '0px';
+          answer.offsetHeight;
+          requestAnimationFrame(function() {
+            answer.style.height = targetHeight + 'px';
+          });
+          var onEnd = function(e) {
+            if (e.propertyName !== 'height') return;
+            answer.style.height = 'auto';
+            answer.removeEventListener('transitionend', onEnd);
+          };
+          answer.addEventListener('transitionend', onEnd);
+        }
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.hub-faqs').forEach(initFaqs);
+  });
+
+  // Re-init on Shopify section reload (theme editor)
+  document.addEventListener('shopify:section:load', function(e) {
+    var section = e.target.querySelector('.hub-faqs');
+    if (section) initFaqs(section);
+  });
+})();
+</script>
+  {%- endif -%}
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hub FAQs",
+  "tag": "section",
+  "class": "section-hub-faqs",
+  "settings": [
+    { "type": "textarea", "id": "intro", "label": "Intro text (optional)", "info": "Short framing line shown above the questions" },
+    { "type": "color", "id": "bg_colour", "label": "Background colour", "default": "#f5f5f7" },
+    { "type": "color", "id": "accent_colour", "label": "Zone accent colour", "default": "#d946ef" },
+    { "type": "paragraph", "content": "Questions pull from the collection's 'FAQ Sets' metafield. Only active sets render. Heading is provided by the Hub Zone Header above this section." }
+  ],
+  "presets": [ { "name": "Hub FAQs" } ]
+}
+{% endschema %}

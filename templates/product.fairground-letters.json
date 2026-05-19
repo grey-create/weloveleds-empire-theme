@@ -1,0 +1,194 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "static-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "vendor": {
+          "type": "vendor",
+          "disabled": true,
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_8PELGc": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "key_details_UTnC3c": {
+          "type": "key_details",
+          "settings": {
+            "icon": "icon-delivery-package",
+            "title": "Made To Order",
+            "text": "<p>{{ product.metafields.custom.extra_info | metafield_tag }}</p>",
+            "text_color": "#1d1d1d",
+            "icon_color": "#1d1d1d",
+            "background_color": "#ffe4ae"
+          }
+        },
+        "79776505-9c5f-47a2-8410-5d2a1ecdf311": {
+          "type": "key_details",
+          "settings": {
+            "icon": "icon-question-mark",
+            "title": "Suitable Applications:",
+            "text": "<p>{{ product.metafields.custom.suitable_application2 | metafield_tag }}</p>",
+            "text_color": "#000000",
+            "icon_color": "#000000",
+            "background_color": "#f1f1f1"
+          }
+        },
+        "0b730581-441b-4a92-8c0f-b6ac67e3b293": {
+          "type": "key_details",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<ul><li>Style/Size:<strong> </strong><strong>{{ product.metafields.custom.style_size | metafield_text }}</strong><strong> </strong></li><li>Voltage:<strong> </strong><strong>{{ product.metafields.custom.voltage | metafield_text }}</strong></li><li>Wattage:<strong> </strong><strong>{{ product.metafields.custom.wattage.value }}</strong></li><li>Lumens:<strong> </strong><strong>{{ product.metafields.custom.lumens.value }}</strong></li></ul>",
+            "text_color": "#000000",
+            "icon_color": "#000000",
+            "background_color": "#e7ecff"
+          }
+        },
+        "dpo_dynamic_product_options_dpo_caDGQi": {
+          "type": "shopify://apps/dpo-dynamic-product-options/blocks/dpo/2864e3ef-cedb-498f-9c77-b996517e0dc3",
+          "settings": {}
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "enable_local_pickup": true,
+            "show_gift_card_recipient_form": false
+          }
+        },
+        "60c11081-24ae-40cd-8714-e5fc3335765c": {
+          "type": "tabs",
+          "settings": {
+            "show_product_description": true,
+            "show_tabs_below_product_gallery": true,
+            "tab_heading_1": "What's Included?",
+            "tab_text_1": "{{ product.metafields.custom.what_s_included | metafield_tag }}",
+            "tab_heading_2": "Delivery Info",
+            "tab_text_2": "{{ product.metafields.custom.other_info | metafield_tag }}",
+            "tab_heading_3": "",
+            "tab_text_3": ""
+          }
+        },
+        "144a5d08-5fa9-4a30-8935-d9cdffb14ccf": {
+          "type": "shopify://apps/klarna-on-site-messaging/blocks/app-block/b95936a9-74b6-4a95-8103-6a1b6459c25e",
+          "settings": {
+            "data_key": "credit-promotion-badge",
+            "theme": "light",
+            "topPadding": "0",
+            "bottomPadding": "0",
+            "messagePrefix": ""
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "vendor",
+        "judge_me_reviews_preview_badge_8PELGc",
+        "price",
+        "key_details_UTnC3c",
+        "79776505-9c5f-47a2-8410-5d2a1ecdf311",
+        "0b730581-441b-4a92-8c0f-b6ac67e3b293",
+        "dpo_dynamic_product_options_dpo_caDGQi",
+        "form",
+        "60c11081-24ae-40cd-8714-e5fc3335765c",
+        "144a5d08-5fa9-4a30-8935-d9cdffb14ccf"
+      ],
+      "custom_css": [],
+      "settings": {
+        "gallery_aspect_ratio": "natural",
+        "gallery_image_crop": false,
+        "gallery_thumbnail_position": "below",
+        "gallery_video_autoplay": true,
+        "gallery_video_looping": true,
+        "gallery_hover_zoom": "disabled",
+        "gallery_click_to_zoom": "always"
+      }
+    },
+    "dynamic_rich_text_dtEYBy": {
+      "type": "dynamic-rich-text",
+      "custom_css": [
+        "{background-color: #ffe4ae;}",
+        "div {padding-top: 20px; padding-bottom: 20px; padding-left: 10px; padding-right: 10px;}"
+      ],
+      "settings": {
+        "width": "full-width",
+        "title": "Custom Orders ✏️",
+        "text": "<p>We specialise in creating bespoke fairground letters for a variety of events, from weddings and parties to fashion stores and hotels. Whether you need a specific font, logo, or size (up to 2m), we can bring your vision to life.</p><p><br/><a href=\"/pages/contact\" target=\"_blank\" title=\"Get in Touch\">Contact us</a> to discuss your unique requirements and see how we can make your event truly special. </p><p><br/>Don’t just decorate; create memories with our vintage styled industrial fairground letters.</p>",
+        "heading_size": "medium",
+        "text_alignment": "left"
+      }
+    },
+    "recommendations": {
+      "type": "static-product-recommendations",
+      "settings": {
+        "show_product_recommendations": false,
+        "product_recommendations_heading": "You may also like"
+      }
+    },
+    "recently-viewed": {
+      "type": "static-recently-viewed",
+      "custom_css": [
+        "{background-color: #f1f1f1;}"
+      ],
+      "settings": {
+        "enable_recently_viewed_products": true
+      }
+    },
+    "17504298345809763c": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_DU3966": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_DU3966"
+      ],
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "dynamic_custom_liquid_JNikUh": {
+      "type": "dynamic-custom-liquid",
+      "custom_css": [
+        ".custom-liquid--container {margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "custom_liquid": "<div style=\"background-color: #e7ecff; width: 100vw; position: relative; left: 50%; right: 50%; margin-left: -50vw; margin-right: -50vw;\">\n  <div class=\"rich-text--container\" style=\"max-width: 1200px; margin: 0 auto; padding: 30px 20px;\">\n    {{ product.metafields.custom.product_description_bottom_html.value }}\n  </div>\n</div>\n\n<style>\n.rich-text--container {\n  font-size: 1.125rem;\n  line-height: 1.5;\n}\n\n.rich-text--container h2 {\n  font-size: 1.5rem;\n  margin-top: 2rem;\n  margin-bottom: 1rem;\n  color: #333;\n}\n\n.rich-text--container h3 {\n  font-size: 1.25rem;\n  margin-top: 1.5rem;\n  margin-bottom: 1rem;\n  color: #333;\n}\n\n.rich-text--container p {\n  margin-bottom: 1rem;\n}\n\n.rich-text--container a {\n  color: #0066cc;\n  text-decoration: none;\n}\n\n.rich-text--container a:hover {\n  text-decoration: underline;\n}\n\n@media (max-width: 768px) {\n  .rich-text--container {\n    font-size: 1rem;\n  }\n  .rich-text--container h2 {\n    font-size: 1.3rem;\n  }\n  .rich-text--container h3 {\n    font-size: 1.15rem;\n  }\n}\n</style>"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "dynamic_rich_text_dtEYBy",
+    "recommendations",
+    "recently-viewed",
+    "17504298345809763c",
+    "dynamic_custom_liquid_JNikUh"
+  ]
+}

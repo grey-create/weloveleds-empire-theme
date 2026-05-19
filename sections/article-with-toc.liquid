@@ -1,0 +1,134 @@
+{% comment %} ─── Optimized Article Template - Reduced HTML Bloat ─── {% endcomment %}
+
+{{ 'article-toc.css' | asset_url | stylesheet_tag }}
+
+<div class="article-wrapper section">
+  
+  <!-- Sticky TOC Navigation -->
+  <nav id="article-toc" class="article-toc">
+    <h3>Contents</h3>
+    <ul></ul>
+    
+    <div class="article-meta">
+      {% if article.tags.size > 0 %}
+        <div class="article-tags">
+          <h4>Topics</h4>
+          {% for tag in article.tags limit: 3 %}
+            <span class="tag-pill" data-tag="{{ tag | handleize }}">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      {% endif %}
+      
+      <div class="article-actions">
+        <h4>Need Help?</h4>
+        <a href="/pages/contact" class="action-btn">Technical Support</a>
+        <a href="mailto:?subject={{ article.title | url_encode }}&body={{ shop.url }}{{ article.url }}" class="action-btn secondary">Share</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Article Content -->
+  <article class="article-main rte" id="article-content">
+  <nav class="mobile-back">
+    <a href="{{ blog.url }}">← Back to {{ blog.title }}</a>
+  </nav>
+
+  <!-- Article Header -->
+  <header class="article-header">
+    {% if article.tags.size > 0 %}
+      <div class="mobile-tags">
+        {% for tag in article.tags limit: 3 %}
+          <span class="tag-pill" data-tag="{{ tag | handleize }}">{{ tag }}</span>
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <h1>{{ article.title }}</h1>
+    
+    <div class="article-subtitle">
+      <span class="read-time">{{ article.content | strip_html | number_of_words | divided_by: 200 | at_least: 1 }} min read</span>
+      <span class="publish-date">{{ article.published_at | date: '%B %d, %Y' }}</span>
+    </div>
+  </header>
+
+  <!-- Article Content -->
+  {{ article.content }}
+
+  <!-- Call-to-Action -->
+  <div class="article-cta">
+    <h3>Need help with your LED project?</h3>
+    <p>Our experts can help with product selection and technical support.</p>
+    <a href="/pages/contact" class="cta-btn primary">Get Technical Support</a>
+    <a href="/collections/all" class="cta-btn secondary">Browse Products</a>
+  </div>
+
+  </article>
+
+</div>
+
+<!-- Article Navigation -->
+{% if blog.previous_article or blog.next_article %}
+<nav class="article-pagination">
+  {% if blog.previous_article %}
+    <a href="{{ blog.previous_article.url }}" class="nav-card prev">
+      <span class="nav-direction">← Previous</span>
+      <span class="nav-title">{{ blog.previous_article.title | truncate: 60 }}</span>
+      {% if blog.previous_article.tags.size > 0 %}
+        <span class="nav-tag">{{ blog.previous_article.tags.first }}</span>
+      {% endif %}
+    </a>
+  {% endif %}
+  
+  {% if blog.next_article %}
+    <a href="{{ blog.next_article.url }}" class="nav-card next">
+      <span class="nav-direction">Next →</span>
+      <span class="nav-title">{{ blog.next_article.title | truncate: 60 }}</span>
+      {% if blog.next_article.tags.size > 0 %}
+        <span class="nav-tag">{{ blog.next_article.tags.first }}</span>
+      {% endif %}
+    </a>
+  {% endif %}
+  
+  <div class="nav-back">
+    <a href="{{ blog.url }}">← Back to {{ blog.title }}</a>
+  </div>
+</nav>
+{% endif %}
+
+<!-- Related Articles -->
+{% if blog.articles.size > 1 %}
+<section class="related-articles">
+  <h3>Related Articles</h3>
+  <div class="related-grid">
+    {% assign count = 0 %}
+    {% for related in blog.articles limit: 6 %}
+      {% if related.id != article.id and count < 3 %}
+        {% assign count = count | plus: 1 %}
+        <a href="{{ related.url }}" class="related-card">
+          {% if related.image %}
+            <img src="{{ related.image | img_url: '300x200' }}" alt="{{ related.title }}">
+          {% endif %}
+          <div class="related-content">
+            <h4>{{ related.title | truncate: 50 }}</h4>
+            <p>{{ related.excerpt | default: related.content | strip_html | truncate: 100 }}</p>
+            {% if related.tags.size > 0 %}
+              <span class="related-tag">{{ related.tags.first }}</span>
+            {% endif %}
+          </div>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{{ 'article-toc.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Article with TOC",
+  "tag": "section", 
+  "class": "section",
+  "settings": []
+}
+{% endschema %}

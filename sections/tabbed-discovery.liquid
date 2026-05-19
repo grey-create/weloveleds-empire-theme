@@ -1,0 +1,249 @@
+{% comment %}
+  Tabbed Discovery Panel for WeLoveLEDs
+  Shows collections/products in a tabbed interface
+{% endcomment %}
+
+{{ 'tabbed-discovery.css' | asset_url | stylesheet_tag }}
+
+<div class="tabbed-discovery" style="
+  {%- if section.settings.bg_style == 'solid' -%}
+    background-color: {{ section.settings.background_colour }};
+  {%- elsif section.settings.bg_style == 'gradient' -%}
+    background: linear-gradient({{ section.settings.gradient_angle }}deg, {{ section.settings.background_colour }} 0%, {{ section.settings.gradient_end }} 100%);
+  {%- elsif section.settings.bg_style == 'gradient_preset' -%}
+    {%- case section.settings.gradient_preset -%}
+      {%- when 'light_grey' -%}
+        background: linear-gradient(135deg, #f5f5f7 0%, #ceceea 100%);
+      {%- when 'warm' -%}
+        background: linear-gradient(135deg, #fef9f3 0%, #fdf2e9 100%);
+      {%- when 'cool' -%}
+        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+      {%- when 'navy' -%}
+        background: linear-gradient(135deg, #1c2135 0%, #2a3147 100%);
+    {%- endcase -%}
+  {%- else -%}
+    background-color: {{ section.settings.background_colour }};
+  {%- endif -%}
+">
+  <div class="tabbed-discovery__container">
+    
+    {% if section.settings.heading != blank %}
+      <p class="tabbed-discovery__heading">{{ section.settings.heading }}</p>
+    {% endif %}
+    
+    {%- comment -%} Tab Navigation {%- endcomment -%}
+    <div class="tabbed-discovery__tabs" role="tablist">
+      {% for block in section.blocks %}
+        {% if block.settings.collection != blank %}
+          <button 
+            class="tabbed-discovery__tab {% if forloop.first %}tabbed-discovery__tab--active{% endif %}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-controls="panel-{{ block.id }}"
+            data-tab="{{ block.id }}"
+            {{ block.shopify_attributes }}
+          >
+            {% if block.settings.tab_title != blank %}
+              {{ block.settings.tab_title }}
+            {% else %}
+              {{ block.settings.collection.title }}
+            {% endif %}
+          </button>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+    {%- comment -%} Tab Panels {%- endcomment -%}
+    <div class="tabbed-discovery__panels">
+      {% for block in section.blocks %}
+        {% if block.settings.collection != blank %}
+          {% assign collection = block.settings.collection %}
+          <div 
+            class="tabbed-discovery__panel {% if forloop.first %}tabbed-discovery__panel--active{% endif %}"
+            role="tabpanel"
+            id="panel-{{ block.id }}"
+            data-panel="{{ block.id }}"
+          >
+            <div class="tabbed-discovery__grid">
+              {% assign product_limit = section.settings.products_per_tab %}
+              {% for product in collection.products limit: product_limit %}
+                <a href="{{ product.url }}" class="tabbed-discovery__product">
+                  <div class="tabbed-discovery__product-image">
+                    {% if product.featured_image != blank %}
+                      {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                    {% else %}
+                      <div class="tabbed-discovery__placeholder"></div>
+                    {% endif %}
+                  </div>
+                  <div class="tabbed-discovery__product-info">
+                    <h3 class="tabbed-discovery__product-title">{{ product.title | truncate: 40 }}</h3>
+                    <p class="tabbed-discovery__product-price">
+                      {% if product.compare_at_price > product.price %}
+                        <span class="tabbed-discovery__product-compare">{{ product.compare_at_price | money }}</span>
+                      {% endif %}
+                      {{ product.price | money }}
+                    </p>
+                  </div>
+                </a>
+              {% endfor %}
+            </div>
+            
+            <div class="tabbed-discovery__footer">
+              <a href="{{ collection.url }}" class="tabbed-discovery__view-all">
+                View All {{ collection.products_count }} Products
+                <span class="tabbed-discovery__arrow">→</span>
+              </a>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+    
+  </div>
+</div>
+
+<script>
+  (function() {
+    const container = document.querySelector('.tabbed-discovery');
+    if (!container) return;
+    
+    const tabs = container.querySelectorAll('.tabbed-discovery__tab');
+    const panels = container.querySelectorAll('.tabbed-discovery__panel');
+    
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const targetId = tab.dataset.tab;
+        
+        // Update tabs
+        tabs.forEach(t => {
+          t.classList.remove('tabbed-discovery__tab--active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('tabbed-discovery__tab--active');
+        tab.setAttribute('aria-selected', 'true');
+        
+        // Update panels
+        panels.forEach(panel => {
+          if (panel.dataset.panel === targetId) {
+            panel.classList.add('tabbed-discovery__panel--active');
+          } else {
+            panel.classList.remove('tabbed-discovery__panel--active');
+          }
+        });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Tabbed Discovery",
+  "tag": "section",
+  "class": "tabbed-discovery-section",
+  "max_blocks": 12,
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "More to Explore"
+    },
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_style",
+      "label": "Background style",
+      "options": [
+        { "value": "solid", "label": "Solid colour" },
+        { "value": "gradient", "label": "Custom gradient" },
+        { "value": "gradient_preset", "label": "Preset gradient" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour / Gradient start",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient end colour",
+      "default": "#e8e8ed",
+      "info": "Only used with custom gradient"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 15,
+      "default": 135,
+      "unit": "°",
+      "info": "Only used with custom gradient"
+    },
+    {
+      "type": "select",
+      "id": "gradient_preset",
+      "label": "Preset gradient",
+      "options": [
+        { "value": "light_grey", "label": "Light grey (f5f5f7 → ceceea)" },
+        { "value": "warm", "label": "Warm (cream/peach)" },
+        { "value": "cool", "label": "Cool blue" },
+        { "value": "navy", "label": "Navy (dark)" }
+      ],
+      "default": "light_grey",
+      "info": "Only used with preset gradient"
+    },
+    {
+      "type": "header",
+      "content": "Content"
+    },
+    {
+      "type": "range",
+      "id": "products_per_tab",
+      "label": "Products per tab",
+      "min": 4,
+      "max": 8,
+      "step": 2,
+      "default": 4
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection_tab",
+      "name": "Collection Tab",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "tab_title",
+          "label": "Tab title",
+          "info": "Leave blank to use collection title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Tabbed Discovery",
+      "blocks": [
+        { "type": "collection_tab" },
+        { "type": "collection_tab" },
+        { "type": "collection_tab" },
+        { "type": "collection_tab" },
+        { "type": "collection_tab" }
+      ]
+    }
+  ]
+}
+{% endschema %}

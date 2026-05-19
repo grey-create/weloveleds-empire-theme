@@ -1,0 +1,419 @@
+{% comment %}
+  Hub: Side-by-Side Comparisons
+  Horizontal scroll row of comparison cards.
+  Each block compares two options with a label, bullet list, and CTA per option.
+  Uses .hub-vs class prefix to avoid collision with .hub-compare (comparison table).
+{% endcomment %}
+
+{%- liquid
+  assign section_id = 'hub-vs-' | append: section.id
+  assign reveal = section.settings.reveal_animation
+  assign bg_colour = section.settings.bg_colour
+  assign accent_colour = section.settings.accent_colour
+-%}
+
+<section class="hub-vs"
+         id="{{ section_id }}"
+         data-zone="decide"
+         style="background: {{ bg_colour }}; --zone-accent: {{ accent_colour }};">
+  <div class="hub-vs__container{% if reveal %} hub-vs--reveal{% endif %}">
+
+    <div class="hub-vs__row-head">
+      {%- if section.settings.row_label != blank -%}
+        <p class="hub-vs__row-label">{{ section.settings.row_label }}</p>
+      {%- endif -%}
+      {%- render 'hub-carousel-controls', prefix: 'hub-vs', prev_label: 'Scroll left', next_label: 'Scroll right' -%}
+    </div>
+
+    <ul class="hub-vs__scroll" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'comparison' -%}
+          <li class="hub-vs__item" {{ block.shopify_attributes }}>
+            <article class="hub-vs__card">
+              <div class="hub-vs__head">
+                <p class="hub-vs__eyebrow">{{ section.settings.card_eyebrow | default: 'Compare' }}</p>
+                <h3 class="hub-vs__title">{{ block.settings.title }}</h3>
+              </div>
+
+              {% comment %} Option A {% endcomment %}
+              <div class="hub-vs__option">
+                {%- if block.settings.option_a_label != blank -%}
+                  <p class="hub-vs__option-label">{{ block.settings.option_a_label }}</p>
+                {%- endif -%}
+                {%- assign a_lines = block.settings.option_a_bullets | newline_to_br | split: '<br />' -%}
+                {%- if a_lines.size > 0 -%}
+                  <ul class="hub-vs__bullets">
+                    {%- for bullet in a_lines -%}
+                      {%- assign t = bullet | strip -%}
+                      {%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+                {%- if block.settings.option_a_cta_url != blank -%}
+                  <a href="{{ block.settings.option_a_cta_url }}" class="hub-vs__cta">
+                    {{ block.settings.option_a_cta_label | default: 'Shop' }}
+                    <span class="hub-vs__cta-arrow" aria-hidden="true">→</span>
+                  </a>
+                {%- endif -%}
+              </div>
+
+              <div class="hub-vs__divider" aria-hidden="true"></div>
+
+              {% comment %} Option B {% endcomment %}
+              <div class="hub-vs__option">
+                {%- if block.settings.option_b_label != blank -%}
+                  <p class="hub-vs__option-label">{{ block.settings.option_b_label }}</p>
+                {%- endif -%}
+                {%- assign b_lines = block.settings.option_b_bullets | newline_to_br | split: '<br />' -%}
+                {%- if b_lines.size > 0 -%}
+                  <ul class="hub-vs__bullets">
+                    {%- for bullet in b_lines -%}
+                      {%- assign t = bullet | strip -%}
+                      {%- if t != blank -%}<li>{{ t }}</li>{%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                {%- endif -%}
+                {%- if block.settings.option_b_cta_url != blank -%}
+                  <a href="{{ block.settings.option_b_cta_url }}" class="hub-vs__cta">
+                    {{ block.settings.option_b_cta_label | default: 'Shop' }}
+                    <span class="hub-vs__cta-arrow" aria-hidden="true">→</span>
+                  </a>
+                {%- endif -%}
+              </div>
+            </article>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .hub-vs__row-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+  }
+  .hub-vs__row-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--hub-text);
+    margin: 0;
+  }
+  .hub-vs__nav-wrap {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .hub-vs__scroll {
+    list-style: none;
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    /* Full-viewport breakout so card 1 aligns with the rail/heading at every
+       width (matches Browse/Bestsellers; replaces the old 5vw bleed that
+       drifted against the 8vw/200px --hub-rail-pad the heading uses) */
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    margin-left: -50vw;
+    margin-right: 0;
+    padding-left: calc(var(--hub-rail-pad) + 1.5rem);
+    padding-right: 0;
+    scroll-padding-left: calc(var(--hub-rail-pad) + 1.5rem);
+  }
+
+  .hub-vs__card {
+    background: var(--hub-card-bg);
+    border-radius: var(--hub-card-radius);
+    border: 1px solid rgba(28, 33, 53, 0.06);
+    box-shadow: var(--hub-card-shadow-rest);
+    transition: transform 0.25s var(--hub-ease), box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    height: 480px;
+    padding: 1.5rem;
+  }
+  .hub-vs__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--hub-card-shadow-hover);
+  }
+
+  .hub-vs__head {
+    margin-bottom: 1rem;
+  }
+  .hub-vs__eyebrow {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--zone-accent, #d946ef);
+    margin: 0 0 0.5rem;
+  }
+  .hub-vs__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    line-height: 1.3;
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .hub-vs__option {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+  .hub-vs__option-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--hub-text);
+    margin: 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #fdcd6a;
+  }
+  .hub-vs__bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+  .hub-vs__bullets li {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--hub-text);
+    padding-left: 1rem;
+    position: relative;
+  }
+  .hub-vs__bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--zone-accent, #d946ef);
+  }
+  .hub-vs__cta {
+    margin-top: 0.25rem;
+    text-decoration: none;
+    color: var(--zone-accent, #d946ef);
+    font-size: 0.875rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    align-self: flex-start;
+    transition: color 0.2s ease, transform 0.2s ease;
+  }
+  .hub-vs__cta:hover {
+    color: #c026d3;
+  }
+  .hub-vs__cta:hover .hub-vs__cta-arrow {
+    transform: translateX(2px);
+  }
+  .hub-vs__cta-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .hub-vs__divider {
+    height: 1px;
+    background: rgba(28, 33, 53, 0.08);
+    margin: 1.25rem 0;
+  }
+
+  @media (max-width: 990px) {
+    .hub-vs__item { flex-basis: 280px; }
+    .hub-vs__card { height: 460px; }
+  }
+  @media (max-width: 600px) {
+    .hub-vs__item { flex-basis: 260px; }
+    .hub-vs__card { height: 460px; padding: 1.25rem; border-radius: var(--hub-card-radius-mobile); }
+    .hub-vs__title { font-size: 1.0625rem; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hub-vs__cta-arrow { transition: none; }
+  }
+</style>
+
+<script>
+  (function() {
+    var section = document.getElementById('{{ section_id }}');
+    if (!section) return;
+
+    var scroll = section.querySelector('.hub-vs__scroll');
+    var prev = section.querySelector('[data-direction="prev"]');
+    var next = section.querySelector('[data-direction="next"]');
+
+    if (scroll && prev && next) {
+      function updateNav() {
+        prev.disabled = scroll.scrollLeft <= 0;
+        next.disabled = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 4;
+      }
+      prev.addEventListener('click', function() {
+        scroll.scrollBy({ left: -340, behavior: 'smooth' });
+      });
+      next.addEventListener('click', function() {
+        scroll.scrollBy({ left: 340, behavior: 'smooth' });
+      });
+      scroll.addEventListener('scroll', updateNav);
+      window.addEventListener('resize', updateNav);
+      updateNav();
+    }
+
+    var revealEl = section.querySelector('.hub-vs--reveal');
+    if (revealEl) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            revealEl.classList.add('is-revealed');
+            observer.unobserve(revealEl);
+          }
+        });
+      }, { threshold: 0.1 });
+      observer.observe(revealEl);
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Hub: Comparisons",
+  "tag": "section",
+  "class": "hub-comparisons-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Row settings"
+    },
+    {
+      "type": "text",
+      "id": "row_label",
+      "label": "Row heading",
+      "default": "Side-by-side comparisons"
+    },
+    {
+      "type": "text",
+      "id": "card_eyebrow",
+      "label": "Card eyebrow tag",
+      "info": "Small label at top of each card",
+      "default": "Compare"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_animation",
+      "label": "Slide-up animation on scroll",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Colours"
+    },
+    {
+      "type": "color",
+      "id": "bg_colour",
+      "label": "Section background",
+      "default": "#f5f5f7"
+    },
+    {
+      "type": "color",
+      "id": "accent_colour",
+      "label": "Zone accent (eyebrow tag, CTAs, hover)",
+      "default": "#d946ef"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "comparison",
+      "name": "Comparison card",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Comparison title",
+          "info": "e.g. \"Cabochons vs Golfball Bulbs\"",
+          "default": "Option A vs Option B"
+        },
+        {
+          "type": "header",
+          "content": "Option A (left/top)"
+        },
+        {
+          "type": "text",
+          "id": "option_a_label",
+          "label": "Option A heading",
+          "info": "e.g. \"Choose Cabochons if…\"",
+          "default": "Choose Option A if…"
+        },
+        {
+          "type": "textarea",
+          "id": "option_a_bullets",
+          "label": "Option A bullet points",
+          "info": "One bullet per line. 3 maximum recommended for readability.",
+          "default": "First key reason\nSecond key reason\nThird key reason"
+        },
+        {
+          "type": "url",
+          "id": "option_a_cta_url",
+          "label": "Option A link URL"
+        },
+        {
+          "type": "text",
+          "id": "option_a_cta_label",
+          "label": "Option A link text",
+          "default": "Shop Option A"
+        },
+        {
+          "type": "header",
+          "content": "Option B (right/bottom)"
+        },
+        {
+          "type": "text",
+          "id": "option_b_label",
+          "label": "Option B heading",
+          "info": "e.g. \"Choose Golfball if…\"",
+          "default": "Choose Option B if…"
+        },
+        {
+          "type": "textarea",
+          "id": "option_b_bullets",
+          "label": "Option B bullet points",
+          "info": "One bullet per line. 3 maximum recommended for readability.",
+          "default": "First key reason\nSecond key reason\nThird key reason"
+        },
+        {
+          "type": "url",
+          "id": "option_b_cta_url",
+          "label": "Option B link URL"
+        },
+        {
+          "type": "text",
+          "id": "option_b_cta_label",
+          "label": "Option B link text",
+          "default": "Shop Option B"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Hub: Comparisons",
+      "blocks": [
+        { "type": "comparison" },
+        { "type": "comparison" },
+        { "type": "comparison" },
+        { "type": "comparison" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,238 @@
+{% assign menu = linklists[collection.handle] %}
+
+{% if menu.links.size > 0 %}
+
+<div class="pct-section">
+  <div class="pct-outer">
+    <button class="pct-arrow pct-arrow--prev" aria-label="Previous">&#8249;</button>
+    <div class="pct-track-wrap">
+      <div class="pct-track" id="pct-track-{{ section.id }}">
+        {% for link in menu.links %}
+          {% assign child = link.object %}
+          {% if child %}
+
+            {% assign tile_image = '' %}
+            {% if child.image %}
+              {% assign tile_image = child.image | img_url: '800x' %}
+            {% elsif child.products.first.featured_image %}
+              {% assign tile_image = child.products.first.featured_image | img_url: '800x' %}
+            {% endif %}
+
+            {% assign tile_title = child.metafields.custom.tile_title | default: child.title %}
+            {% assign tile_desc = child.metafields.custom.tile_description %}
+
+            <a href="{{ link.url }}" class="pct-tile">
+              <div class="pct-tile__image-wrap">
+                {% if tile_image != '' %}
+                  <img
+                    src="{{ tile_image }}"
+                    alt="{{ tile_title }}"
+                    class="pct-tile__image"
+                    loading="lazy"
+                  >
+                {% endif %}
+              </div>
+              <div class="pct-tile__text">
+                <h3 class="pct-tile__title">{{ tile_title }}</h3>
+                {% if tile_desc != blank %}
+                  <p class="pct-tile__desc">{{ tile_desc }}</p>
+                {% endif %}
+              </div>
+            </a>
+
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <button class="pct-arrow pct-arrow--next" aria-label="Next">&#8250;</button>
+  </div>
+</div>
+
+<style>
+.pct-section {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  background: #f5f5f7;
+  padding: 1.5rem 0;
+  box-sizing: border-box;
+}
+
+.pct-outer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pct-track-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.pct-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-bottom: 4px;
+}
+
+.pct-track::-webkit-scrollbar {
+  display: none;
+}
+
+.pct-tile {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 180px;
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.pct-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.pct-tile__image-wrap {
+  height: 140px;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+.pct-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.pct-tile:hover .pct-tile__image {
+  transform: scale(1.03);
+}
+
+.pct-tile__text {
+  padding: 10px 12px 12px 12px;
+}
+
+.pct-tile__title {
+  color: #1d2236;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0 3px 0;
+  line-height: 1.3;
+  font-family: Inter, sans-serif;
+}
+
+.pct-tile__desc {
+  color: #666;
+  font-size: 0.75rem;
+  margin: 0;
+  line-height: 1.4;
+  font-family: Inter, sans-serif;
+}
+
+/* Arrows */
+.pct-arrow {
+  flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #1d2236;
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  padding: 0;
+}
+
+.pct-arrow:hover {
+  background: #1d2236;
+  color: #ffffff;
+  border-color: #1d2236;
+}
+
+.pct-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Hide arrows on mobile — swipe handles it */
+@media (max-width: 680px) {
+  .pct-arrow {
+    display: none;
+  }
+  .pct-outer {
+    padding: 0 16px;
+  }
+  .pct-tile {
+    flex: 0 0 155px;
+  }
+  .pct-tile__image-wrap {
+    height: 110px;
+  }
+  .pct-tile__desc {
+    display: none;
+  }
+}
+</style>
+
+<script>
+(function() {
+  var track = document.getElementById('pct-track-{{ section.id }}');
+  var prevBtn = track.closest('.pct-outer').querySelector('.pct-arrow--prev');
+  var nextBtn = track.closest('.pct-outer').querySelector('.pct-arrow--next');
+
+  function getScrollAmount() {
+    var tile = track.querySelector('.pct-tile');
+    return tile ? tile.offsetWidth + 12 : 200;
+  }
+
+  function updateArrows() {
+    prevBtn.disabled = track.scrollLeft <= 0;
+    nextBtn.disabled = track.scrollLeft + track.offsetWidth >= track.scrollWidth - 2;
+  }
+
+  prevBtn.addEventListener('click', function() {
+    track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', function() {
+    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', updateArrows);
+  updateArrows();
+})();
+</script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Parent Collection Tiles",
+  "settings": []
+}
+{% endschema %}

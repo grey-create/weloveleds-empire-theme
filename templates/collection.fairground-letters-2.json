@@ -1,0 +1,292 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "df62666d-0ce6-4aa8-9f19-8ecc0e383ed9": {
+      "type": "superspeed-apps",
+      "blocks": {
+        "fd1b5579-2263-4eb0-ab21-460b03118715": {
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "settings": {
+            "t": "<h1>{{ collection.title }}</h1>",
+            "above_the_fold": "above_the_fold",
+            "html": "",
+            "tc": "#ffffff",
+            "b1_label": "",
+            "b1": "",
+            "b1_color": "ss:btn1",
+            "b2_label": "",
+            "b2": "",
+            "b2_color": "ss:btn2",
+            "image": "shopify://shop_images/WLL-Squiggly-Background_40864056-b4d4-4297-99e4-836bb66ffc40.jpg",
+            "fill_bg": true,
+            "fill_content": true,
+            "ta": "md-ss:ss:text-center",
+            "sa": "md-ss:ss:items-center md-ss:ss:justify-center",
+            "image_mobile": "shopify://shop_images/WLL-Squiggly-Background_40864056-b4d4-4297-99e4-836bb66ffc40.jpg",
+            "fill_bg_mob": true,
+            "fill_content_mob": true,
+            "ta_mob": "ss:text-center",
+            "sa_mob": "ss:items-center ss:justify-center",
+            "overlay": false,
+            "tx": "/*\n--h: auto;\n--min-h: auto;\n--max-h: auto;\n--w: 100%;\n--max-w: 1100px;\n--mar: 0px;\n--mar-mob: 0px;\n--pad: 0px;\n--pad-mob: 0px;\n--max-image-width: 100%;\n--ar: 1\n--text-balance: balance;\n--img-br: 0px;\n--ss-overlay: #000;\n--min-h-mob: auto;\n*/",
+            "ex": ""
+          }
+        }
+      },
+      "block_order": [
+        "fd1b5579-2263-4eb0-ab21-460b03118715"
+      ],
+      "settings": {
+        "show_section": "desktop",
+        "use_slideshow": false,
+        "grid_id": "1c",
+        "include_margins": false,
+        "ss-x-mw": 1440,
+        "enable_height": "custom",
+        "ss-v-min-h": 15,
+        "ss-v-max-h": 15,
+        "ss-bg-color": "#ffffff",
+        "ss-text-color": "#000000",
+        "ss-xg-gap": 0,
+        "ss-mx-pad": 1,
+        "ss-x-pt": 0,
+        "ss-x-pb": 0,
+        "ss-x-pl": 0,
+        "ss-x-pr": 0,
+        "ss-mx-mar": 1,
+        "ss-x-mt": 0,
+        "ss-x-mb": 0,
+        "ss-x-ml": 0,
+        "ss-x-mr": 0,
+        "ss-lh": "1.4",
+        "ss-x-h1-fs": 48,
+        "ss-x-h2-fs": 32,
+        "ss-x-h3-fs": 24,
+        "ss-x-h4-fs": 18,
+        "ss-x-p-fs": 16,
+        "reverse": false,
+        "grid_id_mob": "1c",
+        "enable_height_mob": "custom",
+        "ss-v-min-h-mob": 15,
+        "ss-v-max-h-mob": 15,
+        "ss-xg-gap-mob": 0,
+        "ss-mx-pad-mob": 1,
+        "ss-x-pt-mob": 0,
+        "ss-x-pb-mob": 0,
+        "ss-x-pl-mob": 0,
+        "ss-x-pr-mob": 0,
+        "ss-mx-mar-mob": 1,
+        "ss-x-mt-mob": 0,
+        "ss-x-mb-mob": 0,
+        "ss-x-ml-mob": 0,
+        "ss-x-mr-mob": 0,
+        "ss-lh-mob": "1.4",
+        "ss-x-h1-fs-mob": 42,
+        "ss-x-h2-fs-mob": 32,
+        "ss-x-h3-fs-mob": 24,
+        "ss-x-h4-fs-mob": 18,
+        "ss-x-p-fs-mob": 16,
+        "loop": false,
+        "add_arrows": false,
+        "add_dots": false,
+        "ss-arrow-color": "#ffffff",
+        "ss-dots-color": "#000000",
+        "ss-dots-color-active": "#ffffff",
+        "auto_rotate": 6,
+        "ss-x-h1-font-fam": "inter_n4",
+        "ss-x-h2-font-fam": "inter_n4",
+        "ss-x-h3-font-fam": "inter_n4",
+        "ss-x-div-font-fam": "inter_n4",
+        "ss-x-p-font-fam": "inter_n4",
+        "ss-x-btn-fs": 16,
+        "ss-x-btn-w": 160,
+        "ss-x-btn-h": 40,
+        "ss-x-btn-rad": 3,
+        "ss-x-btn-br": 1,
+        "ss-x-btn-fs-mob": 16,
+        "ss-x-btn-w-mob": 160,
+        "ss-x-btn-h-mob": 40,
+        "ss-x-btn-rad-mob": 3,
+        "ss-x-btn-br-mob": 1,
+        "ss-x-btn-font-fam": "inter_n4",
+        "ss-b1-t": "#ffffff",
+        "ss-b1-bg": "#000000",
+        "ss-b1-br": "#000000",
+        "ss-b1-h-t": "#ffffff",
+        "ss-b1-h-bg": "#333333",
+        "ss-b1-h-br": "#000000",
+        "ss-x-secbtn-font-fam": "inter_n4",
+        "ss-b2-t": "#ffffff",
+        "ss-b2-bg": "rgba(0,0,0,0)",
+        "ss-b2-br": "#ffffff",
+        "ss-b2-h-t": "#ffffff",
+        "ss-b2-h-bg": "#000000",
+        "ss-b2-h-br": "#000000",
+        "ss-x-bgap": 20,
+        "ss-overlay": "#000000",
+        "ss-p-overlay-opacity": 70,
+        "image_hover": false
+      }
+    },
+    "dynamic_custom_liquid_hAfTBE": {
+      "type": "dynamic-custom-liquid",
+      "custom_css": [
+        ".custom-liquid--container {margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "custom_liquid": "<div class=\"collection-top-section\">\n  <div class=\"rich-text--container\" style=\"max-width: 1200px; margin: 0 auto; padding: 1.875rem 20px 2.5rem 20px;\">\n    {{ collection.metafields.custom.collection_description_top_html.value }}\n  </div>\n</div>\n\n<style>\n.collection-top-section {\n  background: linear-gradient(135deg, #f5f5f7 0%, #ceceea 100%);\n  margin-left: calc(-50vw + 50%);\n  margin-right: calc(-50vw + 50%);\n  padding-left: calc(50vw - 50%);\n  padding-right: calc(50vw - 50%);\n  margin-top: 0;\n}\n\n.rich-text--container {\n  font-size: 1.125rem;\n  line-height: 1.5;\n}\n\n.rich-text--container p:first-child {\n  font-size: 1.25rem;\n  font-weight: 500;\n  margin-bottom: 0.9375rem;\n}\n\n@media (max-width: 768px) {\n  .rich-text--container {\n    font-size: 1rem;\n  }\n  .rich-text--container p:first-child {\n    font-size: 1.125rem;\n  }\n}\n</style>"
+      }
+    },
+    "main": {
+      "type": "static-collection",
+      "blocks": {
+        "filter-1": {
+          "type": "filter",
+          "settings": {
+            "filter_option": "faceted",
+            "filter_groups": "expand_first",
+            "show_filter_product_count": false,
+            "filter_style": "tags",
+            "filter_limit": "5",
+            "grid_categories": "",
+            "custom_ordered_categories": "",
+            "custom_ordered_tags": "",
+            "excluded_tags": "",
+            "excluded_groups": ""
+          }
+        }
+      },
+      "block_order": [
+        "filter-1"
+      ],
+      "custom_css": [
+        "h1.collection--title {font-size: 10px;}",
+        ".breadcrumbs-container {margin-top: 0px; margin-bottom: 0px;}",
+        ".section--canonical {margin-top: 20px !important;}"
+      ],
+      "settings": {
+        "show_collection_image": false,
+        "products_per_page_range": 24,
+        "products_per_row": "4",
+        "sort_by": true,
+        "grid_list": true,
+        "default_view": "grid-view",
+        "enable_subcollection": true,
+        "show_product_count": false,
+        "thumbnail_image": "collection-image",
+        "image_crop": "square"
+      }
+    },
+    "dynamic_promo_mosaic_6fmyEn": {
+      "type": "dynamic-promo-mosaic",
+      "blocks": {
+        "promotion_wnBBLW": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Fairground-Strips-8.jpg",
+            "title": "",
+            "text": "",
+            "color": "#4d4d4d",
+            "block_link": "",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": false,
+            "background": "",
+            "opacity": 50
+          }
+        },
+        "promotion_bEdmhB": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Fairground-Letter-Small---G8.jpg",
+            "title": "",
+            "text": "",
+            "color": "#4d4d4d",
+            "block_link": "",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": false,
+            "background": "",
+            "opacity": 50
+          }
+        },
+        "promotion_67FRXP": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Fairground-Letter-Small---A2.jpg",
+            "title": "",
+            "text": "",
+            "color": "#4d4d4d",
+            "block_link": "",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": false,
+            "background": "",
+            "opacity": 50
+          }
+        },
+        "promotion_WqXL8W": {
+          "type": "promotion",
+          "settings": {
+            "image": "shopify://shop_images/Fairground-Strips-6.jpg",
+            "title": "",
+            "text": "",
+            "color": "#4d4d4d",
+            "block_link": "",
+            "button_text": "",
+            "button_style": "primary",
+            "show_overlay": false,
+            "background": "",
+            "opacity": 50
+          }
+        }
+      },
+      "block_order": [
+        "promotion_wnBBLW",
+        "promotion_bEdmhB",
+        "promotion_67FRXP",
+        "promotion_WqXL8W"
+      ],
+      "settings": {
+        "title": "",
+        "section_height": "small",
+        "text_alignment": "top-left",
+        "maintain_aspect_ratio": false,
+        "compress_blocks": true
+      }
+    },
+    "static-recently-viewed": {
+      "type": "static-recently-viewed",
+      "settings": {
+        "enable_recently_viewed_products": true
+      }
+    },
+    "dynamic_custom_liquid_VhM3Xe": {
+      "type": "dynamic-custom-liquid",
+      "custom_css": [
+        ".custom-liquid--container {margin-top: 0 !important; padding-top: 0 !important; margin-bottom: 0 !important; padding-bottom: 0 !important;}"
+      ],
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "settings": {
+        "custom_liquid": "<div class=\"collection-bottom-section\">\n  <div class=\"rich-text--container\" style=\"max-width: 1200px; margin: 0 auto; padding: 30px 20px;\">\n    {{ collection.metafields.custom.collection_description_bottom_html.value }}\n  </div>\n</div>\n\n<style>\n.collection-bottom-section {\n  background: linear-gradient(135deg, #f0f7ff 0%, #d6e9f9 100%);\n  margin-left: calc(-50vw + 50%);\n  margin-right: calc(-50vw + 50%);\n  padding-left: calc(50vw - 50%);\n  padding-right: calc(50vw - 50%);\n}\n\n.rich-text--container {\n  font-size: 1.125rem;\n  line-height: 1.5;\n}\n</style>"
+      }
+    }
+  },
+  "order": [
+    "df62666d-0ce6-4aa8-9f19-8ecc0e383ed9",
+    "dynamic_custom_liquid_hAfTBE",
+    "main",
+    "dynamic_promo_mosaic_6fmyEn",
+    "static-recently-viewed",
+    "dynamic_custom_liquid_VhM3Xe"
+  ]
+}

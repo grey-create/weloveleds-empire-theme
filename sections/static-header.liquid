@@ -1,0 +1,1035 @@
+
+<script
+  type="application/json"
+  data-section-id="{{ section.id }}"
+  data-section-type="static-header"
+  data-section-data>
+  {
+    "settings": {
+      "sticky_header": {{ section.settings.sticky_header | json }},
+      "live_search": {
+        "enable": {{ section.settings.enable_live_search | json }},
+        "money_format": {{ shop.money_format | strip_html | json }},
+        "show_mobile_search_bar": {{ section.settings.show_mobile_search_bar | json }}
+      }
+    }
+  }
+</script>
+
+<header
+  class="site-header site-header-nav--open"
+  role="banner"
+  data-site-header
+>
+
+  <div class="trust-strip">
+    <div class="trust-strip-inner">
+      <a href="/pages/trade-discount" class="trust-pill">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        Trade 10% off
+      </a>
+      <span class="trust-divider" aria-hidden="true"></span>
+      <span class="trust-item trust-item--order">Order by 2pm for next-day UK delivery</span>
+      <span class="trust-divider trust-divider--order" aria-hidden="true"></span>
+      <span class="trust-item trust-item--shipping">Free UK shipping</span>
+      <span class="trust-divider trust-divider--shipping" aria-hidden="true"></span>
+      <span class="trust-item trust-item--warranty">Up to 10-year warranty</span>
+      <span class="trust-spacer"></span>
+      <a href="tel:01132524706" class="trust-phone">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        0113 252 4706
+      </a>
+    </div>
+  </div>
+
+  <div
+    class="
+      site-header-main
+      {% if section.settings.full_width_header %}site-header--full-width{% endif %}
+    "
+    data-site-header-main
+    {% if section.settings.sticky_header %}data-site-header-sticky{% endif %}
+    {% if section.settings.show_mobile_search_bar %}
+      data-site-header-mobile-search-bar
+    {% else %}
+      data-site-header-mobile-search-button
+    {% endif %}
+  >
+    <button class="site-header-menu-toggle" data-menu-toggle>
+      <div class="site-header-menu-toggle--button" tabindex="-1">
+        <span class="toggle-icon--bar toggle-icon--bar-top"></span>
+        <span class="toggle-icon--bar toggle-icon--bar-middle"></span>
+        <span class="toggle-icon--bar toggle-icon--bar-bottom"></span>
+        <span class="visually-hidden">{{ 'general.accessibility.menu' | t }}</span>
+      </div>
+    </button>
+
+    {% unless section.settings.show_mobile_search_bar %}
+      {% capture search_button %}
+        <div class="site-header-mobile-search-button--button" tabindex="-1">
+          {% render 'icon-search' %}
+        </div>
+      {% endcapture %}
+      {% if section.settings.enable_live_search %}
+        <button class="site-header-mobile-search-button" data-mobile-search-button>
+          {{ search_button }}
+        </button>
+      {% else %}
+        <a class="site-header-mobile-search-button" href="{{ routes.search_url }}">
+          {{ search_button }}
+        </a>
+      {% endif %}
+    {% endunless %}
+
+    <div class="site-header-main-content">
+      <div class="site-header-logo">
+        <a class="site-logo" href="{{ routes.root_url }}">
+          {% if section.settings.logo %}
+            {% assign logo_alt = section.settings.logo.alt %}
+            {% if logo_alt == '' %}
+              {% assign logo_alt = shop.name | strip %}
+            {% endif %}
+
+            {%
+              render 'rimg',
+              img: section.settings.logo,
+              class: 'site-logo-image',
+              alt: logo_alt,
+              size: '400x',
+              focal_point: section.settings.logo.presentation.focal_point,
+            %}
+          {% else %}
+            {% if template == 'index' %}
+              <h1 class="site-logo-text">{{ shop.name }}</h1>
+            {% else %}
+              <span class="site-logo-text">{{ shop.name }}</span>
+            {% endif %}
+          {% endif %}
+        </a>
+      </div>
+
+      {%
+        render 'live-search-form',
+        quick_links: linklists[section.settings.quick_links],
+        enable_images: section.settings.enable_live_search_images,
+      %}
+    </div>
+
+    <div
+      class="
+        site-navigation-wrapper
+        {% if shop.customer_accounts_enabled %}site-navigation--has-actions{% endif %}
+        {% if section.settings.full_width_header %}site-header--full-width{% endif %}
+      "
+      data-site-navigation
+      id="site-header-nav"
+    >
+      <nav
+        class="site-navigation"
+        aria-label="{{ 'general.accessibility.nav_main' | t }}"
+      >
+        {%
+          render 'navmenu',
+          menu: section.settings.menu,
+          blocks: section.blocks,
+        %}
+
+        {% if section.settings.secondary_menu != blank %}
+          {%
+            render 'navlist',
+            menu_list: linklists[section.settings.secondary_menu].links,
+            depth: 1,
+            max_depth: 1,
+            aria_expanded: true,
+            navmenu_classes: 'site-navigation__secondary-menu',
+          %}
+        {% endif %}
+      </nav>
+    </div>
+
+    <div class="site-header-right">
+      {% render 'site-header-actions' %}
+
+      <div class="site-header-cart">
+        <a class="site-header-cart--button" href="{{ routes.cart_url }}">
+          <span
+            class="site-header-cart--count {% if cart.item_count > 0 %}visible{% endif %}"
+            data-header-cart-count="{% if cart.item_count > 0 %}{{ cart.item_count }}{% endif %}">
+          </span>
+          <span class="site-header-cart-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 7h14v13H5z"/>
+              <path d="M9 7V5a3 3 0 0 1 6 0v2"/>
+            </svg>
+          </span>
+          <span class="visually-hidden">{{ 'general.accessibility.cart' | t }}</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  {% render 'site-mobile-nav', blocks: section.blocks %}
+
+<style>
+/* ============================================================
+   TRUST STRIP — full width
+   ============================================================ */
+.trust-strip {
+  background: #14172a;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+  z-index: 101;
+}
+.trust-strip-inner {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 32px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 18px !important;
+}
+.trust-spacer { flex: 1; }
+.trust-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(253, 205, 106, 0.15); color: #fdcd6a;
+  padding: 4px 11px; border-radius: 999px;
+  font-weight: 500; font-size: 11.5px; text-decoration: none;
+  letter-spacing: 0.02em; transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+.trust-pill:hover { background: rgba(253, 205, 106, 0.25); color: #fdcd6a; }
+.trust-pill svg { width: 11px; height: 11px; stroke: currentColor; stroke-width: 2.5; fill: none; }
+.trust-divider { width: 1px; height: 12px; background: rgba(255, 255, 255, 0.18); flex-shrink: 0; }
+.trust-item { flex-shrink: 0; white-space: nowrap; }
+.trust-phone {
+  display: inline-flex; align-items: center; gap: 6px;
+  color: rgba(255, 255, 255, 0.92); text-decoration: none;
+  font-weight: 500; font-size: 12px; flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+.trust-phone:hover { color: #fdcd6a; }
+.trust-phone svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+@media (max-width: 1180px) { .trust-item--warranty, .trust-divider--shipping { display: none; } }
+@media (max-width: 920px) { .trust-item--shipping, .trust-divider--order { display: none; } }
+@media (max-width: 768px) {
+  .trust-strip { padding: 8px 0; }
+  .trust-strip-inner { padding: 0 16px !important; gap: 12px !important; justify-content: space-between; }
+  .trust-item, .trust-divider { display: none; }
+  .trust-pill { font-size: 11px; }
+  .trust-phone { font-size: 11.5px; }
+}
+
+/* ============================================================
+   HEADER FOUNDATION
+   ============================================================ */
+.site-header-wrapper, .site-header { background-color: #1B2034; }
+/* === STICKY HEADER — pin <header> with trust strip pulled above viewport === */
+header.site-header {
+  position: sticky !important;
+  top: -36px !important;
+  z-index: 100 !important;
+  background-color: #1B2034 !important;
+}
+@media (max-width: 768px) {
+  header.site-header {
+    top: -32px !important;
+  }
+}
+header.site-header { border: none; outline: none; position: relative; }
+
+/* ============================================================
+   MAIN BAR — FULL WIDTH, logo flush left, icons flush right
+   ============================================================ */
+.site-header-main {
+  background-color: #1B2034 !important;
+  max-width: none !important;
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 12px 32px !important; /* left 32px == .trust-strip-inner left inset, so the logo's left edge aligns with the "Trade 10% off" pill above. Do NOT use the theme --layout-container gutter (25px) — that is the hub content rail, a different inset. */
+  min-height: 64px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 24px !important;
+  box-sizing: border-box;
+}
+
+/* ROOT CAUSE of the logo not sitting flush left (defeated 3 prior attempts):
+   theme.css (~line 2062) injects a float clearfix —
+   .site-header-main::before, .site-header-main::after { display: table; content: ""; }
+   In this flex top row those pseudo-elements blockify into FLEX ITEMS. The phantom
+   ::before is the first flex item, so .site-header-main's `gap: 24px` inserts 24px
+   BETWEEN it and the logo, pushing the logo to 32(padding) + 24(gap) = 56px while the
+   "Trade 10% off" pill sits at 32px (.trust-strip-inner is NOT in the clearfix selector).
+   The clearfix is useless in a flex/grid layout, so remove it. This restores logo-left
+   to the 32px page inset == pill-left, in BOTH the single-row and two-row states, and
+   also lets the account/cart cluster sit hard against the right inset (::after gap gone).
+   Pure box-model change: no effect on row-breaking, breakpoints, the nav row, or mobile. */
+.site-header-main::before,
+.site-header-main::after {
+  display: none !important;
+  content: none !important;
+}
+
+.site-header-main-content {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  /* DELIBERATE override of the real bug: theme.css ~3838
+       @media (min-width:1024px){ .site-header-main-content{ justify-content:center } }
+     centres the logo+search pair inside this full-width grown box at EVERY width
+     >=1024 (both the single-row and the two-row state), leaving the empty gap to
+     the LEFT of the logo. The inline rule never declared justify-content, so that
+     theme rule stayed live and no amount of padding/!important could pull centred
+     flex children left. Pinning to flex-start fixes both states at source. */
+  justify-content: flex-start !important;
+  gap: 24px !important;
+  margin: 0 !important;
+  max-width: none !important;
+  min-width: 0;
+}
+
+.site-header-logo {
+  flex-shrink: 0;
+  flex-grow: 0;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  height: 42px;
+}
+
+.site-logo {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none;
+  height: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.site-logo-image {
+  max-height: 42px !important;
+  height: 42px !important;
+  max-width: 231px !important;
+  width: auto !important;
+  display: block !important;
+  vertical-align: middle !important;
+}
+
+.site-logo-text {
+  font-size: 20px !important;
+  font-weight: 700; color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1 !important;
+}
+
+/* ============================================================
+   INLINE SEARCH
+   ============================================================ */
+.site-header-main-content .live-search {
+  flex: 1 1 280px !important;
+  max-width: 480px !important;
+  min-width: 220px !important;
+  margin: 0 !important;
+  display: flex;
+  align-items: center;
+}
+
+.site-header-main-content .live-search-form {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 10px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  width: 100%;
+}
+.site-header-main-content .live-search-form:focus-within {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+.site-header-main-content .live-search-form .form-field {
+  background: transparent !important; border: none !important;
+  height: 38px !important; padding: 0 !important; margin: 0 !important;
+  display: flex !important; align-items: center !important; width: 100%;
+}
+.site-header-main-content .live-search-form .form-field-input,
+.site-header-main-content .live-search-form .live-search-form-field {
+  background: transparent !important; border: none !important;
+  color: #ffffff !important;
+  font-family: 'Inter', sans-serif !important;
+  font-size: 13.5px !important; font-weight: 400 !important;
+  height: 38px !important; padding: 0 14px !important;
+  box-shadow: none !important; outline: none !important; flex: 1;
+}
+.site-header-main-content .live-search-form .form-field-input::placeholder,
+.site-header-main-content .live-search-form .live-search-form-field::placeholder {
+  color: rgba(255, 255, 255, 0.5) !important; opacity: 1 !important;
+}
+.site-header-main-content .live-search-form .live-search-button {
+  background: transparent !important; border: none !important;
+  border-radius: 0 10px 10px 0 !important;
+  width: 40px !important; height: 38px !important;
+  padding: 0 !important; margin: 0 !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  display: flex !important; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.site-header-main-content .live-search-form .live-search-button:hover { color: #ffffff !important; }
+.site-header-main-content .live-search-form .live-search-button svg {
+  width: 16px !important; height: 16px !important;
+  stroke: currentColor !important; fill: none !important;
+}
+.site-header-main-content .live-search-form .live-search-takeover-cancel {
+  color: rgba(255, 255, 255, 0.7) !important;
+  background: transparent !important; border: none !important;
+  font-size: 13px !important; padding: 0 12px !important;
+}
+.site-header-main-content .live-search-form .live-search-filter-wrapper {
+  background: transparent !important; border: none !important;
+  border-right: none !important;
+  padding: 0 !important; height: 38px !important;
+  display: flex; align-items: center;
+}
+.site-header-main-content .live-search-form .live-search-filter-label {
+  color: rgba(255, 255, 255, 0.85) !important;
+  background: transparent !important;
+  font-size: 13px !important; padding: 0 12px !important;
+  height: 38px !important;
+  display: flex; align-items: center;
+}
+.site-header-main-content .search-flydown {
+  background: #ffffff; color: #1B2034;
+  border-radius: 10px; margin-top: 8px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* ============================================================
+   RIGHT CLUSTER — account + cart, identical 40px circles
+   AGGRESSIVE forced alignment
+   ============================================================ */
+.site-header-right {
+  flex: 0 0 auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  height: 40px !important;
+}
+
+.site-header-actions,
+.site-header-actions__account-link,
+.site-header-cart {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 40px !important;
+}
+
+.site-header-cart {
+  top: 1px !important;
+}
+
+.site-header_account-link-text,
+.site-header__account-links { display: none !important; }
+
+/* All clickable icon buttons: 40px circle, perfectly centered */
+.site-header_account-link-anchor,
+.site-header-cart--button,
+.site-header-actions__account-link > .site-header__account-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  border: none !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  text-decoration: none !important;
+  cursor: pointer;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: background 0.2s ease, color 0.2s ease;
+  position: relative;
+  line-height: 0 !important;
+}
+
+.site-header_account-link-anchor:hover,
+.site-header-cart--button:hover,
+.site-header-actions__account-link > .site-header__account-icon:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: #ffffff !important;
+}
+
+/* Icon spans: force flex centering inside the circle button */
+.site-header__account-icon,
+.site-header-cart-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: 0 !important;
+}
+
+/* SVGs: identical size, centered, line-art with 1.5 stroke */
+.site-header__account-icon svg,
+.site-header-cart-icon svg,
+.site-header-right svg {
+  width: 18px !important;
+  height: 18px !important;
+  display: block !important;
+  stroke: currentColor !important;
+  stroke-width: 1.5 !important;
+  fill: none !important;
+  vertical-align: middle !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Cart count badge — magenta */
+.site-header-cart--count {
+  position: absolute; top: 2px; right: 2px;
+  min-width: 16px; height: 16px; padding: 0 4px;
+  background: #d946ef !important; color: #ffffff !important;
+  font-size: 10px; font-weight: 600;
+  border-radius: 999px; border: 2px solid #1B2034;
+  display: none !important; align-items: center; justify-content: center;
+  line-height: 1; z-index: 2;
+}
+
+/* Cart anchor: pull hidden text and count span fully out of layout flow */
+.site-header-cart--button .visually-hidden,
+.site-header-cart--button .site-header-cart--count {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  margin: -1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Re-show cart count when it has the .visible modifier */
+.site-header-cart--button .site-header-cart--count.visible {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  width: auto !important;
+  height: 16px !important;
+  min-width: 16px !important;
+  padding: 0 4px !important;
+  margin: 0 !important;
+  clip: auto !important;
+  background: #d946ef !important;
+  color: #ffffff !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  border-radius: 999px !important;
+  border: 2px solid #1B2034 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  line-height: 1 !important;
+  z-index: 2 !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+}
+
+.site-header-mobile-search-button { display: none !important; }
+/* Hamburger hidden from 1024px up (States A & B show the in-row / row-2 nav).
+   Visible at <=1023px (State C) where the theme's mobile drawer JS is active. */
+@media (min-width: 1024px) { .site-header-menu-toggle { display: none !important; } }
+
+/* ============================================================
+   NAV ROW — full width
+   ============================================================ */
+.site-navigation-wrapper {
+  background-color: transparent !important;
+  max-width: none !important;
+  margin: 0 0 0 auto !important;
+  padding: 0 !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  width: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.site-navigation {
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+}
+
+.site-navigation > .navmenu,
+.site-navigation > ul,
+.site-navigation > .gm-menu-installed,
+.site-navigation > .gm-menu-installed > ul {
+  margin: 0 !important; padding: 0 !important;
+  display: flex !important; align-items: center !important;
+  flex-wrap: nowrap !important; justify-content: center !important;
+  list-style: none !important; width: auto !important;
+}
+
+.site-navigation > .navmenu > li,
+.site-navigation > ul > li,
+.site-navigation > .gm-menu-installed > ul > li {
+  padding: 0 !important; margin: 0 !important;
+  border: none !important; list-style: none !important;
+  flex-shrink: 0;
+}
+
+.site-navigation > .navmenu > li::before,
+.site-navigation > .navmenu > li::after,
+.site-navigation > ul > li::before,
+.site-navigation > ul > li::after,
+.site-navigation > .gm-menu-installed > ul > li::before,
+.site-navigation > .gm-menu-installed > ul > li::after {
+  display: none !important; content: none !important;
+}
+
+.site-navigation > .navmenu > li > .navmenu-link,
+.site-navigation > ul > li > a,
+.site-navigation > .gm-menu-installed > ul > li > .gm-target,
+.site-navigation > .gm-menu-installed > ul > li > a {
+  display: inline-flex !important;
+  align-items: center !important;
+  padding: 14px 18px !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  letter-spacing: -0.005em !important;
+  line-height: 1.4 !important;
+  color: rgba(255, 255, 255, 0.85) !important;
+  white-space: nowrap !important;
+  transition: color 0.2s ease;
+  text-decoration: none !important;
+}
+
+.site-navigation > .navmenu > li > .navmenu-link:hover,
+.site-navigation > ul > li > a:hover,
+.site-navigation > .gm-menu-installed > ul > li > .gm-target:hover,
+.site-navigation > .gm-menu-installed > ul > li > a:hover {
+  color: #ffffff !important;
+}
+
+@media (max-width: 1180px) {
+  .site-navigation > .navmenu > li > .navmenu-link,
+  .site-navigation > .gm-menu-installed > ul > li > .gm-target {
+    padding: 14px 12px !important;
+    font-size: 13.5px !important;
+  }
+  /* Shrink the search box before the nav is forced to wrap */
+  .site-header-main-content .live-search {
+    max-width: 320px !important;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE NAV STATES  (GLOBAL header responsive rework)
+   ------------------------------------------------------------
+   Boundaries follow the Empire breakpoint ladder (L = 1024px)
+   and the theme's own mobile-drawer JS. NavMobile._open()
+   (empire.js) returns early when cjs.min('L') is true, so the
+   hamburger drawer ONLY opens below 1024px.
+
+     State A  >= 1800px      single row (base rules — unchanged)
+     State B  1024px–1799px  two rows: row1 logo+search+actions,
+                             row2 full-width centred nav
+     State C  <= 1023px      hamburger + existing mobile drawer
+                             (<=768px keeps its existing grid)
+
+   1024px MUST stay State B: the drawer JS refuses to open at
+   >=1024, so a hamburger there would be dead. B owns 1024,
+   C is strictly <=1023. The ranges are mutually exclusive, so
+   exactly one nav presentation is shown at every width.
+   ============================================================ */
+
+/* State C — hide the in-row nav at <=1023 (covers 769–1023 and,
+   redundantly but harmlessly, the <=768 grid block below). */
+@media (max-width: 1023px) {
+  .site-navigation-wrapper { display: none !important; }
+}
+
+/* State C — 769–1023 tablet bar: hamburger | logo+search | actions.
+   (<=768px is governed entirely by the grid block further down.) */
+@media (min-width: 769px) and (max-width: 1023px) {
+  .site-header-menu-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    flex: 0 0 auto !important;
+    order: 0 !important;
+  }
+}
+
+/* State B — 1024–1799 two-row header */
+@media (min-width: 1024px) and (max-width: 1799px) {
+  .site-header-main {
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    row-gap: 0 !important;
+    padding-top: 10px !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* Row 1 — logo + search (left) ... account + cart (right) */
+  .site-header-main-content {
+    order: 1 !important;
+    flex: 1 1 auto !important;
+  }
+  .site-header-right {
+    order: 2 !important;
+    flex: 0 0 auto !important;
+  }
+  /* Search: sensible width, sat right beside the logo */
+  .site-header-main-content .live-search {
+    flex: 0 1 420px !important;
+    max-width: 420px !important;
+    min-width: 240px !important;
+  }
+
+  /* Row 2 — full-width, centred nav bar on its own line */
+  .site-navigation-wrapper {
+    order: 3 !important;
+    flex: 0 0 100% !important;
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 10px 0 12px !important;
+    justify-content: center !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.06) !important;
+  }
+  .site-navigation {
+    width: 100% !important;
+    justify-content: center !important;
+  }
+  .site-navigation > .navmenu,
+  .site-navigation > ul,
+  .site-navigation > .gm-menu-installed,
+  .site-navigation > .gm-menu-installed > ul {
+    width: 100% !important;
+    justify-content: center !important;
+    flex-wrap: nowrap !important;
+  }
+}
+
+/* ============================================================
+   MOBILE — Grid: hamburger | logo | cart on row 1, search on row 2
+   ============================================================ */
+@media (max-width: 768px) {
+  .site-header-main {
+    display: grid !important;
+    grid-template-columns: 40px 1fr 40px !important;
+    grid-template-rows: 40px auto !important;
+    grid-row-gap: 14px !important;
+    grid-column-gap: 16px !important;
+    padding: 12px 20px !important;
+    align-items: center !important;
+    gap: unset !important;
+  }
+
+  .site-header-menu-toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 40px !important;
+    height: 40px !important;
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    /* ROOT CAUSE of the <680px mobile-header collapse:
+       theme.css makes .site-header-menu-toggle `position:absolute; left:0`
+       by default and only restores `position:relative` inside
+       @media (max-width:1023px) and (min-width:680px). Below 680px that
+       restore stops, so the hamburger reverts to absolute, drops OUT of this
+       grid (column 1 collapses, the centred logo re-centres on the wrong
+       axis, the row trio loses vertical alignment). Pinning it relative
+       inside the grid cell keeps it in flow at every width <=768 — exactly
+       what the 769–1023 State C block already does for the tablet bar. */
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+  } /* mobile toggle pinned in grid */
+
+  /* site-header-main-content holds logo and search; let them flow into grid */
+  .site-header-main-content {
+    display: contents !important;
+  }
+
+  .site-header-main-content .site-header-logo {
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    justify-self: center !important;
+    margin: 0 !important;
+  }
+  .site-logo-image {
+    max-height: 36px !important;
+    height: 36px !important;
+    max-width: 180px !important;
+  }
+
+  .site-header-main-content .live-search {
+    grid-column: 1 / -1 !important;
+    grid-row: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .site-header-right {
+    grid-column: 3 !important;
+    grid-row: 1 !important;
+    justify-self: end !important;
+    height: 40px !important;
+  }
+
+  /* Hide account icon in main bar — it's in the drawer */
+  .site-header-right .site-header-actions {
+    display: none !important;
+  }
+
+  /* Hide nav row — Globo handles via drawer */
+  .site-navigation-wrapper {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   MOBILE DRAWER — fully navy, close moved to top-right,
+   no overlap with account icon
+   ============================================================ */
+@media (max-width: 768px) {
+  /* Force navy on every drawer container */
+  .site-mobile-nav,
+  .site-mobile-nav > *,
+  .mobile-nav-panel,
+  [data-mobile-nav-panel],
+  .mobile-nav-content,
+  .mobile-nav-content > *,
+  [data-mobile-nav-content],
+  .utility-bar__mobile-disclosure,
+  .gm-mobile-menu,
+  .gm-mobile-menu > *,
+  .gm-mobile-menu-wrapper,
+  .gm-mobile-menu-container {
+    background-color: #1B2034 !important;
+  }
+
+  .mobile-nav-panel {
+    position: relative !important;
+  }
+
+  .site-mobile-nav ul,
+  .site-mobile-nav li,
+  .mobile-nav-panel ul,
+  .mobile-nav-panel li,
+  .gm-mobile-menu ul,
+  .gm-mobile-menu li {
+    background-color: #1B2034 !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .site-mobile-nav a,
+  .mobile-nav-panel a:not(.mobile-nav-close):not(.site-header_account-link-anchor):not(.site-header__account-link--account):not(.site-header__account-link--logout),
+  .mobile-nav-content a,
+  .gm-mobile-menu a:not(.gm-submenu a),
+  .gm-mobile-menu .gm-target {
+    display: block !important;
+    width: 100% !important;
+    padding: 16px 20px !important;
+    color: #ffffff !important;
+    background-color: #1B2034 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    text-decoration: none !important;
+    font-size: 15px !important;
+    font-weight: 400 !important;
+  }
+
+  /* Submenu (when expanded) — keep white */
+  .gm-submenu, .gm-submenu-mega, .gm-submenu-bordered,
+  .gm-mobile-menu .gm-submenu, .gm-mobile-menu .gm-dropdown-menu {
+    background-color: #ffffff !important;
+  }
+  .gm-submenu a, .gm-submenu-mega a,
+  .gm-mobile-menu .gm-submenu a, .gm-mobile-menu .gm-dropdown-menu a,
+  .gm-submenu .gm-target {
+    background-color: #ffffff !important;
+    color: #1B2034 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    padding: 14px 32px !important;
+  }
+  .gm-submenu a:hover, .gm-submenu-mega a:hover,
+  .gm-mobile-menu .gm-submenu a:hover {
+    color: #d946ef !important;
+    background-color: #ffffff !important;
+  }
+
+  .utility-bar__mobile-disclosure:empty { display: none !important; }
+
+  /* Account row: top-left of drawer, with right padding so close X doesn't overlap */
+  .mobile-nav-panel .site-header-actions {
+    display: flex !important;
+    background: #1B2034 !important;
+    padding: 16px 60px 16px 20px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  }
+  .mobile-nav-panel .site-header_account-link-anchor,
+  .mobile-nav-panel .site-header-actions__account-link > .site-header__account-icon {
+    width: auto !important;
+    height: auto !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    gap: 10px;
+    padding: 4px 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .mobile-nav-panel .site-header_account-link-text,
+  .mobile-nav-panel .site-header__account-links {
+    display: inline-flex !important;
+    color: #ffffff !important;
+    font-size: 14px;
+  }
+  .mobile-nav-panel .site-header__account-icon {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .mobile-nav-panel .site-header__account-icon svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #ffffff !important;
+    fill: none !important;
+  }
+
+  /* CLOSE BUTTON: pin to TOP-RIGHT (away from account icon) */
+  .mobile-nav-close,
+  a.mobile-nav-close,
+  .mobile-nav-panel .mobile-nav-close {
+    position: absolute !important;
+    top: 12px !important;
+    right: 16px !important;
+    left: auto !important;
+    bottom: auto !important;
+    width: 40px !important;
+    height: 40px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: transparent !important;
+    color: #ffffff !important;
+    opacity: 1 !important;
+    border-radius: 50% !important;
+    z-index: 100 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .mobile-nav-close svg,
+  a.mobile-nav-close svg {
+    width: 20px !important;
+    height: 20px !important;
+    stroke: #ffffff !important;
+    fill: #ffffff !important;
+  }
+  .mobile-nav-close:hover,
+  a.mobile-nav-close:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+}
+</style>
+
+</header>
+
+{% schema %}
+{
+  "name": "t:sections.header.name",
+  "class": "site-header-wrapper",
+  "settings": [
+    { "type": "checkbox", "id": "sticky_header", "label": "t:sections.header.sticky_header.label", "default": true },
+    { "type": "checkbox", "id": "full_width_header", "label": "t:sections.header.full_width_header.label", "default": true },
+    { "type": "image_picker", "id": "logo", "label": "t:sections.header.logo.label", "info": "t:sections.header.logo.info" },
+    { "type": "header", "content": "t:sections.header.header_1.content" },
+    { "type": "select", "id": "filter_search_by", "label": "t:sections.header.filter_search_by.label", "info": "t:sections.header.filter_search_by.info", "options": [{"value":"disabled","label":"t:sections.header.filter_search_by.option_1"},{"value":"product_type","label":"t:sections.header.filter_search_by.option_2"},{"value":"tag","label":"t:sections.header.filter_search_by.option_3"}], "default": "product_type" },
+    { "type": "checkbox", "id": "enable_live_search", "label": "t:sections.header.enable_live_search.label", "default": true },
+    { "type": "checkbox", "id": "show_mobile_search_bar", "label": "t:sections.header.show_mobile_search_bar.label", "default": false },
+    { "type": "checkbox", "id": "enable_live_search_images", "label": "t:sections.header.enable_live_search_images.label", "default": true },
+    { "type": "link_list", "id": "quick_links", "label": "t:sections.header.quick_links.label", "info": "t:sections.header.quick_links.info" },
+    { "type": "header", "content": "t:sections.header.header_2.content" },
+    { "type": "link_list", "id": "menu", "label": "t:sections.header.menu.label", "default": "main-menu" },
+    { "type": "link_list", "id": "secondary_menu", "label": "t:sections.header.secondary_menu.label" }
+  ],
+  "blocks": [
+    {
+      "type": "meganav_images", "name": "t:sections.header.blocks.mega_menu.name", "limit": 5,
+      "settings": [
+        { "type": "text", "id": "meganav_trigger", "label": "t:sections.header.blocks.mega_menu.meganav_trigger.label", "info": "t:sections.header.blocks.mega_menu.meganav_trigger.info" },
+        { "type": "header", "content": "t:sections.header.blocks.mega_menu.header_1.content" },
+        { "type": "image_picker", "id": "image_1", "label": "t:sections.header.blocks.mega_menu.image_1.label" },
+        { "type": "text", "id": "text_1", "label": "t:sections.header.blocks.mega_menu.text_1.label" },
+        { "type": "url", "id": "link_1", "label": "t:sections.header.blocks.mega_menu.link_1.label" },
+        { "type": "select", "id": "position_1", "label": "t:sections.header.blocks.mega_menu.position_1.label", "options": [{"value":"first","label":"t:sections.header.blocks.mega_menu.position_1.option_1"},{"value":"last","label":"t:sections.header.blocks.mega_menu.position_1.option_2"}], "default": "last" },
+        { "type": "select", "id": "size_1", "label": "t:sections.header.blocks.mega_menu.size_1.label", "options": [{"value":"small","label":"t:sections.header.blocks.mega_menu.size_1.option_1"},{"value":"medium","label":"t:sections.header.blocks.mega_menu.size_1.option_2"},{"value":"large","label":"t:sections.header.blocks.mega_menu.size_1.option_3"}], "default": "medium" },
+        { "type": "header", "content": "t:sections.header.blocks.mega_menu.header_2.content" },
+        { "type": "image_picker", "id": "image_2", "label": "t:sections.header.blocks.mega_menu.image_2.label" },
+        { "type": "text", "id": "text_2", "label": "t:sections.header.blocks.mega_menu.text_2.label" },
+        { "type": "url", "id": "link_2", "label": "t:sections.header.blocks.mega_menu.link_2.label" },
+        { "type": "select", "id": "position_2", "label": "t:sections.header.blocks.mega_menu.position_2.label", "options": [{"value":"first","label":"t:sections.header.blocks.mega_menu.position_2.option_1"},{"value":"last","label":"t:sections.header.blocks.mega_menu.position_2.option_2"}], "default": "last" },
+        { "type": "select", "id": "size_2", "label": "t:sections.header.blocks.mega_menu.size_2.label", "options": [{"value":"small","label":"t:sections.header.blocks.mega_menu.size_2.option_1"},{"value":"medium","label":"t:sections.header.blocks.mega_menu.size_2.option_2"},{"value":"large","label":"t:sections.header.blocks.mega_menu.size_2.option_3"}], "default": "medium" }
+      ]
+    },
+    {
+      "type": "meganav_sidenav", "name": "t:sections.header.blocks.mega_menu_with_sidebar.name", "limit": 5,
+      "settings": [
+        { "type": "text", "id": "meganav_trigger", "label": "t:sections.header.blocks.mega_menu_with_sidebar.meganav_trigger.label", "info": "t:sections.header.blocks.mega_menu_with_sidebar.meganav_trigger.info" },
+        { "type": "radio", "id": "submenu_layout", "label": "t:sections.header.blocks.mega_menu_with_sidebar.submenu_layout.label", "options": [{"value":"text_columns","label":"t:sections.header.blocks.mega_menu_with_sidebar.submenu_layout.option_1"},{"value":"product_images","label":"t:sections.header.blocks.mega_menu_with_sidebar.submenu_layout.option_2"},{"value":"collection_images","label":"t:sections.header.blocks.mega_menu_with_sidebar.submenu_layout.option_3"}], "default": "text_columns" },
+        { "type": "select", "id": "image_aspect_ratio", "label": "t:sections.header.blocks.mega_menu_with_sidebar.image_aspect_ratio.label", "options": [{"value":"natural","label":"t:sections.header.blocks.mega_menu_with_sidebar.image_aspect_ratio.option_1"},{"value":"short","label":"t:sections.header.blocks.mega_menu_with_sidebar.image_aspect_ratio.option_2"},{"value":"square","label":"t:sections.header.blocks.mega_menu_with_sidebar.image_aspect_ratio.option_3"},{"value":"tall","label":"t:sections.header.blocks.mega_menu_with_sidebar.image_aspect_ratio.option_4"}], "default": "natural" },
+        { "type": "checkbox", "id": "image_crop", "label": "t:sections.header.blocks.mega_menu_with_sidebar.image_crop.label", "info": "t:sections.header.blocks.mega_menu_with_sidebar.image_crop.info", "default": true }
+      ]
+    },
+    {
+      "type": "multi_column_menu", "name": "t:sections.header.blocks.multi-column_single_menu.name",
+      "settings": [
+        { "type": "text", "id": "menu_trigger", "label": "t:sections.header.blocks.multi-column_single_menu.menu_trigger.label", "info": "t:sections.header.blocks.multi-column_single_menu.menu_trigger.info" }
+      ]
+    }
+  ]
+}
+{% endschema %}

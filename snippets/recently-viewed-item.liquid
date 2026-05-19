@@ -1,0 +1,14 @@
+{% layout none %}
+{%- if product and product.id and product.available != null -%}
+  {%- 
+    render 'product-grid-item',
+    product: product,
+    recently_viewed: true,
+    enable_quickshop: false,
+    quick_shop_display: 'never',
+    atc_display: 'never',
+    enable_cart_redirection: false
+  -%}
+{%- else -%}
+  {%- comment -%}Product no longer exists{%- endcomment -%}
+{%- endif -%}

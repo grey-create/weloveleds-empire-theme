@@ -1,0 +1,171 @@
+{% comment %}
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  WELOVELEDS CHRISTMAS CLOSURE SECTION                            ║
+  ║  Edit all dates via Theme Customizer - no code changes needed    ║
+  ║                                                                  ║
+  ║  File location: sections/christmas-closure.liquid                ║
+  ║  Add to page via: Customize > Add Section > Christmas Closure    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+{% endcomment %}
+
+<div class="christmas-closure" style="background: #fff; padding: 40px 20px;">
+  <div style="max-width: 800px; margin: 0 auto;">
+
+    <!-- HEADER -->
+    <div style="text-align: center; margin-bottom: 35px;">
+      <p style="font-size: 2.5em; margin: 0 0 10px 0;">🎄</p>
+      <h2 style="font-size: 1.9em; color: #1a1a1a; margin: 0 0 12px 0; font-weight: 600;">{{ section.settings.heading }}</h2>
+      <p style="font-size: 1.1em; color: #333; margin: 0;">{{ section.settings.subheading }}</p>
+    </div>
+
+    <!-- KEY DATES BOX -->
+    <div style="background: linear-gradient(135deg, #f5f5f7 0%, #ceceea 100%); padding: 35px 30px; border-radius: 16px; margin: 30px 0;">
+      <h3 style="color: #1a1a1a; margin: 0 0 25px 0; text-align: center; font-size: 1.4em; font-weight: 600;">Christmas Shutdown {{ section.settings.year }}</h3>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+
+        <!-- CLOSING DATE -->
+        <div style="background: white; padding: 24px 28px; border-radius: 12px; min-width: 220px; text-align: center; flex: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <p style="margin: 0 0 8px 0; font-size: 0.9em; color: #666;">🚪 Closing</p>
+          <p style="margin: 0; font-size: 1.35em; font-weight: 600; color: #1a1a1a;">{{ section.settings.closing_time }}</p>
+          <p style="margin: 8px 0 0 0; font-size: 1em; color: #333;">{{ section.settings.closing_date }}</p>
+        </div>
+
+        <!-- REOPENING DATE -->
+        <div style="background: white; padding: 24px 28px; border-radius: 12px; min-width: 220px; text-align: center; flex: 1; box-shadow: 0 2px 8px rgba(0,0,0,0.06);">
+          <p style="margin: 0 0 8px 0; font-size: 0.9em; color: #666;">🔓 Reopening</p>
+          <p style="margin: 0; font-size: 1.35em; font-weight: 600; color: #1a1a1a;">{{ section.settings.reopening_time }}</p>
+          <p style="margin: 8px 0 0 0; font-size: 1em; color: #333;">{{ section.settings.reopening_date }}</p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DELIVERY INFO -->
+    <div style="background: #d6e9f9; padding: 22px 25px; border-radius: 12px; margin: 25px 0;">
+      <p style="margin: 0 0 12px 0; color: #1a1a1a; font-size: 1.05em;"><strong>📦 Last DPD Collection:</strong> {{ section.settings.last_dpd_date }}</p>
+      <p style="margin: 0; color: #333; font-size: 1.05em; line-height: 1.6;"><strong>⚠️ Please Note:</strong> Orders placed on or after <strong>{{ section.settings.order_cutoff_date }}</strong> cannot be guaranteed for delivery before Christmas to UK mainland addresses – it's in the hands of the Courier Gods from then on! 📦✨</p>
+    </div>
+
+    <!-- DIVIDER -->
+    <hr style="margin: 40px 0; border: none; border-top: 1px solid #e0e0e0;">
+
+    <!-- THANK YOU MESSAGE -->
+    <div style="text-align: center; padding: 10px 0;">
+      <p style="font-size: 1.1em; line-height: 1.75; color: #333; margin-bottom: 20px;">
+        We'd like to take this opportunity to <strong>thank you</strong> for your support and orders throughout the year. Your loyalty means the world to us. ❤️
+      </p>
+
+      <p style="font-size: 1.1em; line-height: 1.75; color: #333; margin-bottom: 25px;">
+        We hope you have a fabulous Christmas filled with joy, relaxation, delicious food, and a cheeky tipple or two. 🥂 May your New Year be bright, happy, and full of exciting opportunities!
+      </p>
+
+      <p style="font-size: 1.3em; font-weight: 600; color: #1a1a1a; margin: 30px 0 15px 0;">
+        Here's to a fantastic {{ section.settings.new_year }}! 🎉
+      </p>
+
+      <p style="font-size: 1.1em; color: #444;">
+        With love,<br>
+        <strong>The WeLoveLEDs Team</strong> 🎁
+      </p>
+    </div>
+
+    <!-- FOOTER -->
+    <div style="text-align: center; margin-top: 35px; padding: 18px; background: #f5f5f7; border-radius: 10px;">
+      <p style="margin: 0; font-size: 1.4em; letter-spacing: 0.1em;">🎄 ❄️ 🎁 ⭐ ❄️ 🎄</p>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Christmas Closure",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Header Text"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Main Heading",
+      "default": "Merry Christmas from WeLoveLEDs!"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "As the festive season approaches, we're preparing to close for a well-deserved break."
+    },
+    {
+      "type": "header",
+      "content": "Key Dates"
+    },
+    {
+      "type": "text",
+      "id": "year",
+      "label": "Shutdown Year",
+      "default": "2025",
+      "info": "Year shown in 'Christmas Shutdown [YEAR]'"
+    },
+    {
+      "type": "text",
+      "id": "closing_time",
+      "label": "Closing Time",
+      "default": "12:00 PM"
+    },
+    {
+      "type": "text",
+      "id": "closing_date",
+      "label": "Closing Date",
+      "default": "Tuesday 23rd December 2025"
+    },
+    {
+      "type": "text",
+      "id": "reopening_time",
+      "label": "Reopening Time",
+      "default": "7:45 AM"
+    },
+    {
+      "type": "text",
+      "id": "reopening_date",
+      "label": "Reopening Date",
+      "default": "Monday 5th January 2026"
+    },
+    {
+      "type": "header",
+      "content": "Delivery Information"
+    },
+    {
+      "type": "text",
+      "id": "last_dpd_date",
+      "label": "Last DPD Collection Date",
+      "default": "Monday 22nd December 2025"
+    },
+    {
+      "type": "text",
+      "id": "order_cutoff_date",
+      "label": "Order Cutoff Date",
+      "default": "20th December",
+      "info": "Orders after this date not guaranteed before Christmas"
+    },
+    {
+      "type": "header",
+      "content": "New Year Message"
+    },
+    {
+      "type": "text",
+      "id": "new_year",
+      "label": "New Year",
+      "default": "2026",
+      "info": "Year shown in 'Here's to a fantastic [YEAR]!'"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Christmas Closure"
+    }
+  ]
+}
+{% endschema %}

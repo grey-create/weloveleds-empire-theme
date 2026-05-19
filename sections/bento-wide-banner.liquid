@@ -1,0 +1,242 @@
+{{ 'bento-hero.css' | asset_url | stylesheet_tag }}
+
+<div class="bento-hero-section" style="
+  {%- if section.settings.bg_style == 'solid' -%}
+    background-color: {{ section.settings.background_colour }};
+  {%- elsif section.settings.bg_style == 'gradient' -%}
+    background: linear-gradient({{ section.settings.gradient_angle }}deg, {{ section.settings.background_colour }} 0%, {{ section.settings.gradient_end }} 100%);
+  {%- elsif section.settings.bg_style == 'gradient_preset' -%}
+    {%- case section.settings.gradient_preset -%}
+      {%- when 'light_grey' -%}
+        background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);
+      {%- when 'warm' -%}
+        background: linear-gradient(135deg, #fef9f3 0%, #fdf2e9 100%);
+      {%- when 'cool' -%}
+        background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+      {%- when 'navy' -%}
+        background: linear-gradient(135deg, #1c2135 0%, #2a3147 100%);
+    {%- endcase -%}
+  {%- else -%}
+    background-color: {{ section.settings.background_colour }};
+  {%- endif -%}
+">
+  <div class="bento-hero-container">
+    
+    <a href="{{ section.settings.collection.url }}" class="bento-hero-tile bento-hero-tile--banner" style="--tile-radius: {{ section.settings.border_radius }}px; --tile-height: {{ section.settings.tile_height }}px;">
+      <div class="bento-hero-tile__background">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'bento-hero-tile__image' }}
+        {%- endif -%}
+        {%- if section.settings.fade_to_transparent -%}
+          {%- assign fade_opacity = section.settings.fade_opacity | divided_by: 100.0 -%}
+          <div class="bento-hero-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.blend_mode }};"></div>
+        {%- else -%}
+          <div class="bento-hero-tile__overlay" style="background: {{ section.settings.overlay }}; mix-blend-mode: {{ section.settings.blend_mode }};"></div>
+        {%- endif -%}
+      </div>
+      <div class="bento-hero-tile__content" style="color: {{ section.settings.text_colour }};">
+        <h2 class="bento-hero-tile__title" style="color: {{ section.settings.text_colour }};">
+          {%- if section.settings.custom_title != blank -%}
+            {{ section.settings.custom_title }}
+          {%- else -%}
+            {{ section.settings.collection.title }}
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.tagline != blank -%}
+          <p class="bento-hero-tile__tagline" style="color: {{ section.settings.text_colour }};">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+        <span class="bento-hero-tile__cta" style="--btn-bg: {{ section.settings.button_colour }}; --btn-text: {{ section.settings.button_text_colour }}; background-color: {{ section.settings.button_colour }}; color: {{ section.settings.button_text_colour }};">Shop now <span class="bento-hero-tile__arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bento Wide Banner",
+  "tag": "section",
+  "class": "bento-banner-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Background"
+    },
+    {
+      "type": "select",
+      "id": "bg_style",
+      "label": "Background style",
+      "options": [
+        { "value": "solid", "label": "Solid colour" },
+        { "value": "gradient", "label": "Custom gradient" },
+        { "value": "gradient_preset", "label": "Preset gradient" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour / Gradient start",
+      "default": "#f5f5f7"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient end colour",
+      "default": "#e8e8ed",
+      "info": "Only used with custom gradient"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 15,
+      "default": 135,
+      "unit": "°",
+      "info": "Only used with custom gradient"
+    },
+    {
+      "type": "select",
+      "id": "gradient_preset",
+      "label": "Preset gradient",
+      "options": [
+        { "value": "light_grey", "label": "Light grey" },
+        { "value": "warm", "label": "Warm (cream/peach)" },
+        { "value": "cool", "label": "Cool blue" },
+        { "value": "navy", "label": "Navy (dark)" }
+      ],
+      "default": "light_grey",
+      "info": "Only used with preset gradient"
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1400,
+      "max": 2400,
+      "step": 100,
+      "default": 1800,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "tile_height",
+      "label": "Tile height",
+      "min": 200,
+      "max": 400,
+      "step": 20,
+      "default": 280,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Tile Content"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Wireless LED control made simple"
+    },
+    {
+      "type": "color",
+      "id": "text_colour",
+      "label": "Text colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_colour",
+      "label": "Button background colour",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_text_colour",
+      "label": "Button text colour",
+      "default": "#1c2135"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(90deg, rgba(91, 33, 182, 0.9) 0%, rgba(134, 25, 143, 0.9) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 70,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Wide Banner"
+    }
+  ]
+}
+{% endschema %}

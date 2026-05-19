@@ -1,0 +1,90 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "announcement-bar": {
+      "type": "static-announcement",
+      "custom_css": [
+        "h1 {font-size: 10px;}"
+      ],
+      "settings": {
+        "show_announcement": false,
+        "homepage_announcement": false,
+        "announcement_text": "💰 Subscribe for instant savings! >>",
+        "announcement_text_mobile": "💰 Subscribe for instant savings! >>",
+        "announcement_link": "shopify://pages/sign-up",
+        "announcement_color": "#ffffff",
+        "announcement_background": "#cc0768"
+      }
+    },
+    "utility-bar": {
+      "type": "static-utility-bar",
+      "disabled": true,
+      "settings": {
+        "use_full_width": true,
+        "background_color": "#0076de",
+        "link_color": "#ffffff",
+        "link_hover_color": "#ffffff",
+        "border_color": "rgba(0,0,0,0)",
+        "menu": "christmas-deliveries",
+        "show_menu_mobile": true,
+        "mobile_layout": "above",
+        "show_locale_selector": false,
+        "show_currency_selector": false,
+        "show_social_icons": false
+      }
+    },
+    "header": {
+      "type": "static-header",
+      "blocks": {
+        "meganav_images_eJTbM3": {
+          "type": "meganav_images",
+          "disabled": true,
+          "settings": {
+            "meganav_trigger": "",
+            "image_1": "shopify://shop_images/COB-LED-Strip.jpg",
+            "text_1": "",
+            "link_1": "",
+            "position_1": "last",
+            "size_1": "small",
+            "image_2": "shopify://shop_images/6x12-Flex-Flipped-Pink-Orange-Green.jpg",
+            "text_2": "srfsdf",
+            "link_2": "",
+            "position_2": "first",
+            "size_2": "small"
+          }
+        }
+      },
+      "block_order": [
+        "meganav_images_eJTbM3"
+      ],
+      "custom_css": [],
+      "settings": {
+        "sticky_header": false,
+        "full_width_header": false,
+        "logo": "shopify://shop_images/WLL-Website-Logo_aa52a7b1-4d13-437b-92f8-6700fce6141d.png",
+        "filter_search_by": "disabled",
+        "enable_live_search": true,
+        "show_mobile_search_bar": true,
+        "enable_live_search_images": true,
+        "quick_links": "",
+        "menu": "",
+        "secondary_menu": ""
+      }
+    }
+  },
+  "order": [
+    "announcement-bar",
+    "utility-bar",
+    "header"
+  ]
+}

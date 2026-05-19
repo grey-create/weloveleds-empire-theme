@@ -1,0 +1,186 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "pxs_image_with_text_overlay_KqEAqK": {
+      "type": "pxs-image-with-text-overlay",
+      "custom_css": [
+        ".pxs-image-with-text-overlay {width: 100%; /* Prevents too-wide on large screens */ padding: 0 5%; /* Responsive side padding */}"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.name",
+      "settings": {
+        "section_height": "small",
+        "image": "shopify://shop_images/Ltech_Mini_Banner_3840_x_1077_74e0477d-4b02-402a-90a1-6f0f82c5ab5c.jpg",
+        "title": "LTech Mini Controllers",
+        "text": "<p><br/>Professional Wireless LED Control Made Simple<br/><br/></p>",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 50,
+        "link": "shopify://collections/ltech-mini-controllers",
+        "button_text": "Shop Now"
+      }
+    },
+    "dynamic_rich_text_aWJjRj": {
+      "type": "dynamic-rich-text",
+      "custom_css": [
+        ".rich-text--container {margin-top: 3rem; margin-bottom: 3rem; width: 100%; max-width: 1200px; /* Prevents too-wide on large screens */ padding: 0 5%; /* Responsive side padding */}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "width": "wide",
+        "title": "",
+        "text": "<h2>Why Choose LTech Mini Controllers?</h2><p><br/><strong>30m Wireless Range</strong> <strong>-</strong> Control your LED lighting from anywhere with reliable 2.4GHz RF technology that won't interfere with WiFi or Bluetooth.<br/><br/><strong>4-Zone Control - </strong>Manage up to 4 different lighting areas independently from a single remote. Perfect for complex installations.<br/><br/><strong>Universal Compatibility</strong> <strong>-</strong> Works with any low voltage LED system - strips, modules, fairground lights, LED flex, signage lighting, and more.<br/><br/><strong>Easy Installation -</strong> Wall-mountable remotes and plug-and-play P5 receiver make professional installations simple.</p>",
+        "heading_size": "small",
+        "text_alignment": "left"
+      }
+    },
+    "1756995459060a69fb": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_c0c328d_6hgmMP": {
+          "type": "ai_gen_block_c0c328d",
+          "settings": {
+            "line_width": 70,
+            "line_thickness": 1,
+            "line_color": "#dddddd",
+            "border_radius": 0,
+            "divider_text": "",
+            "text_color": "#666666",
+            "text_size": 14,
+            "text_weight": "400",
+            "text_spacing": 15,
+            "background_color": "#ffffff",
+            "margin_top": 30,
+            "margin_bottom": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_c0c328d_6hgmMP"
+      ],
+      "disabled": true,
+      "settings": {}
+    },
+    "dynamic_image_with_text_nCYhwJ": {
+      "type": "dynamic-image-with-text",
+      "custom_css": [
+        ".image-with-text__container {margin-top: 2rem; margin-bottom: 2rem; align-items: center; display: flex;}",
+        ".image-with-text--section {background-color: #f1f1f1;}"
+      ],
+      "name": "t:sections.image_with_text.presets.image_with_text.name",
+      "settings": {
+        "section_heading": "",
+        "image": "shopify://shop_images/LTech_Multiple_types_of_lighting_925x400_8cff2b0e-421b-4b30-87cb-499446092465.jpg",
+        "desktop_height": "natural",
+        "mobile_height": "natural",
+        "desktop_image_alignment": "left",
+        "mobile_image_alignment": "top",
+        "heading": "What's Available in the LTech Mini Range?",
+        "subheading": "<p>P5 Universal Receiver - Works with all LED types (DIM/CCT/RGB/RGBW/RGBCW)<br/><br/>Individual Remotes:<br/>- M1D Remote - Single channel dimming<br/>- M2D Remote - Tuneable white temperature  <br/>- M4D Remote - Full RGBW colour control<br/>- M5D Remote - RGB + tuneable white combined<br/><br/>Complete Kits - Ready-to-use bundles (save money!)<br/>- Everything included at discounted prices<br/>- Perfect for getting started quickly<br/>- Professional installation made simple<br/> </p><p><a href=\"/collections/ltech-mini-controllers\" target=\"_blank\" title=\"LTech Mini Controllers - Wireless Control Systems\"><strong>View The Range &gt;&gt;</strong></a></p>",
+        "text_alignment": "left",
+        "button_label": "Button",
+        "button_link": ""
+      }
+    },
+    "dynamic_rich_text_enpFiW": {
+      "type": "dynamic-rich-text",
+      "custom_css": [
+        ".rich-text--container {margin-top: 2rem; margin-bottom: 2rem; width: 100%; max-width: 1200px; /* Prevents too-wide on large screens */ padding: 0 5%; /* Responsive side padding */}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "width": "wide",
+        "title": "",
+        "text": "<h2>Ready to Transform Your LED Lighting?</h2><p>Whether you need individual components for a custom setup or complete ready-to-use kits for instant results, LTech Mini Controllers make professional wireless LED control simple and affordable.<br/><br/>Perfect for:<br/>LED strips • Modules • Fairground lights • Commercial signage • Retail displays • Architectural lighting • DIY projects<br/><br/>Get expert advice on choosing the right components for your project - our technical team is here to help.</p>",
+        "heading_size": "medium",
+        "text_alignment": "left"
+      }
+    },
+    "blocks_ahVXVF": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_c0c328d_aCzcAz": {
+          "type": "ai_gen_block_c0c328d",
+          "settings": {
+            "line_width": 70,
+            "line_thickness": 1,
+            "line_color": "#dddddd",
+            "border_radius": 0,
+            "divider_text": "",
+            "text_color": "#666666",
+            "text_size": 14,
+            "text_weight": "400",
+            "text_spacing": 15,
+            "background_color": "#ffffff",
+            "margin_top": 30,
+            "margin_bottom": 30
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_c0c328d_aCzcAz"
+      ],
+      "settings": {}
+    },
+    "dynamic_rich_text_fm8NYh": {
+      "type": "dynamic-rich-text",
+      "custom_css": [
+        ".rich-text--container {margin-top: 3rem; margin-bottom: 3rem;}"
+      ],
+      "name": "t:sections.rich_text.presets.rich_text.name",
+      "settings": {
+        "width": "wide",
+        "title": "",
+        "text": "<p><a href=\"/collections/ltech-mini-controllers\" target=\"_blank\" title=\"LTech Mini Controllers - Wireless Control Systems\"><strong>Shop LTech Mini Controllers &gt;&gt;</strong></a></p>",
+        "heading_size": "medium",
+        "text_alignment": "center"
+      }
+    },
+    "pxs_image_with_text_overlay_nh4iUm": {
+      "type": "pxs-image-with-text-overlay",
+      "custom_css": [
+        ".pxs-image-with-text-overlay {width: 100%; /* Prevents too-wide on large screens */ padding: 0 5%; /* Responsive side padding */}"
+      ],
+      "name": "t:sections.image_with_text_overlay.presets.name",
+      "settings": {
+        "section_height": "large",
+        "image": "shopify://shop_images/LTech_Mini_Controller_3840_x_1077.jpg",
+        "title": "",
+        "text": "",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 0,
+        "link": "",
+        "button_text": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "pxs_image_with_text_overlay_KqEAqK",
+    "dynamic_rich_text_aWJjRj",
+    "1756995459060a69fb",
+    "dynamic_image_with_text_nCYhwJ",
+    "dynamic_rich_text_enpFiW",
+    "blocks_ahVXVF",
+    "dynamic_rich_text_fm8NYh",
+    "pxs_image_with_text_overlay_nh4iUm"
+  ]
+}

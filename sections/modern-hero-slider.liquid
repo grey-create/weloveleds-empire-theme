@@ -1,0 +1,890 @@
+{% comment %}
+  Modern Hero Slider with Images for WeLoveLEDs
+  Compatible with Shopify Empire Theme
+{% endcomment %}
+
+<div class="modern-slider-wrapper" data-section-id="{{ section.id }}">
+  <div class="modern-slider" data-slider data-overlay-style="{{ section.settings.overlay_style }}">
+    <!-- Slides -->
+    {% for block in section.blocks %}
+      <div class="slider-item" data-slide="{{ forloop.index0 }}">
+        <!-- Background Image -->
+        {% if block.settings.image != blank or block.settings.mobile_image != blank %}
+          <div class="slider-image-wrapper">
+            <!-- Desktop Image -->
+            {% if block.settings.image != blank %}
+              <img 
+                src="{{ block.settings.image | img_url: 'master' }}" 
+                srcset="{{ block.settings.image | img_url: '1024x' }} 1024w,
+                        {{ block.settings.image | img_url: '1536x' }} 1536w,
+                        {{ block.settings.image | img_url: '2048x' }} 2048w,
+                        {{ block.settings.image | img_url: 'master' }} 2400w"
+                sizes="100vw"
+                alt="{{ block.settings.title }}"
+                class="slider-image slider-image--desktop {% if block.settings.disable_animation %}no-animation{% endif %}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {% endif %}
+            
+            <!-- Mobile Image -->
+            {% if block.settings.mobile_image != blank %}
+              <img 
+                src="{{ block.settings.mobile_image | img_url: '1024x' }}" 
+                srcset="{{ block.settings.mobile_image | img_url: '768x' }} 768w,
+                        {{ block.settings.mobile_image | img_url: '1024x' }} 1024w,
+                        {{ block.settings.mobile_image | img_url: '1536x' }} 1536w"
+                sizes="100vw"
+                alt="{{ block.settings.title }}"
+                class="slider-image slider-image--mobile {% if block.settings.disable_animation %}no-animation{% endif %}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {% elsif block.settings.image != blank %}
+              <!-- Fallback to desktop image on mobile if no mobile image set -->
+              <img 
+                src="{{ block.settings.image | img_url: '1024x' }}" 
+                srcset="{{ block.settings.image | img_url: '768x' }} 768w,
+                        {{ block.settings.image | img_url: '1024x' }} 1024w,
+                        {{ block.settings.image | img_url: '1536x' }} 1536w"
+                sizes="100vw"
+                alt="{{ block.settings.title }}"
+                class="slider-image slider-image--mobile {% if block.settings.disable_animation %}no-animation{% endif %}"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            {% endif %}
+          </div>
+        {% endif %}
+        
+        <!-- Overlay Options -->
+        <div class="slider-overlay"></div>
+        
+        <!-- Optional Gradient Overlay -->
+        {% if block.settings.use_gradient %}
+          <div class="slider-gradient" style="background: linear-gradient(135deg, {{ block.settings.gradient_start }}dd 0%, {{ block.settings.gradient_end }}dd 100%);"></div>
+        {% endif %}
+        
+        <!-- Animated Pattern Overlay -->
+        <div class="slider-pattern"></div>
+
+        <!-- Content -->
+        <div class="slider-content slider-content--{{ block.settings.content_position }}" style="text-align: {{ block.settings.text_align }};">
+          <div class="slider-content-inner">
+            <h2 class="slider-title">{{ block.settings.title }}</h2>
+            <p class="slider-subtitle">{{ block.settings.subtitle }}</p>
+            {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+              <a href="{{ block.settings.button_link }}" class="slider-button">
+                {{ block.settings.button_text }}
+                <span class="slider-button__arrow">→</span>
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+
+    <!-- Navigation Arrows -->
+    <button class="slider-arrow slider-arrow--prev" data-prev aria-label="Previous slide">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="slider-arrow slider-arrow--next" data-next aria-label="Next slide">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Navigation Dots -->
+    <div class="slider-dots" data-dots>
+      {% for block in section.blocks %}
+        <button class="slider-dot {% if forloop.first %}active{% endif %}" data-goto="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+      {% endfor %}
+      
+      <!-- Play/Pause Button -->
+      <button class="slider-playpause" data-playpause aria-label="Pause slideshow">
+        <svg class="pause-icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+          <rect x="2" y="2" width="3" height="8" rx="0.5"/>
+          <rect x="7" y="2" width="3" height="8" rx="0.5"/>
+        </svg>
+        <svg class="play-icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor" style="display: none;">
+          <path d="M3 2l7 4-7 4V2z"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+.modern-slider-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+.modern-slider {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  background: #1a1a2e;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .modern-slider {
+    height: 500px;
+  }
+}
+
+/* Slides */
+.slider-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.7s ease-in-out;
+  z-index: 1;
+}
+
+.slider-item.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.slider-item.previous {
+  z-index: 1;
+}
+
+/* Background Image with Ken Burns Effect */
+.slider-image-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1);
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  will-change: transform;
+}
+
+/* Show/hide desktop and mobile images */
+.slider-image--mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .slider-image--desktop {
+    display: none;
+  }
+  .slider-image--mobile {
+    display: block;
+  }
+}
+
+/* Ken Burns animation - only on active slide if enabled */
+.slider-item.active .slider-image:not(.no-animation) {
+  animation: kenBurns 7s ease-out forwards;
+}
+
+/* Disable animation for static slides */
+.slider-item .slider-image.no-animation {
+  animation: none !important;
+  transform: scale(1) !important;
+}
+
+@keyframes kenBurns {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}
+
+/* Overlay Styles */
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 1;
+  will-change: auto;
+}
+
+/* Dark overlay */
+.modern-slider[data-overlay-style="dark"] .slider-overlay {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Light overlay */
+.modern-slider[data-overlay-style="light"] .slider-overlay {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* Gradient overlay from bottom */
+.modern-slider[data-overlay-style="gradient-bottom"] .slider-overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+}
+
+/* Gradient overlay from left */
+.modern-slider[data-overlay-style="gradient-left"] .slider-overlay {
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.6) 0%, transparent 60%);
+}
+
+/* Blur effect */
+.modern-slider[data-overlay-style="blur"] .slider-image {
+  filter: blur(2px);
+}
+
+.modern-slider[data-overlay-style="blur"] .slider-overlay {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Custom gradient overlay */
+.slider-gradient {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 1;
+  will-change: auto;
+}
+
+/* Animated Pattern */
+.slider-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  z-index: 3;
+  background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0);
+  background-size: 40px 40px;
+  animation: slidePattern 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes slidePattern {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(40px, 40px);
+  }
+}
+
+/* Content Positioning */
+.slider-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 8rem;
+  z-index: 4;
+}
+
+.slider-content--left {
+  justify-content: flex-start;
+}
+
+.slider-content--left .slider-content-inner {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.slider-content--center {
+  justify-content: center;
+}
+
+.slider-content--center .slider-content-inner {
+  margin: 0 auto;
+}
+
+.slider-content--right {
+  justify-content: flex-end;
+}
+
+.slider-content--right .slider-content-inner {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+.slider-content-inner {
+  max-width: 960px;
+  width: 100%;
+}
+
+/* Mobile: Always centered */
+@media (max-width: 768px) {
+  .slider-content {
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 2rem;
+  }
+  
+  .slider-content-inner {
+    margin: 0 auto !important;
+  }
+}
+
+.slider-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  color: white;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transform: translateY(2rem);
+  opacity: 0;
+  transition: all 0.7s ease 0.2s;
+}
+
+.slider-item.active .slider-title {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slider-subtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0 0 2rem 0;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  transform: translateY(2rem);
+  opacity: 0;
+  transition: all 0.7s ease 0.4s;
+}
+
+.slider-item.active .slider-subtitle {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Pill Button - Matching Grid Style */
+.slider-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #1c2135;
+  padding: 0.75rem 1.75rem;
+  border-radius: 50px;
+  font-weight: 500;
+  font-size: 1rem;
+  text-decoration: none;
+  transform: translateY(2rem);
+  opacity: 0;
+  transition: all 0.7s ease 0.6s, background 0.2s ease, transform 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.slider-item.active .slider-button {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.slider-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(0);
+}
+
+.slider-button__arrow {
+  margin-left: 0.5rem;
+  transition: transform 0.3s ease;
+}
+
+.slider-button:hover .slider-button__arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 768px) {
+  .slider-title {
+    font-size: 2rem;
+  }
+  .slider-subtitle {
+    font-size: 1.125rem;
+  }
+  .slider-button {
+    font-size: 0.9375rem;
+    padding: 0.625rem 1.5rem;
+  }
+}
+
+/* Navigation Arrows */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modern-slider:hover .slider-arrow {
+  opacity: 1;
+}
+
+.slider-arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.slider-arrow--prev {
+  left: 1rem;
+}
+
+.slider-arrow--next {
+  right: 1rem;
+}
+
+/* Hide arrows on mobile */
+@media (max-width: 768px) {
+  .slider-arrow {
+    display: none;
+  }
+}
+
+/* Navigation Dots - Matching Carousel Style */
+.slider-dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 10;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.slider-dot:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.2);
+}
+
+.slider-dot.active {
+  background: #ffffff;
+}
+
+/* Play/Pause Button - Matching Carousel Style */
+.slider-playpause {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  padding: 0;
+  margin-left: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.7);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.slider-playpause:hover {
+  background: rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+}
+
+.slider-playpause.paused .play-icon {
+  display: block;
+}
+
+.slider-playpause.paused .pause-icon {
+  display: none;
+}
+</style>
+
+<script>
+(function() {
+  const slider = document.querySelector('[data-slider]');
+  if (!slider) return;
+
+  const slides = slider.querySelectorAll('[data-slide]');
+  const dots = slider.querySelectorAll('[data-goto]');
+  const prevBtn = slider.querySelector('[data-prev]');
+  const nextBtn = slider.querySelector('[data-next]');
+  const playPauseBtn = slider.querySelector('[data-playpause]');
+
+  let currentSlide = 0;
+  let previousSlide = null;
+  let isAutoPlaying = true;
+  let autoplayInterval;
+  
+  // Touch/swipe support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let touchStartY = 0;
+  let touchEndY = 0;
+
+  function showSlide(index) {
+    // Track previous slide
+    if (previousSlide !== null && previousSlide !== index) {
+      slides[previousSlide].classList.remove('active');
+      slides[previousSlide].classList.add('previous');
+      // Remove previous class after transition
+      setTimeout(() => {
+        slides[previousSlide].classList.remove('previous');
+      }, 700);
+    }
+    
+    // Remove active from all other slides
+    slides.forEach((slide, i) => {
+      if (i !== index) {
+        slide.classList.remove('active');
+      }
+    });
+    dots.forEach(dot => dot.classList.remove('active'));
+    
+    // Add active to current slide
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+    
+    previousSlide = index;
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+    showSlide(currentSlide);
+  }
+
+  function goToSlide(index) {
+    currentSlide = index;
+    showSlide(currentSlide);
+  }
+
+  function startAutoplay() {
+    stopAutoplay();
+    autoplayInterval = setInterval(nextSlide, 5000);
+  }
+
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+
+  function toggleAutoplay() {
+    isAutoPlaying = !isAutoPlaying;
+    playPauseBtn.classList.toggle('paused', !isAutoPlaying);
+    
+    if (isAutoPlaying) {
+      startAutoplay();
+    } else {
+      stopAutoplay();
+    }
+  }
+  
+  // Handle touch swipe
+  function handleTouchStart(e) {
+    touchStartX = e.changedTouches[0].screenX;
+    touchStartY = e.changedTouches[0].screenY;
+  }
+  
+  function handleTouchEnd(e) {
+    touchEndX = e.changedTouches[0].screenX;
+    touchEndY = e.changedTouches[0].screenY;
+    handleSwipe();
+  }
+  
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    const horizontalDiff = touchEndX - touchStartX;
+    const verticalDiff = Math.abs(touchEndY - touchStartY);
+    
+    // Only trigger if horizontal swipe is greater than vertical (not scrolling)
+    if (Math.abs(horizontalDiff) > swipeThreshold && Math.abs(horizontalDiff) > verticalDiff) {
+      if (horizontalDiff > 0) {
+        // Swiped right - go to previous
+        prevSlide();
+      } else {
+        // Swiped left - go to next
+        nextSlide();
+      }
+      if (isAutoPlaying) startAutoplay();
+    }
+  }
+
+  // Event listeners
+  prevBtn.addEventListener('click', () => {
+    prevSlide();
+    if (isAutoPlaying) startAutoplay();
+  });
+
+  nextBtn.addEventListener('click', () => {
+    nextSlide();
+    if (isAutoPlaying) startAutoplay();
+  });
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      if (isAutoPlaying) startAutoplay();
+    });
+  });
+
+  playPauseBtn.addEventListener('click', toggleAutoplay);
+  
+  // Touch events
+  slider.addEventListener('touchstart', handleTouchStart, { passive: true });
+  slider.addEventListener('touchend', handleTouchEnd, { passive: true });
+
+  // Initialize
+  showSlide(0);
+  if (isAutoPlaying) {
+    startAutoplay();
+  }
+
+  // Pause on hover (desktop only)
+  let isHovering = false;
+  
+  slider.addEventListener('mouseenter', () => {
+    isHovering = true;
+    if (isAutoPlaying) stopAutoplay();
+  });
+
+  slider.addEventListener('mouseleave', () => {
+    isHovering = false;
+    if (isAutoPlaying) startAutoplay();
+  });
+  
+  // Ensure autoplay continues if page becomes visible again
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && isAutoPlaying && !isHovering) {
+      startAutoplay();
+    }
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Modern Hero Slider",
+  "class": "modern-slider-section",
+  "max_blocks": 5,
+  "settings": [
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Overlay Style",
+      "options": [
+        {
+          "value": "dark",
+          "label": "Dark (50% black)"
+        },
+        {
+          "value": "light",
+          "label": "Light (30% white)"
+        },
+        {
+          "value": "gradient-bottom",
+          "label": "Gradient from bottom"
+        },
+        {
+          "value": "gradient-left",
+          "label": "Gradient from left"
+        },
+        {
+          "value": "blur",
+          "label": "Slight blur"
+        }
+      ],
+      "default": "dark",
+      "info": "Choose how to darken/lighten the background images for better text readability"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Background Images"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Desktop Background Image",
+          "info": "Recommended: 2400x900px (landscape). High resolution JPG or PNG."
+        },
+        {
+          "type": "image_picker",
+          "id": "mobile_image",
+          "label": "Mobile Background Image (Optional)",
+          "info": "Recommended: 1080x1350px (portrait/square works best). If not set, desktop image will be used."
+        },
+        {
+          "type": "checkbox",
+          "id": "disable_animation",
+          "label": "Disable zoom animation",
+          "default": false,
+          "info": "Turn off the Ken Burns zoom effect for static graphics (like promotional banners)"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "LTech Mini Controllers"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Professional Wireless LED Control Made Simple"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Desktop Content Position",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center",
+          "info": "Where content appears horizontally on desktop"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Text Alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop The Range"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        },
+        {
+          "type": "header",
+          "content": "Optional Gradient Overlay"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_gradient",
+          "label": "Add custom gradient overlay",
+          "default": false,
+          "info": "Adds a colored gradient on top of the image for brand consistency"
+        },
+        {
+          "type": "color",
+          "id": "gradient_start",
+          "label": "Gradient Start Color",
+          "default": "#6b46c1",
+          "info": "Only applies if 'Add custom gradient overlay' is enabled"
+        },
+        {
+          "type": "color",
+          "id": "gradient_end",
+          "label": "Gradient End Color",
+          "default": "#9333ea",
+          "info": "Only applies if 'Add custom gradient overlay' is enabled"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Modern Hero Slider",
+      "settings": {
+        "overlay_style": "dark"
+      },
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "title": "LTech Mini Controllers",
+            "subtitle": "Professional Wireless LED Control Made Simple",
+            "button_text": "Shop The Range",
+            "content_position": "center",
+            "text_align": "center",
+            "use_gradient": false
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "RGB & RGBW Solutions",
+            "subtitle": "Complete Color Control for Your LED Projects",
+            "button_text": "Explore Controllers",
+            "content_position": "center",
+            "text_align": "center",
+            "use_gradient": false
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "title": "Smart Lighting Control",
+            "subtitle": "WiFi & Bluetooth Enabled Controllers",
+            "button_text": "Discover Smart Range",
+            "content_position": "center",
+            "text_align": "center",
+            "use_gradient": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

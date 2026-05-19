@@ -1,0 +1,288 @@
+{% assign parent_handle = collection.metafields.custom.parent_collection %}
+{% assign sibling_menu = linklists[parent_handle] %}
+
+{% if sibling_menu and sibling_menu.links.size > 0 %}
+
+<div class="ccn-section">
+  <div class="ccn-outer">
+    <button class="ccn-arrow ccn-arrow--prev" aria-label="Previous">&#8249;</button>
+    <div class="ccn-track-wrap">
+      <div class="ccn-track" id="ccn-track-{{ section.id }}">
+        {% for link in sibling_menu.links %}
+          {% assign sibling = link.object %}
+          {% if sibling %}
+            {% assign is_current = false %}
+            {% if sibling.handle == collection.handle %}
+              {% assign is_current = true %}
+            {% endif %}
+
+            {% assign tile_image = '' %}
+            {% if sibling.image %}
+              {% assign tile_image = sibling.image | img_url: '400x' %}
+            {% elsif sibling.products.first.featured_image %}
+              {% assign tile_image = sibling.products.first.featured_image | img_url: '400x' %}
+            {% endif %}
+
+            {% assign tile_title = sibling.metafields.custom.tile_title | default: sibling.title %}
+            {% assign tile_desc = sibling.metafields.custom.tile_description %}
+
+            <a href="{{ link.url }}" class="ccn-tile{% if is_current %} ccn-tile--active{% endif %}">
+              <div class="ccn-tile__image-wrap">
+                {% if tile_image != '' %}
+                  <img
+                    src="{{ tile_image }}"
+                    alt="{{ tile_title }}"
+                    class="ccn-tile__image"
+                    loading="lazy"
+                  >
+                {% endif %}
+                {% if is_current %}
+                  <div class="ccn-tile__current-badge">Viewing</div>
+                {% endif %}
+              </div>
+              <div class="ccn-tile__text">
+                <h3 class="ccn-tile__title">{{ tile_title }}</h3>
+                {% if tile_desc != blank %}
+                  <p class="ccn-tile__desc">{{ tile_desc }}</p>
+                {% endif %}
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+    <button class="ccn-arrow ccn-arrow--next" aria-label="Next">&#8250;</button>
+  </div>
+</div>
+
+<style>
+.ccn-section {
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  width: 100vw;
+  background: #f5f5f7;
+  padding: 1.25rem 0;
+  box-sizing: border-box;
+}
+
+.ccn-outer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ccn-track-wrap {
+  flex: 1;
+  overflow: hidden;
+}
+
+.ccn-track {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-bottom: 2px;
+}
+
+.ccn-track::-webkit-scrollbar {
+  display: none;
+}
+
+.ccn-tile {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 160px;
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  text-decoration: none;
+  scroll-snap-align: start;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  border: 2px solid transparent;
+}
+
+.ccn-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+.ccn-tile--active {
+  border-color: #1d2236;
+  box-shadow: 0 0 0 1px #1d2236;
+}
+
+.ccn-tile--active:hover {
+  transform: none;
+}
+
+.ccn-tile__image-wrap {
+  position: relative;
+  height: 100px;
+  overflow: hidden;
+  background: #f9f9f9;
+}
+
+.ccn-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.ccn-tile:hover .ccn-tile__image {
+  transform: scale(1.03);
+}
+
+.ccn-tile--active .ccn-tile__image {
+  opacity: 0.85;
+}
+
+.ccn-tile__current-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #1d2236;
+  color: #ffffff;
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 3px 7px;
+  border-radius: 20px;
+  font-family: Inter, sans-serif;
+}
+
+.ccn-tile__text {
+  padding: 8px 10px 10px 10px;
+}
+
+.ccn-tile__title {
+  color: #1d2236;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin: 0 0 2px 0;
+  line-height: 1.3;
+  font-family: Inter, sans-serif;
+}
+
+.ccn-tile--active .ccn-tile__title {
+  color: #1d2236;
+}
+
+.ccn-tile__desc {
+  color: #666;
+  font-size: 0.7rem;
+  margin: 0;
+  line-height: 1.3;
+  font-family: Inter, sans-serif;
+}
+
+/* Arrows */
+.ccn-arrow {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background: #ffffff;
+  color: #1d2236;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  padding: 0;
+}
+
+.ccn-arrow:hover {
+  background: #1d2236;
+  color: #ffffff;
+  border-color: #1d2236;
+}
+
+.ccn-arrow:disabled {
+  opacity: 0.3;
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (max-width: 680px) {
+  .ccn-arrow {
+    display: none;
+  }
+  .ccn-outer {
+    padding: 0 16px;
+  }
+  .ccn-tile {
+    flex: 0 0 130px;
+  }
+  .ccn-tile__image-wrap {
+    height: 80px;
+  }
+  .ccn-tile__desc {
+    display: none;
+  }
+}
+</style>
+
+<script>
+(function() {
+  var track = document.getElementById('ccn-track-{{ section.id }}');
+  var outer = track.closest('.ccn-outer');
+  var prevBtn = outer.querySelector('.ccn-arrow--prev');
+  var nextBtn = outer.querySelector('.ccn-arrow--next');
+
+  function getScrollAmount() {
+    var tile = track.querySelector('.ccn-tile');
+    return tile ? tile.offsetWidth + 10 : 170;
+  }
+
+  function updateArrows() {
+    prevBtn.disabled = track.scrollLeft <= 0;
+    nextBtn.disabled = track.scrollLeft + track.offsetWidth >= track.scrollWidth - 2;
+  }
+
+  prevBtn.addEventListener('click', function() {
+    track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
+  });
+
+  nextBtn.addEventListener('click', function() {
+    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
+  });
+
+  track.addEventListener('scroll', updateArrows);
+
+  // Scroll active tile into view on load
+  var activeTile = track.querySelector('.ccn-tile--active');
+  if (activeTile) {
+    setTimeout(function() {
+      activeTile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+    }, 100);
+  }
+
+  updateArrows();
+})();
+</script>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": "Child Collection Nav",
+  "settings": []
+}
+{% endschema %}

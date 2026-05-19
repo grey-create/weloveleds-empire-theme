@@ -1,0 +1,194 @@
+{%- liquid
+  assign collections_list = collection.metafields.custom.hub_cross_sell_collections.value
+  assign heading = section.settings.heading
+  assign heading_muted = section.settings.heading_muted
+  assign intro = section.settings.intro
+  assign bg_colour = section.settings.bg_colour
+
+  assign has_blocks = false
+  if section.blocks.size > 0
+    assign has_blocks = true
+  endif
+
+  assign has_metafield = false
+  if collections_list != blank and collections_list.size > 0
+    assign has_metafield = true
+  endif
+
+  assign show_section = false
+  if has_blocks or has_metafield
+    assign show_section = true
+  endif
+-%}
+
+{%- if show_section -%}
+<section class="hub-cross-sell" data-section-id="{{ section.id }}" style="background: {{ bg_colour }};">
+  <div class="hub-cross-sell__container">
+    <div class="hub-cross-sell__header">
+      {%- if heading != blank -%}
+        <h2 class="hub-cross-sell__heading">
+          <span class="hub-cross-sell__heading-bold">{{ heading | escape }}</span>
+          {%- if heading_muted != blank %} <span class="hub-cross-sell__heading-muted">{{ heading_muted | escape }}</span>{%- endif -%}
+        </h2>
+      {%- endif -%}
+      {%- if intro != blank -%}
+        <p class="hub-cross-sell__intro">{{ intro | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="hub-cross-sell__pills">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'link' and block.settings.link_label != blank -%}
+            <a href="{{ block.settings.link_url | default: '#' }}" class="hub-cross-sell__pill" {{ block.shopify_attributes }}>
+              <span class="hub-cross-sell__pill-label">
+                {{- block.settings.link_label | escape -}}
+              </span>
+              <svg class="hub-cross-sell__pill-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M5 3l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for col in collections_list -%}
+          <a href="{{ col.url }}" class="hub-cross-sell__pill">
+            <span class="hub-cross-sell__pill-label">
+              {{- col.metafields.custom.tile_title | default: col.title | escape -}}
+            </span>
+            <svg class="hub-cross-sell__pill-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M5 3l5 5-5 5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.hub-cross-sell {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  /* Top 0 to match the consistent inter-section gap: every other hub
+     section (e.g. .hub-applications) uses top:0 / bottom:4rem, so the
+     gap above each is the previous section's 4rem bottom padding only.
+     This section's old 5rem top added an extra ~80px above it. */
+  padding: 0 1.5rem 4rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.hub-cross-sell__container {
+  padding-left: var(--hub-rail-pad);
+  padding-right: var(--hub-rail-pad);
+}
+.hub-cross-sell__header {
+  margin-bottom: 1.75rem;
+}
+.hub-cross-sell__heading {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+.hub-cross-sell__heading-bold {
+  color: #1c2135;
+  font-weight: 600;
+}
+.hub-cross-sell__heading-muted {
+  color: #6e6e73;
+  font-weight: 400;
+}
+.hub-cross-sell__intro {
+  color: #6e6e73;
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+.hub-cross-sell__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+.hub-cross-sell__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #ffffff;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #1c2135;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  border: 0.5px solid rgba(28, 33, 53, 0.12);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease, color 0.2s ease;
+}
+.hub-cross-sell__pill:hover {
+  background: #1c2135;
+  border-color: #1c2135;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+.hub-cross-sell__pill-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+.hub-cross-sell__pill:hover .hub-cross-sell__pill-icon {
+  transform: translateX(3px);
+}
+@media (max-width: 749px) {
+  .hub-cross-sell { padding: 0 1.25rem 2.5rem; } /* top 0 to match other hub sections' mobile spacing */
+  .hub-cross-sell__header { margin-bottom: 1.25rem; }
+  .hub-cross-sell__pill {
+    padding: 0.625rem 1rem;
+    font-size: 0.8125rem;
+  }
+}
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hub Cross-Sell Links",
+  "tag": "section",
+  "class": "section-hub-cross-sell",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading (bold)", "default": "Complete your setup." },
+    { "type": "text", "id": "heading_muted", "label": "Heading (muted continuation)", "info": "Optional. Appears in lighter grey alongside the bold heading.", "default": "Everything else you need for a professional installation." },
+    { "type": "text", "id": "intro", "label": "Intro text (optional)" },
+    { "type": "color", "id": "bg_colour", "label": "Background colour", "default": "#f5f5f7" },
+    { "type": "paragraph", "content": "Add Link blocks below to control the pills. If no blocks are added, the section falls back to the 'Hub Cross-Sell Collections' metafield (legacy behaviour)." }
+  ],
+  "blocks": [
+    {
+      "type": "link",
+      "name": "Link",
+      "settings": [
+        { "type": "text", "id": "link_label", "label": "Label", "default": "Category" },
+        { "type": "url", "id": "link_url", "label": "URL", "info": "Destination collection or page." }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Hub Cross-Sell Links",
+      "blocks": [
+        { "type": "link" },
+        { "type": "link" },
+        { "type": "link" },
+        { "type": "link" },
+        { "type": "link" }
+      ]
+    }
+  ]
+}
+{% endschema %}

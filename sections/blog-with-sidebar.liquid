@@ -1,0 +1,1201 @@
+{% assign full_articles = blog.articles %}
+{% paginate blog.articles by section.settings.posts_per_page %}
+<section class="blog-wrapper section">
+
+  <header class="blog-header">
+    <h1 class="blog-title">{{ blog.title }}</h1>
+    <p class="blog-intro">Search or browse our blog posts below.</p>
+  </header>
+
+  <aside class="blog-nav">
+    <div class="search-container">
+      <input id="post-search" type="search" placeholder="Search posts, content, and products…" autocomplete="off">
+      <div id="search-suggestions" class="search-suggestions"></div>
+    </div>
+    <div id="search-status" style="display: none;"></div>
+
+    <details id="master-tags"{% if request.device_type == 'desktop' %} open{% endif %}>
+      <summary class="master-summary">Browse tags ({{ blog.all_tags.size }})</summary>
+
+      {% comment %} Collect all tags from articles and sort them {% endcomment %}
+      {% assign all_tags = blog.all_tags | sort_natural %}
+      
+      {% if all_tags.size > 0 %}
+        <div class="tags-list">
+          {% for tag in all_tags %}
+            {% assign tag_count = 0 %}
+            {% for article in full_articles %}
+              {% if article.tags contains tag %}
+                {% assign tag_count = tag_count | plus: 1 %}
+              {% endif %}
+            {% endfor %}
+            
+            {% if tag_count > 0 %}
+              <details class="tag-item" data-tag="{{ tag | handleize }}">
+                <summary class="tag-summary">
+                  <span class="tag-name">{{ tag }}</span>
+                  <span class="tag-count">({{ tag_count }})</span>
+                </summary>
+                <ul class="tag-articles">
+                  {% for article in full_articles %}
+                    {% if article.tags contains tag %}
+                      <li><a href="{{ article.url }}">{{ article.title }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                </ul>
+              </details>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="no-tags">No tags found.</p>
+      {% endif %}
+    </details>
+  </aside>
+
+  <div class="blog-grid">
+    {% for article in blog.articles %}
+      <article class="blog-card" 
+        data-title="{{ article.title | escape }}"
+        data-excerpt="{{ article.excerpt_or_content | strip_html | escape }}"
+        data-tags="{{ article.tags | join: ' ' | escape }}"
+        data-url="{{ article.url }}"
+      >
+        <a class="card-link" href="{{ article.url }}">
+          {% if article.image %}
+            <div class="card-img">
+              <img src="{{ article.image | img_url: '600x' }}" alt="{{ article.title | escape }}">
+              {% if article.tags.size > 0 %}
+                <div class="card-tags">
+                  <span class="tag-pill" data-tag="{{ article.tags.first | handleize }}">{{ article.tags.first }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <div class="card-no-img">
+              {% if article.tags.size > 0 %}
+                <div class="card-tags-no-img">
+                  <span class="tag-pill" data-tag="{{ article.tags.first | handleize }}">{{ article.tags.first }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% endif %}
+
+          <h2 class="card-title">{{ article.title }}</h2>
+          <p class="card-excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 26 }}</p>
+        </a>
+      </article>
+    {% endfor %}
+  </div>
+
+  {% if paginate.pages > 1 %}
+  <div class="load-more-container">
+    {% if paginate.next %}
+      <button id="load-more-btn" class="load-more-btn" data-next-url="{{ paginate.next.url }}">Load More Articles</button>
+    {% endif %}
+    <div class="pagination-info">Showing 1-{{ blog.articles.size }} of {{ paginate.items }} articles</div>
+  </div>
+  {% endif %}
+
+</section>
+{% endpaginate %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const master = document.getElementById('master-tags');
+  const loadMoreBtn = document.getElementById('load-more-btn');
+
+  // Mobile tag collapse
+  if (window.matchMedia('(max-width: 900px)').matches) {
+    master.open = false;
+    document.querySelectorAll('.tag-item').forEach(item => item.open = false);
+  }
+
+  // Load More Functionality
+  if (loadMoreBtn) {
+    const initialPaginationInfo = document.querySelector('.pagination-info');
+    const totalArticlesMatch = initialPaginationInfo ? initialPaginationInfo.textContent.match(/of (\d+) articles/) : null;
+    const totalArticles = totalArticlesMatch ? totalArticlesMatch[1] : '{{ paginate.items }}';
+    
+    loadMoreBtn.addEventListener('click', function() {
+      const nextUrl = this.getAttribute('data-next-url');
+      if (!nextUrl) return;
+      
+      this.disabled = true;
+      this.textContent = 'Loading...';
+      
+      fetch(nextUrl)
+        .then(response => response.text())
+        .then(html => {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = html;
+          
+          const newArticles = tempDiv.querySelectorAll('.blog-card');
+          const blogGrid = document.querySelector('.blog-grid');
+          
+          newArticles.forEach(article => {
+            const clonedArticle = article.cloneNode(true);
+            blogGrid.appendChild(clonedArticle);
+            
+            // Apply tag pill colors to new articles
+            clonedArticle.querySelectorAll('.tag-pill').forEach(pill => {
+              const tagName = pill.getAttribute('data-tag');
+              const computedStyle = window.getComputedStyle(pill);
+              const hasCustomColor = computedStyle.backgroundColor !== 'rgb(0, 122, 204)';
+              
+              if (!hasCustomColor && !usedTags.has(tagName)) {
+                pill.style.backgroundColor = autoColors[colorIndex % autoColors.length];
+                usedTags.add(tagName);
+                colorIndex++;
+              }
+            });
+          });
+          
+          // Update load more button
+          const newLoadMoreContainer = tempDiv.querySelector('.load-more-container');
+          const currentLoadMoreContainer = document.querySelector('.load-more-container');
+          
+          if (newLoadMoreContainer && newLoadMoreContainer.querySelector('#load-more-btn')) {
+            const newBtn = newLoadMoreContainer.querySelector('#load-more-btn');
+            loadMoreBtn.setAttribute('data-next-url', newBtn.getAttribute('data-next-url'));
+            loadMoreBtn.disabled = false;
+            loadMoreBtn.textContent = 'Load More Articles';
+            
+            const currentPaginationInfo = currentLoadMoreContainer.querySelector('.pagination-info');
+            const currentArticleCount = document.querySelectorAll('.blog-card').length;
+            if (currentPaginationInfo) {
+              currentPaginationInfo.textContent = `Showing 1-${currentArticleCount} of ${totalArticles} articles`;
+            }
+          } else {
+            currentLoadMoreContainer.style.display = 'none';
+          }
+          
+          // Notify enhanced search of new articles
+          if (window.rebuildSearchIndex) {
+            window.rebuildSearchIndex();
+          }
+        })
+        .catch(error => {
+          console.error('Error loading more articles:', error);
+          loadMoreBtn.disabled = false;
+          loadMoreBtn.textContent = 'Load More Articles';
+          alert('Failed to load more articles. Please try again.');
+        });
+    });
+  }
+
+  // Auto-assign colors to tag pills
+  const autoColors = [
+    '#8b5a2c', '#2dd4bf', '#f472b6', '#a855f7', '#3b82f6', 
+    '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4',
+    '#84cc16', '#f97316', '#ec4899', '#6366f1', '#14b8a6',
+    '#eab308', '#e11d48', '#7c3aed', '#059669', '#dc2626'
+  ];
+  
+  let colorIndex = 0;
+  const usedTags = new Set();
+  
+  document.querySelectorAll('.tag-pill').forEach(pill => {
+    const tagName = pill.getAttribute('data-tag');
+    const computedStyle = window.getComputedStyle(pill);
+    const hasCustomColor = computedStyle.backgroundColor !== 'rgb(0, 122, 204)';
+    
+    if (!hasCustomColor && !usedTags.has(tagName)) {
+      pill.style.backgroundColor = autoColors[colorIndex % autoColors.length];
+      usedTags.add(tagName);
+      colorIndex++;
+    }
+  });
+
+  // Make color variables available globally for load more
+  window.autoColors = autoColors;
+  window.colorIndex = colorIndex;
+  window.usedTags = usedTags;
+
+  // Tag filtering functionality
+  document.querySelectorAll('.tag-item summary').forEach(tagSummary => {
+    tagSummary.addEventListener('click', function(e) {
+      // Don't prevent default - let the details element handle open/close
+      // This just adds the tag filter functionality
+      setTimeout(() => {
+        const tagItem = this.closest('.tag-item');
+        const tagName = tagItem.getAttribute('data-tag');
+        
+        if (tagItem.open) {
+          // Tag was just opened - could implement filtering here if desired
+          console.log('Tag opened:', tagName);
+        }
+      }, 10);
+    });
+  });
+});
+
+// Suggestion click handler (used by enhanced search)
+function selectSuggestion(word) {
+  const search = document.getElementById('post-search');
+  search.value = word;
+  search.dispatchEvent(new Event('input'));
+  const suggestions = document.getElementById('search-suggestions');
+  if (suggestions) {
+    suggestions.style.display = 'none';
+  }
+}
+</script>
+
+<script>
+// Enhanced Search with Complete Results Loading
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('post-search');
+    const searchSuggestions = document.getElementById('search-suggestions');
+    const articlesContainer = document.querySelector('.blog-grid');
+    const loadMoreBtn = document.querySelector('#load-more-btn');
+    const paginationContainer = document.querySelector('.load-more-container');
+    const searchStatus = document.getElementById('search-status');
+    
+    let allArticles = []; // Will store all articles after loading
+    let originalArticles = []; // Store original visible articles
+    let isSearchMode = false;
+    let isLoadingAllArticles = false;
+
+    // Initialize with currently visible articles
+    function initializeArticles() {
+        const visibleArticles = Array.from(document.querySelectorAll('.blog-card')).map(article => ({
+            element: article,
+            title: article.getAttribute('data-title') || '',
+            excerpt: article.getAttribute('data-excerpt') || '',
+            tags: article.getAttribute('data-tags') || '',
+            content: article.textContent,
+            url: article.getAttribute('data-url') || '#'
+        }));
+        
+        allArticles = [...visibleArticles];
+        originalArticles = [...visibleArticles];
+    }
+
+    // Load all remaining articles for comprehensive search
+    async function loadAllArticlesForSearch() {
+        if (isLoadingAllArticles || !loadMoreBtn || loadMoreBtn.style.display === 'none') {
+            return; // No more articles to load or already loading
+        }
+
+        isLoadingAllArticles = true;
+        showSearchStatus('🔍 Loading all articles for comprehensive search...', 'loading');
+
+        const baseUrl = window.location.pathname;
+        let currentPage = 2; // Start from page 2 since page 1 is already loaded
+        let hasMorePages = true;
+
+        while (hasMorePages && currentPage <= 20) { // Safety limit of 20 pages
+            try {
+                const response = await fetch(`${baseUrl}?page=${currentPage}`);
+                if (!response.ok) break;
+
+                const html = await response.text();
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = html;
+
+                const newArticles = Array.from(tempDiv.querySelectorAll('.blog-card'));
+                if (newArticles.length === 0) {
+                    hasMorePages = false;
+                    break;
+                }
+
+                // Add new articles to our collection
+                newArticles.forEach(article => {
+                    allArticles.push({
+                        element: article,
+                        title: article.getAttribute('data-title') || '',
+                        excerpt: article.getAttribute('data-excerpt') || '',
+                        tags: article.getAttribute('data-tags') || '',
+                        content: article.textContent,
+                        url: article.getAttribute('data-url') || '#'
+                    });
+                });
+
+                currentPage++;
+            } catch (error) {
+                console.warn('Failed to load page', currentPage, error);
+                hasMorePages = false;
+            }
+        }
+
+        isLoadingAllArticles = false;
+        hideSearchStatus();
+    }
+
+    // Calculate search relevance score
+    function calculateRelevance(article, searchTerms) {
+        let score = 0;
+        const title = article.title.toLowerCase();
+        const excerpt = article.excerpt.toLowerCase();
+        const tags = article.tags.toLowerCase();
+        const content = article.content.toLowerCase();
+
+        searchTerms.forEach(term => {
+            const termLower = term.toLowerCase();
+            
+            // Title matches (highest weight)
+            if (title.includes(termLower)) {
+                score += title === termLower ? 100 : 50;
+            }
+            
+            // Tag matches (high weight)
+            if (tags.includes(termLower)) {
+                score += 40;
+            }
+            
+            // Excerpt matches (medium weight)
+            const excerptMatches = (excerpt.match(new RegExp(termLower, 'g')) || []).length;
+            score += excerptMatches * 20;
+            
+            // Content matches (lower weight but still valuable)
+            const contentMatches = (content.match(new RegExp(termLower, 'g')) || []).length;
+            score += Math.min(contentMatches * 2, 20);
+        });
+
+        return score;
+    }
+
+    // Highlight search terms in text
+    function highlightTerms(text, searchTerms) {
+        if (!searchTerms.length) return text;
+        
+        let highlightedText = text;
+        const fullPhrase = searchTerms.join(' ').toLowerCase();
+        
+        // First, highlight the complete phrase with orange
+        if (searchTerms.length > 1) {
+            const phraseRegex = new RegExp(`(${fullPhrase.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            highlightedText = highlightedText.replace(phraseRegex, '<mark class="highlight-phrase">$1</mark>');
+        }
+        
+        // Then highlight individual words with yellow (if not already in phrase)
+        searchTerms.forEach(term => {
+            const wordRegex = new RegExp(`(?!<mark[^>]*>)(\\b${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b)(?![^<]*</mark>)`, 'gi');
+            highlightedText = highlightedText.replace(wordRegex, '<mark class="highlight-word">$1</mark>');
+        });
+        
+        return highlightedText;
+    }
+
+    // Show search status message
+    function showSearchStatus(message, type = 'info') {
+        if (searchStatus) {
+            searchStatus.innerHTML = `<div class="search-status-${type}">${message}</div>`;
+            searchStatus.style.display = 'block';
+        }
+    }
+
+    // Hide search status
+    function hideSearchStatus() {
+        if (searchStatus) {
+            searchStatus.style.display = 'none';
+        }
+    }
+
+    // Enhanced search functionality
+    async function performEnhancedSearch(searchTerm) {
+        if (!searchTerm.trim()) {
+            exitSearchMode();
+            return;
+        }
+
+        // Load all articles if we haven't already
+        if (allArticles.length === originalArticles.length) {
+            await loadAllArticlesForSearch();
+        }
+
+        isSearchMode = true;
+        const searchTerms = searchTerm.toLowerCase().split(/\s+/).filter(term => term.length > 0);
+        
+        showSearchStatus('🔍 Searching through all articles...', 'loading');
+
+        // Hide pagination during search
+        if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+        if (paginationContainer) paginationContainer.style.display = 'none';
+
+        // Filter and score articles
+        const results = allArticles
+            .map(article => ({
+                ...article,
+                relevance: calculateRelevance(article, searchTerms)
+            }))
+            .filter(article => article.relevance > 0)
+            .sort((a, b) => b.relevance - a.relevance);
+
+        // Clear current articles and show results
+        articlesContainer.innerHTML = '';
+
+        if (results.length === 0) {
+            showSearchStatus(`No articles found for: "${searchTerm}"`, 'no-results');
+            return;
+        }
+
+        // Show search results count
+        showSearchStatus(`Search results for: "${searchTerm}" - ${results.length} article${results.length === 1 ? '' : 's'} found`, 'results');
+
+        // Display all matching articles
+        results.forEach((result, index) => {
+            const articleClone = result.element.cloneNode(true);
+            
+            // Add "Top Result" badge for the best match
+            if (index === 0 && result.relevance > 50) {
+                const badge = document.createElement('div');
+                badge.className = 'top-result-badge';
+                badge.textContent = '⭐ Top Result';
+                articleClone.insertBefore(badge, articleClone.firstChild);
+            }
+            
+            // Highlight search terms in title
+            const titleElement = articleClone.querySelector('.card-title');
+            if (titleElement) {
+                titleElement.innerHTML = highlightTerms(titleElement.innerHTML, searchTerms);
+            }
+            
+            // Highlight search terms in excerpt
+            const excerptElement = articleClone.querySelector('.card-excerpt');
+            if (excerptElement) {
+                excerptElement.innerHTML = highlightTerms(excerptElement.innerHTML, searchTerms);
+            }
+            
+            articlesContainer.appendChild(articleClone);
+        });
+
+        // Update sidebar during search
+        updateSidebarDuringSearch(searchTerms);
+    }
+
+    // Update sidebar to highlight matching tags during search
+    function updateSidebarDuringSearch(searchTerms) {
+        document.querySelectorAll('.tag-item').forEach(tagItem => {
+            const tagName = tagItem.querySelector('.tag-name').textContent.toLowerCase();
+            const tagSummary = tagItem.querySelector('.tag-summary');
+            
+            // Check if tag matches search terms
+            const matches = searchTerms.some(term => tagName.includes(term.toLowerCase()));
+            
+            if (matches) {
+                tagItem.style.display = '';
+                tagItem.open = true;
+                
+                // Highlight matching text
+                const tagNameElement = tagItem.querySelector('.tag-name');
+                const originalText = tagNameElement.getAttribute('data-original') || tagNameElement.textContent;
+                if (!tagNameElement.getAttribute('data-original')) {
+                    tagNameElement.setAttribute('data-original', originalText);
+                }
+                
+                let highlightedText = originalText;
+                searchTerms.forEach(term => {
+                    const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+                    highlightedText = highlightedText.replace(regex, '<span class="search-highlight">$1</span>');
+                });
+                tagNameElement.innerHTML = highlightedText;
+            } else {
+                tagItem.style.display = 'none';
+            }
+        });
+    }
+
+    // Exit search mode and restore original state
+    function exitSearchMode() {
+        if (!isSearchMode) return;
+        
+        isSearchMode = false;
+        hideSearchStatus();
+        
+        // Restore original articles
+        articlesContainer.innerHTML = '';
+        originalArticles.forEach(article => {
+            articlesContainer.appendChild(article.element.cloneNode(true));
+        });
+        
+        // Restore sidebar
+        document.querySelectorAll('.tag-item').forEach(tagItem => {
+            tagItem.style.display = '';
+            tagItem.open = false;
+            
+            const tagNameElement = tagItem.querySelector('.tag-name');
+            const originalText = tagNameElement.getAttribute('data-original');
+            if (originalText) {
+                tagNameElement.innerHTML = originalText;
+            }
+        });
+        
+        // Restore pagination
+        if (loadMoreBtn && originalArticles.length >= 6) { // Assuming 6 articles per page
+            loadMoreBtn.style.display = 'block';
+        }
+        if (paginationContainer) {
+            paginationContainer.style.display = 'block';
+        }
+    }
+
+    // Search suggestions
+    function updateSearchSuggestions(searchTerm) {
+        if (!searchTerm.trim() || searchTerm.length < 2) {
+            if (searchSuggestions) searchSuggestions.style.display = 'none';
+            return;
+        }
+
+        const suggestions = [];
+        const searchLower = searchTerm.toLowerCase();
+        
+        // Get tag suggestions
+        const allTags = new Set();
+        allArticles.forEach(article => {
+            article.tags.split(' ').forEach(tag => {
+                if (tag.trim()) allTags.add(tag.trim());
+            });
+        });
+        
+        Array.from(allTags).forEach(tag => {
+            if (tag.toLowerCase().includes(searchLower) && suggestions.length < 5) {
+                suggestions.push({ text: tag, type: 'tag' });
+            }
+        });
+        
+        // Get title suggestions
+        allArticles.forEach(article => {
+            if (article.title.toLowerCase().includes(searchLower) && suggestions.length < 8) {
+                suggestions.push({ text: article.title, type: 'title' });
+            }
+        });
+
+        if (suggestions.length > 0 && searchSuggestions) {
+            searchSuggestions.innerHTML = suggestions
+                .map(suggestion => `
+                    <div class="search-suggestion" data-suggestion="${suggestion.text}">
+                        <span class="suggestion-type">${suggestion.type === 'tag' ? '🏷️' : '📄'}</span>
+                        ${highlightTerms(suggestion.text, [searchTerm])}
+                    </div>
+                `).join('');
+            searchSuggestions.style.display = 'block';
+        } else if (searchSuggestions) {
+            searchSuggestions.style.display = 'none';
+        }
+    }
+
+    // Event listeners
+    if (searchInput) {
+        // Initialize articles collection
+        initializeArticles();
+
+        let searchTimeout;
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.trim();
+            
+            clearTimeout(searchTimeout);
+            
+            if (searchTerm.length === 0) {
+                if (searchSuggestions) searchSuggestions.style.display = 'none';
+                exitSearchMode();
+                return;
+            }
+            
+            // Update suggestions immediately for responsive feel
+            updateSearchSuggestions(searchTerm);
+            
+            // Debounce the actual search
+            searchTimeout = setTimeout(() => {
+                performEnhancedSearch(searchTerm);
+            }, 300);
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                this.value = '';
+                if (searchSuggestions) searchSuggestions.style.display = 'none';
+                exitSearchMode();
+            }
+        });
+
+        searchInput.addEventListener('blur', function() {
+            // Delay hiding suggestions to allow for clicks
+            setTimeout(() => {
+                if (searchSuggestions) searchSuggestions.style.display = 'none';
+            }, 200);
+        });
+    }
+
+    // Handle suggestion clicks
+    if (searchSuggestions) {
+        searchSuggestions.addEventListener('click', function(e) {
+            const suggestion = e.target.closest('.search-suggestion');
+            if (suggestion) {
+                const suggestionText = suggestion.dataset.suggestion;
+                searchInput.value = suggestionText;
+                searchSuggestions.style.display = 'none';
+                performEnhancedSearch(suggestionText);
+            }
+        });
+    }
+
+    // Close suggestions when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!searchInput?.contains(e.target) && !searchSuggestions?.contains(e.target)) {
+            if (searchSuggestions) searchSuggestions.style.display = 'none';
+        }
+    });
+});
+</script>
+
+<style>
+.blog-wrapper {
+  max-width: var(--page-width, 1200px);
+  margin: auto;
+  padding: 2rem 1rem 3rem;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 2rem;
+}
+
+.blog-header {
+  flex: 1 1 100%;
+}
+
+.blog-title {
+  font-size: clamp(2.2rem, 3.5vw, 2.8rem);
+  font-weight: 700;
+  margin: 0;
+  text-align: center;
+}
+
+.blog-intro {
+  text-align: center;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.5rem;
+  color: var(--text-color, #555);
+}
+
+.blog-nav {
+  flex: 0 0 260px;
+  font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.search-container {
+  position: relative;
+}
+
+#post-search {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.search-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ddd;
+  border-top: none;
+  border-radius: 0 0 4px 4px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+}
+
+.search-suggestion {
+  padding: 0.5rem 0.7rem;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 0.85rem;
+}
+
+.search-suggestion:hover {
+  background: #f5f5f5;
+}
+
+.blog-nav details {
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+}
+
+.blog-nav summary {
+  padding: 0.55rem 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  background: #fafafa;
+  list-style: none;
+}
+
+.master-summary {
+  position: relative;
+  padding-right: 1.8rem;
+}
+
+.master-summary::after {
+  content: '▾';
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.2s;
+}
+
+#master-tags[open] .master-summary::after {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* Simplified tags list styling */
+.tags-list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.tag-item {
+  border: none;
+  border-bottom: 1px solid #f0f0f0;
+  border-radius: 0;
+  margin: 0;
+}
+
+.tag-item:last-child {
+  border-bottom: none;
+}
+
+.tag-summary {
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  font-weight: 500;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.2s;
+}
+
+.tag-summary:hover {
+  background: #f8f9fa;
+}
+
+.tag-name {
+  flex: 1;
+}
+
+.tag-count {
+  color: #666;
+  font-size: 0.8rem;
+  font-weight: normal;
+}
+
+.tag-articles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background: #fafafa;
+}
+
+.tag-articles li {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.tag-articles li:last-child {
+  border-bottom: none;
+}
+
+.tag-articles a {
+  display: block;
+  padding: 0.4rem 1rem;
+  color: var(--text-color, #333);
+  text-decoration: none;
+  font-size: 0.85rem;
+  line-height: 1.3;
+}
+
+.tag-articles a:hover {
+  background: #e9ecef;
+  text-decoration: underline;
+}
+
+.no-tags {
+  padding: 1rem;
+  text-align: center;
+  color: #666;
+  font-style: italic;
+}
+
+.blog-grid {
+  flex: 1 1 0%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.blog-card {
+  border: 1px solid #e5e5e5;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+
+.blog-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.card-link {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+.card-img {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-no-img {
+  height: 40px;
+  background: #f8f9fa;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-tags {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  z-index: 2;
+}
+
+.card-tags-no-img {
+  position: absolute;
+  top: 0.3rem;
+  right: 0.6rem;
+  z-index: 2;
+}
+
+.tag-pill {
+  background: #007acc;
+  color: white;
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  display: inline-block;
+}
+
+.tag-pill[data-tag="led-modules"] { background: #1e40af !important; }
+.tag-pill[data-tag="neon-flex"] { background: #7c3aed !important; }
+.tag-pill[data-tag="led-neon-flex"] { background: #8b5cf6 !important; }
+.tag-pill[data-tag="controllers"] { background: #dc2626 !important; }
+.tag-pill[data-tag="led-strip"] { background: #059669 !important; }
+.tag-pill[data-tag="led-strips"] { background: #10b981 !important; }
+.tag-pill[data-tag="installation"] { background: #ea580c !important; }
+.tag-pill[data-tag="lighting"] { background: #0891b2 !important; }
+.tag-pill[data-tag="led-lighting"] { background: #06b6d4 !important; }
+.tag-pill[data-tag="guide"] { background: #92400e !important; }
+.tag-pill[data-tag="guides"] { background: #a16207 !important; }
+.tag-pill[data-tag="office"] { background: #4338ca !important; }
+.tag-pill[data-tag="offices"] { background: #5b21b6 !important; }
+.tag-pill[data-tag="restaurant"] { background: #be123c !important; }
+.tag-pill[data-tag="restaurants"] { background: #e11d48 !important; }
+.tag-pill[data-tag="home"] { background: #15803d !important; }
+.tag-pill[data-tag="homes"] { background: #22c55e !important; }
+.tag-pill[data-tag="bedroom"] { background: #166534 !important; }
+.tag-pill[data-tag="kitchen"] { background: #16a34a !important; }
+.tag-pill[data-tag="fairground"] { background: #d97706 !important; }
+.tag-pill[data-tag="fairground-lights"] { background: #f59e0b !important; }
+.tag-pill[data-tag="cafe"] { background: #0d9488 !important; }
+.tag-pill[data-tag="cafes"] { background: #14b8a6 !important; }
+.tag-pill[data-tag="general"] { background: #6b7280 !important; }
+
+.card-title {
+  margin: 1rem 0.9rem 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1a1a1a;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.card-excerpt {
+  margin: 0 0.9rem 1.1rem;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: var(--text-color, #555);
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.search-highlight {
+  background: #ffeb3b;
+  padding: 0 0.1rem;
+  border-radius: 2px;
+  font-weight: 600;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 2rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 2px dashed #dee2e6;
+  margin: 2rem 0;
+}
+
+.no-results h3 {
+  margin: 0 0 1rem;
+  color: #6c757d;
+  font-size: 1.2rem;
+}
+
+.no-results p {
+  margin: 0 0 1rem;
+  color: #6c757d;
+}
+
+.no-results ul {
+  text-align: left;
+  display: inline-block;
+  margin: 0;
+  color: #6c757d;
+}
+
+.no-results strong {
+  color: #495057;
+}
+
+.load-more-container {
+  width: 100%;
+  text-align: center;
+  margin: 3rem 0 2rem;
+  grid-column: 1 / -1;
+}
+
+.load-more-btn {
+  background: #007acc;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.load-more-btn:hover {
+  background: #0056a3;
+  transform: translateY(-1px);
+}
+
+.load-more-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.pagination-info {
+  margin-top: 0.8rem;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Search Status Styles */
+#search-status {
+  margin-bottom: 20px;
+  display: none;
+  z-index: 10;
+  position: relative;
+}
+
+.search-status-loading {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #495057;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  animation: pulse 2s infinite;
+}
+
+.search-status-results {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #155724;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.search-status-no-results {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #721c24;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.search-status-info {
+  background: #cce7ff;
+  border: 1px solid #b3d9ff;
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: #004085;
+  font-weight: 500;
+  font-size: 14px;
+  display: inline-block;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Enhanced Search Result Indicators */
+.top-result-badge {
+  background: linear-gradient(135deg, #ffd700, #ffb300);
+  color: #e65100;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: inline-block;
+  border: 1px solid #ff8f00;
+  box-shadow: 0 1px 3px rgba(255, 193, 7, 0.3);
+}
+
+/* Search Highlighting Improvements */
+mark.highlight-phrase {
+  background: linear-gradient(135deg, #ff9800, #ffb74d);
+  color: #e65100;
+  padding: 1px 3px;
+  border-radius: 3px;
+  font-weight: 600;
+}
+
+mark.highlight-word {
+  background: linear-gradient(135deg, #ffeb3b, #fff176);
+  color: #f57f17;
+  padding: 1px 2px;
+  border-radius: 2px;
+  font-weight: 500;
+}
+
+/* Enhanced search input focus */
+#post-search:focus {
+  border-color: #007acc !important;
+  box-shadow: 0 0 0 3px rgba(0, 122, 204, 0.15) !important;
+  outline: none;
+}
+
+/* Sidebar search highlighting */
+.tag-item .search-highlight {
+  background: #007acc !important;
+  color: white !important;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+@media (min-width: 901px) {
+  .blog-grid {
+    column-gap: 2rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .blog-wrapper {
+    flex-direction: column;
+  }
+  
+  .blog-nav {
+    position: sticky;
+    top: 140px;
+    background: white;
+    z-index: 50;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 1rem;
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  
+  .load-more-container {
+    margin: 2rem 0;
+  }
+  
+  #search-status {
+    margin-bottom: 15px;
+  }
+  
+  .search-status-loading,
+  .search-status-results,
+  .search-status-no-results,
+  .search-status-info {
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 4px;
+  }
+  
+  .top-result-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+    margin-bottom: 6px;
+  }
+  
+  .tags-list {
+    max-height: 300px;
+  }
+  
+  .tag-articles a {
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Blog with sidebar nav",
+  "settings": [
+    { "type": "range", "id": "posts_per_page", "label": "Posts per page", "min": 4, "max": 24, "step": 1, "default": 12 }
+  ],
+  "tag": "section",
+  "class": "section"
+}
+{% endschema %}

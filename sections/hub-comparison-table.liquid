@@ -1,0 +1,323 @@
+{%- liquid
+  assign html_content = collection.metafields.custom.hub_comparison_table_html.value
+  assign reveal = section.settings.reveal_on_scroll
+  assign bg_colour = section.settings.bg_colour
+  assign accent_colour = section.settings.accent_colour
+  assign has_blocks = false
+  if section.blocks.size > 0
+    assign has_blocks = true
+  endif
+-%}
+
+{%- if has_blocks or html_content != blank -%}
+<section class="hub-compare"
+         data-section-id="{{ section.id }}"
+         style="background: {{ bg_colour }}; --zone-accent: {{ accent_colour }};">
+  <div class="hub-compare__container{% if reveal %} hub-compare--reveal{% endif %}">
+    <div class="hub-compare__scroll">
+      {%- if has_blocks -%}
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              {%- for block in section.blocks -%}
+                {%- if block.settings.col_heading != blank -%}
+                  <th {{ block.shopify_attributes }}>{{ block.settings.col_heading | escape }}</th>
+                {%- endif -%}
+              {%- endfor -%}
+            </tr>
+          </thead>
+          <tbody>
+            {%- for i in (1..5) -%}
+              {%- assign label_key = 'row_label_' | append: i -%}
+              {%- assign row_label = section.settings[label_key] -%}
+              {%- if row_label != blank -%}
+                <tr>
+                  <th scope="row">{{ row_label | escape }}</th>
+                  {%- for block in section.blocks -%}
+                    {%- if block.settings.col_heading != blank -%}
+                      {%- assign cell_key = 'cell_' | append: i -%}
+                      <td data-label="{{ row_label | escape }}">{{ block.settings[cell_key] | escape }}</td>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </tr>
+              {%- endif -%}
+            {%- endfor -%}
+            <tr class="comparison-cta">
+              <th></th>
+              {%- for block in section.blocks -%}
+                {%- if block.settings.col_heading != blank -%}
+                  <td>
+                    {%- if block.settings.shop_url != blank -%}
+                      <a href="{{ block.settings.shop_url }}">{{ block.settings.shop_label | default: 'Shop' | escape }}</a>
+                    {%- endif -%}
+                  </td>
+                {%- endif -%}
+              {%- endfor -%}
+            </tr>
+          </tbody>
+        </table>
+      {%- else -%}
+        {{ html_content }}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.hub-compare {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0 1.5rem 4rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.hub-compare__container { padding-left: var(--hub-rail-pad); padding-right: var(--hub-rail-pad); }
+
+/* Unified card — chassis tokens, shadow defines the edge (no border) */
+.hub-compare__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  background: var(--hub-card-bg);
+  border-radius: var(--hub-card-radius);
+  box-shadow: var(--hub-card-shadow-rest);
+  padding: 2rem;
+}
+
+.hub-compare__scroll .comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 800px;
+  color: var(--hub-text);
+  font-size: 0.9375rem;
+}
+
+/* Column headers: bold navy, hairline underline only */
+.hub-compare__scroll .comparison-table thead th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.0625rem;
+  color: var(--hub-text);
+  padding: 0.5rem 1.25rem 1rem;
+  border-bottom: 1px solid rgba(28, 33, 53, 0.12);
+  letter-spacing: -0.015em;
+  vertical-align: bottom;
+}
+.hub-compare__scroll .comparison-table thead th:first-child {
+  background: transparent;
+}
+
+/* Row label column: eyebrow-style — uppercase, muted, small */
+.hub-compare__scroll .comparison-table tbody th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--hub-text-muted);
+  padding: 1.125rem 1.25rem;
+  width: 160px;
+  vertical-align: top;
+  white-space: nowrap;
+  border-top: 1px solid rgba(28, 33, 53, 0.08);
+}
+
+/* Body cells: horizontal hairline only — no vertical gridlines */
+.hub-compare__scroll .comparison-table tbody td {
+  padding: 1.125rem 1.25rem;
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--hub-text);
+  border-top: 1px solid rgba(28, 33, 53, 0.08);
+}
+.hub-compare__scroll .comparison-table tbody tr:first-child td,
+.hub-compare__scroll .comparison-table tbody tr:first-child th {
+  border-top: none;
+}
+
+/* Faint row hover — minimal, no zebra */
+.hub-compare__scroll .comparison-table tbody tr:hover {
+  background: rgba(28, 33, 53, 0.02);
+  transition: background 0.2s var(--hub-ease);
+}
+
+/* CTA row: navy pill buttons */
+.hub-compare__scroll .comparison-table tbody tr.comparison-cta th,
+.hub-compare__scroll .comparison-table tbody tr.comparison-cta td {
+  padding-top: 1.75rem;
+  padding-bottom: 0.5rem;
+  border-top: 1px solid rgba(28, 33, 53, 0.08);
+}
+.hub-compare__scroll .comparison-table tbody tr.comparison-cta a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #1B2034;
+  color: #ffffff;
+  border-radius: 999px;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform 0.2s var(--hub-ease), background 0.2s var(--hub-ease);
+}
+.hub-compare__scroll .comparison-table tbody tr.comparison-cta a:hover {
+  transform: translateY(-1px);
+  background: #2a3148;
+}
+
+.hub-compare--reveal { transform: translateY(24px); transition: transform 0.7s ease; }
+.hub-compare--reveal.is-revealed { transform: translateY(0); }
+
+@media (max-width: 749px) {
+  .hub-compare { padding: 0 1rem 2.5rem; }
+  .hub-compare__container { padding: 0 0.5rem; }
+  .hub-compare__scroll {
+    padding: 1rem;
+    border-radius: var(--hub-card-radius);
+    box-shadow: var(--hub-card-shadow-rest);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Sticky column requires separated borders: under border-collapse:collapse
+     the table owns the borders and they don't travel with a sticky cell. */
+  .hub-compare__scroll .comparison-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 640px;
+  }
+  .hub-compare__scroll .comparison-table thead th,
+  .hub-compare__scroll .comparison-table tbody td {
+    min-width: 150px;
+  }
+
+  /* Horizontal hairlines via border-bottom — renders cleanly with
+     border-spacing:0 (border-top would double / clip behind sticky cells) */
+  .hub-compare__scroll .comparison-table tbody th,
+  .hub-compare__scroll .comparison-table tbody td {
+    border-top: none;
+    border-bottom: 1px solid rgba(28, 33, 53, 0.08);
+  }
+  .hub-compare__scroll .comparison-table tbody tr:last-child th,
+  .hub-compare__scroll .comparison-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Scrolling cells: opaque card bg + explicit low stacking level so the
+     pinned first column always paints above them while scrolling. */
+  .hub-compare__scroll .comparison-table thead th,
+  .hub-compare__scroll .comparison-table tbody td {
+    position: relative;
+    z-index: 0;
+    background: var(--hub-card-bg);
+  }
+  /* First column pinned (left only — header row is NOT sticky-top).
+     z-index:3 keeps it above the z-index:0 scrolling cells. The solid
+     -1rem left box-shadow paints the opaque card bg over the scroll
+     container's 1rem left padding gutter — that gutter is where overflow
+     cells were bleeding through to the LEFT of the frozen column
+     (left:0 sticky pins at the content box, not over the padding). */
+  .hub-compare__scroll .comparison-table thead th:first-child,
+  .hub-compare__scroll .comparison-table tbody th {
+    position: sticky;
+    left: 0;
+    z-index: 3;
+    background: var(--hub-card-bg);
+    box-shadow:
+      -1rem 0 0 0 var(--hub-card-bg),
+      inset -1px 0 0 rgba(28, 33, 53, 0.08),
+      2px 0 4px rgba(28, 33, 53, 0.04);
+  }
+  /* Top-left corner cell is BOTH the sticky column and the header row —
+     stack it above both the column and the scrolling header cells. */
+  .hub-compare__scroll .comparison-table thead th:first-child {
+    z-index: 4;
+  }
+
+  /* CTA row: tappable pills, pin the empty leading cell so no transparent gap */
+  .hub-compare__scroll .comparison-table tbody tr.comparison-cta th,
+  .hub-compare__scroll .comparison-table tbody tr.comparison-cta td {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+  .hub-compare__scroll .comparison-table tbody tr.comparison-cta a {
+    min-height: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-compare--reveal { transform: none; transition: none; }
+  .hub-compare__scroll .comparison-table tbody tr.comparison-cta a { transition: none; }
+}
+</style>
+
+<script>
+(function() {
+  if (!('IntersectionObserver' in window)) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.hub-compare--reveal').forEach(function(el) { observer.observe(el); });
+  });
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hub Comparison Table",
+  "tag": "section",
+  "class": "section-hub-compare",
+  "settings": [
+    { "type": "color", "id": "bg_colour", "label": "Background colour", "default": "#f5f5f7" },
+    { "type": "color", "id": "accent_colour", "label": "Zone accent colour", "default": "#d946ef" },
+    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Fade in on scroll", "default": true },
+    { "type": "header", "content": "Row labels" },
+    { "type": "text", "id": "row_label_1", "label": "Row 1 label", "default": "Best for" },
+    { "type": "text", "id": "row_label_2", "label": "Row 2 label", "default": "Includes" },
+    { "type": "text", "id": "row_label_3", "label": "Row 3 label", "default": "Voltage" },
+    { "type": "text", "id": "row_label_4", "label": "Row 4 label", "default": "Skill level" },
+    { "type": "text", "id": "row_label_5", "label": "Row 5 label", "default": "Colour options" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Product column",
+      "limit": 8,
+      "settings": [
+        { "type": "text", "id": "col_heading", "label": "Column heading", "info": "Leave blank to hide this whole column.", "default": "Complete Kits" },
+        { "type": "text", "id": "cell_1", "label": "Row 1 value" },
+        { "type": "text", "id": "cell_2", "label": "Row 2 value" },
+        { "type": "text", "id": "cell_3", "label": "Row 3 value" },
+        { "type": "text", "id": "cell_4", "label": "Row 4 value" },
+        { "type": "text", "id": "cell_5", "label": "Row 5 value" },
+        { "type": "url", "id": "shop_url", "label": "Shop link URL", "info": "No button shows until this is filled in." },
+        { "type": "text", "id": "shop_label", "label": "Shop button text", "default": "Shop" }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Hub Comparison Table",
+      "blocks": [
+        { "type": "column", "settings": { "col_heading": "Complete Kits", "cell_1": "New builds, fastest route to finished result", "cell_2": "Bulbs, caps, bases, lampholders, cable, PSU", "cell_3": "24V DC", "cell_4": "Beginner-friendly", "cell_5": "Single or mixed, 15 colours", "shop_label": "Shop Kits", "shop_url": "" } },
+        { "type": "column", "settings": { "col_heading": "Cabochons", "cell_1": "Classic fairground look, permanent signage", "cell_2": "Cap & base only (bulbs sold separately)", "cell_3": "12V / 24V", "cell_4": "Some wiring knowledge helpful", "cell_5": "15 static colours inc. fluorescent", "shop_label": "Shop Cabochons", "shop_url": "" } },
+        { "type": "column", "settings": { "col_heading": "Replacement Bulbs", "cell_1": "Maintaining existing installations", "cell_2": "LED module or incandescent only", "cell_3": "24V or 220-240V", "cell_4": "Simple swap-out", "cell_5": "Warm white to ice white, coloured", "shop_label": "Shop Bulbs", "shop_url": "" } },
+        { "type": "column", "settings": { "col_heading": "Colour-Changing", "cell_1": "Events, theatre, dynamic displays", "cell_2": "Pixel or RGB DMX cabochons", "cell_3": "24V DC (plug-and-play)", "cell_4": "Controller setup required", "cell_5": "Full RGB, millions of combinations", "shop_label": "Shop RGB", "shop_url": "" } },
+        { "type": "column", "settings": { "col_heading": "Components", "cell_1": "Custom builds and repairs", "cell_2": "Individual parts - caps, bases, lampholders", "cell_3": "12V / 24V", "cell_4": "Trade / experienced installer", "cell_5": "Full range of individual parts", "shop_label": "Shop Components", "shop_url": "" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

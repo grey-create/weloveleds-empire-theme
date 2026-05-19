@@ -1,0 +1,991 @@
+{% comment %}
+  Flexible Hero Slider for WeLoveLEDs
+  Supports multiple slide types: Statement, Offer, Spotlight, Image
+{% endcomment %}
+
+{{ 'flexible-hero.css' | asset_url | stylesheet_tag }}
+
+<div class="flexible-hero" data-flexible-hero data-autoplay="{{ section.settings.autoplay }}" data-interval="{{ section.settings.interval }}">
+  <div class="flexible-hero__track">
+    {% for block in section.blocks %}
+      {%- comment -%} Calculate per-slide background {%- endcomment -%}
+      {%- assign slide_bg = '' -%}
+      {%- assign slide_dark = false -%}
+      
+      {%- if block.settings.bg_style == 'solid' -%}
+        {%- assign slide_bg = 'background: ' | append: block.settings.bg_colour | append: ';' -%}
+        {%- unless block.settings.dark_text -%}
+          {%- assign slide_dark = true -%}
+        {%- endunless -%}
+      {%- elsif block.settings.bg_style == 'gradient' -%}
+        {%- assign slide_bg = 'background: linear-gradient(135deg, ' | append: block.settings.bg_colour | append: ' 0%, ' | append: block.settings.bg_gradient_end | append: ' 100%);' -%}
+        {%- unless block.settings.dark_text -%}
+          {%- assign slide_dark = true -%}
+        {%- endunless -%}
+      {%- else -%}
+        {%- comment -%} Use section default {%- endcomment -%}
+        {%- if section.settings.background_style == 'solid' -%}
+          {%- assign slide_bg = 'background: ' | append: section.settings.background_colour | append: ';' -%}
+        {%- elsif section.settings.background_style == 'gradient_light' -%}
+          {%- assign slide_bg = 'background: linear-gradient(135deg, #f5f5f7 0%, #e8e8ed 100%);' -%}
+        {%- elsif section.settings.background_style == 'gradient_warm' -%}
+          {%- assign slide_bg = 'background: linear-gradient(135deg, #fef9f3 0%, #fdf2e9 100%);' -%}
+        {%- elsif section.settings.background_style == 'gradient_cool' -%}
+          {%- assign slide_bg = 'background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);' -%}
+        {%- elsif section.settings.background_style == 'gradient_navy' -%}
+          {%- assign slide_bg = 'background: linear-gradient(135deg, #1c2135 0%, #2a3147 100%);' -%}
+          {%- assign slide_dark = true -%}
+        {%- elsif section.settings.background_style == 'gradient_custom' -%}
+          {%- assign slide_bg = 'background: linear-gradient(' | append: section.settings.gradient_angle | append: 'deg, ' | append: section.settings.gradient_start | append: ' 0%, ' | append: section.settings.gradient_end | append: ' 100%);' -%}
+        {%- endif -%}
+      {%- endif -%}
+      
+      <div class="flexible-hero__slide {% if forloop.first %}flexible-hero__slide--active{% endif %}{% if slide_dark %} flexible-hero__slide--dark{% endif %}" data-slide="{{ forloop.index0 }}" data-type="{{ block.type }}" style="{{ slide_bg }}" {{ block.shopify_attributes }}>
+        
+        {% case block.type %}
+        
+          {% when 'statement' %}
+            {%- comment -%} Statement Slide - Large centred text {%- endcomment -%}
+            <div class="flexible-hero__statement">
+              {% if block.settings.preheading != blank %}
+                <p class="flexible-hero__preheading">{{ block.settings.preheading }}</p>
+              {% endif %}
+              {% if block.settings.is_h1 %}
+                <h1 class="flexible-hero__headline">{{ block.settings.headline }}</h1>
+              {% else %}
+                <h2 class="flexible-hero__headline">{{ block.settings.headline }}</h2>
+              {% endif %}
+              {% if block.settings.subheading != blank %}
+                <p class="flexible-hero__subheading">{{ block.settings.subheading }}</p>
+              {% endif %}
+              {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                <a href="{{ block.settings.button_link }}" class="flexible-hero__button">
+                  {{ block.settings.button_text }}
+                  <span class="flexible-hero__button-arrow">→</span>
+                </a>
+              {% endif %}
+            </div>
+
+          {% when 'offer' %}
+            {%- comment -%} Offer Slide - Badge + headline + CTA {%- endcomment -%}
+            <div class="flexible-hero__offer">
+              {% if block.settings.badge_text != blank %}
+                <span class="flexible-hero__badge" style="background-color: {{ block.settings.badge_colour }};">{{ block.settings.badge_text }}</span>
+              {% endif %}
+              {% if block.settings.is_h1 %}
+                <h1 class="flexible-hero__headline">{{ block.settings.headline }}</h1>
+              {% else %}
+                <h2 class="flexible-hero__headline">{{ block.settings.headline }}</h2>
+              {% endif %}
+              {% if block.settings.subheading != blank %}
+                <p class="flexible-hero__subheading">{{ block.settings.subheading }}</p>
+              {% endif %}
+              {% if block.settings.code != blank %}
+                <div class="flexible-hero__code">
+                  <span class="flexible-hero__code-label">Use code:</span>
+                  <span class="flexible-hero__code-value">{{ block.settings.code }}</span>
+                </div>
+              {% endif %}
+              {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                <a href="{{ block.settings.button_link }}" class="flexible-hero__button">
+                  {{ block.settings.button_text }}
+                  <span class="flexible-hero__button-arrow">→</span>
+                </a>
+              {% endif %}
+            </div>
+
+          {% when 'spotlight' %}
+            {%- comment -%} Spotlight Slide - 2-3 featured products {%- endcomment -%}
+            <div class="flexible-hero__spotlight">
+              {% if block.settings.spotlight_heading != blank %}
+                <p class="flexible-hero__spotlight-heading">{{ block.settings.spotlight_heading }}</p>
+              {% endif %}
+              <div class="flexible-hero__products flexible-hero__products--{{ block.settings.layout }}">
+                {% for i in (1..3) %}
+                  {% assign product_setting = 'product_' | append: i %}
+                  {% assign image_setting = 'product_' | append: i | append: '_image' %}
+                  {% assign title_setting = 'product_' | append: i | append: '_title' %}
+                  {% assign unit_setting = 'product_' | append: i | append: '_unit' %}
+                  {% assign product = block.settings[product_setting] %}
+                  {% if product != blank %}
+                    <a href="{{ product.url }}" class="flexible-hero__product">
+                      <div class="flexible-hero__product-image">
+                        {% if block.settings[image_setting] != blank %}
+                          {{ block.settings[image_setting] | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                        {% elsif product.featured_image != blank %}
+                          {{ product.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                        {% endif %}
+                      </div>
+                      <div class="flexible-hero__product-info">
+                        <h3 class="flexible-hero__product-title">
+                          {% if block.settings[title_setting] != blank %}
+                            {{ block.settings[title_setting] }}
+                          {% else %}
+                            {{ product.title }}
+                          {% endif %}
+                        </h3>
+                        {% if block.settings[unit_setting] != blank %}
+                          <p class="flexible-hero__product-unit">{{ block.settings[unit_setting] }}</p>
+                        {% endif %}
+                        <p class="flexible-hero__product-price">
+                          {% if product.compare_at_price > product.price %}
+                            <span class="flexible-hero__product-compare">{{ product.compare_at_price | money }}</span>
+                          {% endif %}
+                          {{ product.price | money }}
+                        </p>
+                        {% if block.settings.layout == 'feature' %}
+                          {% if product.description != blank %}
+                            <p class="flexible-hero__product-description">{{ product.description | strip_html | truncate: 80 }}</p>
+                          {% endif %}
+                          <span class="flexible-hero__product-cta">View Product <span class="flexible-hero__product-cta-arrow">→</span></span>
+                        {% endif %}
+                      </div>
+                    </a>
+                    {% if block.settings.layout == 'feature' %}
+                      {% break %}
+                    {% endif %}
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+
+          {% when 'collections' %}
+            {%- comment -%} Collection Spotlight Slide - 2-3 featured collections {%- endcomment -%}
+            <div class="flexible-hero__spotlight">
+              {% if block.settings.spotlight_heading != blank %}
+                <p class="flexible-hero__spotlight-heading">{{ block.settings.spotlight_heading }}</p>
+              {% endif %}
+              <div class="flexible-hero__products flexible-hero__products--{{ block.settings.layout }}">
+                {% for i in (1..3) %}
+                  {% assign collection_setting = 'collection_' | append: i %}
+                  {% assign image_setting = 'collection_' | append: i | append: '_image' %}
+                  {% assign title_setting = 'collection_' | append: i | append: '_title' %}
+                  {% assign collection = block.settings[collection_setting] %}
+                  {% if collection != blank %}
+                    <a href="{{ collection.url }}" class="flexible-hero__product">
+                      <div class="flexible-hero__product-image">
+                        {% if block.settings[image_setting] != blank %}
+                          {{ block.settings[image_setting] | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                        {% elsif collection.image != blank %}
+                          {{ collection.image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                        {% elsif collection.products.first.featured_image != blank %}
+                          {{ collection.products.first.featured_image | image_url: width: 400 | image_tag: loading: 'lazy' }}
+                        {% endif %}
+                      </div>
+                      <div class="flexible-hero__product-info">
+                        <h3 class="flexible-hero__product-title">
+                          {% if block.settings[title_setting] != blank %}
+                            {{ block.settings[title_setting] }}
+                          {% else %}
+                            {{ collection.title }}
+                          {% endif %}
+                        </h3>
+                        <p class="flexible-hero__product-count">{{ collection.products_count }} products</p>
+                      </div>
+                    </a>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+
+          {% when 'image' %}
+            {%- comment -%} Image Slide - Full background with text overlay {%- endcomment -%}
+            <div class="flexible-hero__image-slide">
+              <div class="flexible-hero__image-bg">
+                {% if block.settings.image != blank %}
+                  {{ block.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', class: 'flexible-hero__bg-img' }}
+                {% endif %}
+                <div class="flexible-hero__image-overlay" style="background: linear-gradient(to right, rgba(0,0,0,{{ block.settings.overlay_opacity | divided_by: 100.0 }}) 0%, transparent 70%);"></div>
+              </div>
+              <div class="flexible-hero__image-content flexible-hero__image-content--{{ block.settings.content_position }}">
+                {% if block.settings.preheading != blank %}
+                  <p class="flexible-hero__preheading flexible-hero__preheading--light">{{ block.settings.preheading }}</p>
+                {% endif %}
+                {% if block.settings.is_h1 %}
+                  <h1 class="flexible-hero__headline flexible-hero__headline--light">{{ block.settings.headline }}</h1>
+                {% else %}
+                  <h2 class="flexible-hero__headline flexible-hero__headline--light">{{ block.settings.headline }}</h2>
+                {% endif %}
+                {% if block.settings.subheading != blank %}
+                  <p class="flexible-hero__subheading flexible-hero__subheading--light">{{ block.settings.subheading }}</p>
+                {% endif %}
+                {% if block.settings.button_text != blank and block.settings.button_link != blank %}
+                  <a href="{{ block.settings.button_link }}" class="flexible-hero__button">
+                    {{ block.settings.button_text }}
+                    <span class="flexible-hero__button-arrow">→</span>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+
+        {% endcase %}
+        
+      </div>
+    {% endfor %}
+  </div>
+
+  {%- comment -%} Navigation - only show if more than 1 slide {%- endcomment -%}
+  {% if section.blocks.size > 1 %}
+    <div class="flexible-hero__nav">
+      <div class="flexible-hero__dots">
+        {% for block in section.blocks %}
+          <button class="flexible-hero__dot {% if forloop.first %}flexible-hero__dot--active{% endif %}" data-goto="{{ forloop.index0 }}" aria-label="Go to slide {{ forloop.index }}"></button>
+        {% endfor %}
+        
+        {% if section.settings.autoplay %}
+          <button class="flexible-hero__pause" data-pause aria-label="Pause slideshow">
+            <svg class="flexible-hero__pause-icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+              <rect x="2" y="2" width="3" height="8" rx="0.5"/>
+              <rect x="7" y="2" width="3" height="8" rx="0.5"/>
+            </svg>
+            <svg class="flexible-hero__play-icon" width="12" height="12" viewBox="0 0 12 12" fill="currentColor">
+              <path d="M3 2l7 4-7 4V2z"/>
+            </svg>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+    {%- comment -%} Arrow Navigation {%- endcomment -%}
+    <button class="flexible-hero__arrow flexible-hero__arrow--prev" data-prev aria-label="Previous slide">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button class="flexible-hero__arrow flexible-hero__arrow--next" data-next aria-label="Next slide">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  {% endif %}
+</div>
+
+<script>
+(function() {
+  const hero = document.querySelector('[data-flexible-hero]');
+  if (!hero) return;
+
+  const slides = hero.querySelectorAll('[data-slide]');
+  const dots = hero.querySelectorAll('[data-goto]');
+  const prevBtn = hero.querySelector('[data-prev]');
+  const nextBtn = hero.querySelector('[data-next]');
+  const pauseBtn = hero.querySelector('[data-pause]');
+  const autoplay = hero.dataset.autoplay === 'true';
+  const interval = parseInt(hero.dataset.interval) || 5000;
+
+  let currentSlide = 0;
+  let autoplayTimer = null;
+  let isPaused = false;
+  let isHovering = false;
+  const totalSlides = slides.length;
+
+  if (totalSlides <= 1) return;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle('flexible-hero__slide--active', i === index);
+    });
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('flexible-hero__dot--active', i === index);
+    });
+  }
+
+  function goToSlide(index) {
+    if (index < 0) {
+      currentSlide = totalSlides - 1;
+    } else if (index >= totalSlides) {
+      currentSlide = 0;
+    } else {
+      currentSlide = index;
+    }
+    showSlide(currentSlide);
+  }
+
+  function nextSlide() {
+    goToSlide(currentSlide + 1);
+  }
+
+  function prevSlide() {
+    goToSlide(currentSlide - 1);
+  }
+
+  function startAutoplay() {
+    if (autoplay && !isPaused) {
+      stopAutoplay();
+      autoplayTimer = setInterval(nextSlide, interval);
+    }
+  }
+
+  function stopAutoplay() {
+    if (autoplayTimer) {
+      clearInterval(autoplayTimer);
+      autoplayTimer = null;
+    }
+  }
+
+  // Event listeners
+  if (prevBtn) {
+    prevBtn.addEventListener('click', () => {
+      prevSlide();
+      startAutoplay();
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener('click', () => {
+      nextSlide();
+      startAutoplay();
+    });
+  }
+
+  dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+      goToSlide(index);
+      startAutoplay();
+    });
+  });
+
+  if (pauseBtn) {
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      pauseBtn.classList.toggle('flexible-hero__pause--paused', isPaused);
+      if (isPaused) {
+        stopAutoplay();
+      } else {
+        startAutoplay();
+      }
+    });
+  }
+
+  // Hover pause
+  hero.addEventListener('mouseenter', () => {
+    isHovering = true;
+    stopAutoplay();
+  });
+
+  hero.addEventListener('mouseleave', () => {
+    isHovering = false;
+    if (!isPaused) startAutoplay();
+  });
+
+  // Touch/swipe
+  let touchStartX = 0;
+  hero.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, { passive: true });
+
+  hero.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextSlide();
+      else prevSlide();
+      startAutoplay();
+    }
+  }, { passive: true });
+
+  // Visibility change
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && !isPaused && !isHovering) {
+      startAutoplay();
+    }
+  });
+
+  // Initialize
+  startAutoplay();
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Flexible Hero",
+  "tag": "section",
+  "class": "flexible-hero-section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Background"
+    },
+    {
+      "type": "select",
+      "id": "background_style",
+      "label": "Background style",
+      "options": [
+        { "value": "solid", "label": "Solid colour" },
+        { "value": "gradient_light", "label": "Gradient - Light grey" },
+        { "value": "gradient_warm", "label": "Gradient - Warm" },
+        { "value": "gradient_cool", "label": "Gradient - Cool blue" },
+        { "value": "gradient_navy", "label": "Gradient - Navy (dark)" },
+        { "value": "gradient_custom", "label": "Custom gradient" }
+      ],
+      "default": "solid"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour",
+      "default": "#f5f5f7",
+      "info": "Used when 'Solid colour' is selected"
+    },
+    {
+      "type": "color",
+      "id": "gradient_start",
+      "label": "Gradient start colour",
+      "default": "#f5f5f7",
+      "info": "Used when 'Custom gradient' is selected"
+    },
+    {
+      "type": "color",
+      "id": "gradient_end",
+      "label": "Gradient end colour",
+      "default": "#e8e8ed",
+      "info": "Used when 'Custom gradient' is selected"
+    },
+    {
+      "type": "range",
+      "id": "gradient_angle",
+      "label": "Gradient angle",
+      "min": 0,
+      "max": 360,
+      "step": 15,
+      "default": 135,
+      "unit": "°",
+      "info": "Used when 'Custom gradient' is selected"
+    },
+    {
+      "type": "header",
+      "content": "Autoplay"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "interval",
+      "label": "Slide interval",
+      "min": 3000,
+      "max": 8000,
+      "step": 500,
+      "default": 5000,
+      "unit": "ms"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "statement",
+      "name": "Statement",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_h1",
+          "label": "Make headline the page H1",
+          "default": false,
+          "info": "Use only once per page for SEO"
+        },
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {
+          "type": "select",
+          "id": "bg_style",
+          "label": "Background style",
+          "options": [
+            { "value": "default", "label": "Use section default" },
+            { "value": "solid", "label": "Solid colour" },
+            { "value": "gradient", "label": "Gradient" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "color",
+          "id": "bg_colour",
+          "label": "Background colour",
+          "default": "#f5f5f7"
+        },
+        {
+          "type": "color",
+          "id": "bg_gradient_end",
+          "label": "Gradient end colour",
+          "default": "#e8e8ed",
+          "info": "Only used if gradient selected"
+        },
+        {
+          "type": "checkbox",
+          "id": "dark_text",
+          "label": "Use dark text",
+          "default": true,
+          "info": "Uncheck for light backgrounds, check for dark backgrounds"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "preheading",
+          "label": "Preheading",
+          "info": "Small text above headline"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline",
+          "default": "Trusted by 8,000+ Trade Customers"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "offer",
+      "name": "Offer",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_h1",
+          "label": "Make headline the page H1",
+          "default": false,
+          "info": "Use only once per page for SEO"
+        },
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {
+          "type": "select",
+          "id": "bg_style",
+          "label": "Background style",
+          "options": [
+            { "value": "default", "label": "Use section default" },
+            { "value": "solid", "label": "Solid colour" },
+            { "value": "gradient", "label": "Gradient" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "color",
+          "id": "bg_colour",
+          "label": "Background colour",
+          "default": "#f5f5f7"
+        },
+        {
+          "type": "color",
+          "id": "bg_gradient_end",
+          "label": "Gradient end colour",
+          "default": "#e8e8ed",
+          "info": "Only used if gradient selected"
+        },
+        {
+          "type": "checkbox",
+          "id": "dark_text",
+          "label": "Use dark text",
+          "default": true,
+          "info": "Uncheck for light backgrounds, check for dark backgrounds"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "badge_text",
+          "label": "Badge text",
+          "default": "LIMITED TIME"
+        },
+        {
+          "type": "color",
+          "id": "badge_colour",
+          "label": "Badge colour",
+          "default": "#0076DE"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline",
+          "default": "10% Off For Trade Customers"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "code",
+          "label": "Discount code",
+          "info": "Leave blank to hide"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    },
+    {
+      "type": "spotlight",
+      "name": "Product Spotlight",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {
+          "type": "select",
+          "id": "bg_style",
+          "label": "Background style",
+          "options": [
+            { "value": "default", "label": "Use section default" },
+            { "value": "solid", "label": "Solid colour" },
+            { "value": "gradient", "label": "Gradient" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "color",
+          "id": "bg_colour",
+          "label": "Background colour",
+          "default": "#f5f5f7"
+        },
+        {
+          "type": "color",
+          "id": "bg_gradient_end",
+          "label": "Gradient end colour",
+          "default": "#e8e8ed",
+          "info": "Only used if gradient selected"
+        },
+        {
+          "type": "checkbox",
+          "id": "dark_text",
+          "label": "Use dark text",
+          "default": true,
+          "info": "Uncheck for light backgrounds, check for dark backgrounds"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "spotlight_heading",
+          "label": "Heading",
+          "default": "Featured Products"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout style",
+          "options": [
+            { "value": "cards", "label": "Cards (horizontal)" },
+            { "value": "list", "label": "Horizontal list" },
+            { "value": "feature", "label": "Single feature (1 product)" },
+            { "value": "minimal", "label": "Minimal (circles)" }
+          ],
+          "default": "cards"
+        },
+        {
+          "type": "header",
+          "content": "Product 1"
+        },
+        {
+          "type": "product",
+          "id": "product_1",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "product_1_title",
+          "label": "Override title",
+          "info": "Leave blank to use product title"
+        },
+        {
+          "type": "text",
+          "id": "product_1_unit",
+          "label": "Unit size",
+          "placeholder": "e.g. Singles, 4pk, Per Metre"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_1_image",
+          "label": "Override image",
+          "info": "Optional - uses product image if blank"
+        },
+        {
+          "type": "header",
+          "content": "Product 2"
+        },
+        {
+          "type": "product",
+          "id": "product_2",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "product_2_title",
+          "label": "Override title"
+        },
+        {
+          "type": "text",
+          "id": "product_2_unit",
+          "label": "Unit size",
+          "placeholder": "e.g. Singles, 4pk, Per Metre"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_2_image",
+          "label": "Override image"
+        },
+        {
+          "type": "header",
+          "content": "Product 3"
+        },
+        {
+          "type": "product",
+          "id": "product_3",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "product_3_title",
+          "label": "Override title"
+        },
+        {
+          "type": "text",
+          "id": "product_3_unit",
+          "label": "Unit size",
+          "placeholder": "e.g. Singles, 4pk, Per Metre"
+        },
+        {
+          "type": "image_picker",
+          "id": "product_3_image",
+          "label": "Override image"
+        }
+      ]
+    },
+    {
+      "type": "collections",
+      "name": "Collection Spotlight",
+      "settings": [
+        {
+          "type": "header",
+          "content": "Background"
+        },
+        {
+          "type": "select",
+          "id": "bg_style",
+          "label": "Background style",
+          "options": [
+            { "value": "default", "label": "Use section default" },
+            { "value": "solid", "label": "Solid colour" },
+            { "value": "gradient", "label": "Gradient" }
+          ],
+          "default": "default"
+        },
+        {
+          "type": "color",
+          "id": "bg_colour",
+          "label": "Background colour",
+          "default": "#f5f5f7"
+        },
+        {
+          "type": "color",
+          "id": "bg_gradient_end",
+          "label": "Gradient end colour",
+          "default": "#e8e8ed",
+          "info": "Only used if gradient selected"
+        },
+        {
+          "type": "checkbox",
+          "id": "dark_text",
+          "label": "Use dark text",
+          "default": true,
+          "info": "Uncheck for light backgrounds, check for dark backgrounds"
+        },
+        {
+          "type": "header",
+          "content": "Content"
+        },
+        {
+          "type": "text",
+          "id": "spotlight_heading",
+          "label": "Heading",
+          "default": "Shop By Category"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Layout style",
+          "options": [
+            { "value": "cards", "label": "Cards (horizontal)" },
+            { "value": "list", "label": "Horizontal list" },
+            { "value": "minimal", "label": "Minimal (circles)" }
+          ],
+          "default": "cards"
+        },
+        {
+          "type": "header",
+          "content": "Collection 1"
+        },
+        {
+          "type": "collection",
+          "id": "collection_1",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "collection_1_title",
+          "label": "Override title",
+          "info": "Leave blank to use collection title"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_1_image",
+          "label": "Override image",
+          "info": "Optional - uses collection image if blank"
+        },
+        {
+          "type": "header",
+          "content": "Collection 2"
+        },
+        {
+          "type": "collection",
+          "id": "collection_2",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "collection_2_title",
+          "label": "Override title"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_2_image",
+          "label": "Override image"
+        },
+        {
+          "type": "header",
+          "content": "Collection 3"
+        },
+        {
+          "type": "collection",
+          "id": "collection_3",
+          "label": "Collection"
+        },
+        {
+          "type": "text",
+          "id": "collection_3_title",
+          "label": "Override title"
+        },
+        {
+          "type": "image_picker",
+          "id": "collection_3_image",
+          "label": "Override image"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "name": "Image Banner",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "is_h1",
+          "label": "Make headline the page H1",
+          "default": false,
+          "info": "Use only once per page for SEO"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Background image",
+          "info": "Recommended: 2000x640px"
+        },
+        {
+          "type": "range",
+          "id": "overlay_opacity",
+          "label": "Overlay opacity",
+          "min": 0,
+          "max": 80,
+          "step": 5,
+          "default": 50,
+          "unit": "%"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "Content position",
+          "options": [
+            { "value": "left", "label": "Left" },
+            { "value": "center", "label": "Center" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "preheading",
+          "label": "Preheading"
+        },
+        {
+          "type": "text",
+          "id": "headline",
+          "label": "Headline",
+          "default": "New Collection"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Subheading"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Flexible Hero",
+      "blocks": [
+        {
+          "type": "statement",
+          "settings": {
+            "headline": "Trusted by 8,000+ Trade Customers Since 2012"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,302 @@
+{%- liquid
+  # Product source is now editor-selectable. If a collection is picked in the
+  # theme editor, render its products; otherwise fall back to the original
+  # source (the page collection's custom.hub_featured_products metafield) so
+  # behaviour is unchanged until a collection is deliberately chosen.
+  assign picked_collection = section.settings.bestsellers_collection
+  if picked_collection != blank
+    assign products = picked_collection.products
+  else
+    assign products = collection.metafields.custom.hub_featured_products.value
+  endif
+  assign reveal = section.settings.reveal_on_scroll
+  assign bg_colour = section.settings.bg_colour
+  assign accent_colour = section.settings.accent_colour
+  assign heading = section.settings.heading
+-%}
+
+{%- if products != blank and products.size > 0 -%}
+<section class="hub-feat"
+         data-section-id="{{ section.id }}"
+         style="background: {{ bg_colour }}; --zone-accent: {{ accent_colour }};">
+  <div class="hub-feat__container{% if reveal %} hub-feat--reveal{% endif %}">
+
+    <div class="hub-feat__header">
+      {%- if heading != blank -%}
+        <h2 class="hub-feat__heading">{{ heading | escape }}</h2>
+      {%- endif -%}
+      {%- render 'hub-carousel-controls', prefix: 'hub-feat', wrap_class: 'hub-feat__nav', wrap_label: 'Scroll bestsellers' -%}
+    </div>
+
+    <div class="hub-feat__scroll" data-feat-scroll>
+      <ul class="hub-feat__strip">
+        {%- for product in products -%}
+          <li class="hub-feat__item">
+            <a href="{{ product.url }}" class="hub-feat__card">
+              <div class="hub-feat__head">
+                <h4 class="hub-feat__title">{{ product.title | escape }}</h4>
+                {%- if product.price > 0 -%}
+                  <p class="hub-feat__price">
+                    {%- if product.price_varies -%}
+                      From {{ product.price_min | money }}
+                    {%- else -%}
+                      {{ product.price | money }}
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+                <span class="hub-feat__cta">
+                  View product
+                  <span class="hub-feat__cta-arrow" aria-hidden="true">→</span>
+                </span>
+              </div>
+              <div class="hub-feat__media">
+                {%- if product.featured_image -%}
+                  <img src="{{ product.featured_image | image_url: width: 600 }}"
+                       alt="{{ product.featured_image.alt | default: product.title | escape }}"
+                       loading="lazy" width="600" height="600">
+                {%- endif -%}
+              </div>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<style>
+.hub-feat__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.hub-feat__heading {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  color: var(--hub-text);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Nav arrows */
+.hub-feat__nav {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+/* Hide arrows when content fits without overflow (toggled by JS). Heading stays
+   left-anchored: it is the lone remaining flex child under justify-content:
+   space-between, so removing the nav does not shift it. */
+.hub-feat--no-overflow .hub-feat__nav { display: none; }
+/* Scroll strip bleed — overflow + snap mechanic in hub-shared.css */
+.hub-feat__scroll {
+  /* Equal shadow/hover breathing room top and bottom */
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  /* Full-viewport breakout so cards extend off the right edge (matches Browse chassis) */
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  margin-left: -50vw;
+  margin-right: 0;
+  padding-left: calc(var(--hub-rail-pad) + 1.5rem);
+  padding-right: 0;
+  /* scroll-padding-left moves the snap-target origin to match padding, so mandatory
+     snap no longer yanks the first card flush to the box edge */
+  scroll-padding-left: calc(var(--hub-rail-pad) + 1.5rem);
+}
+
+/* Fluid card width — ~13% smaller than Browse for visual hierarchy: 210px floor → 400px ceiling */
+.hub-feat__item {
+  flex-basis: clamp(210px, calc(160px + 6vw), 400px);
+}
+
+/* Card matches Choose Route chassis: content top, image bottom */
+.hub-feat__card {
+  display: flex;
+  flex-direction: column;
+  background: var(--hub-card-bg);
+  border-radius: var(--hub-card-radius);
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--hub-text);
+  aspect-ratio: 4 / 5;
+  transition: transform 0.25s var(--hub-ease), box-shadow 0.25s ease;
+  box-shadow: var(--hub-card-shadow-rest);
+}
+.hub-feat__card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--hub-card-shadow-hover);
+}
+
+/* Top content section */
+.hub-feat__head {
+  padding: clamp(0.875rem, calc(0.5rem + 0.5vw), 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+.hub-feat__title {
+  font-size: clamp(0.875rem, calc(0.625rem + 0.4vw), 1.125rem);
+  font-weight: 600;
+  color: var(--hub-text);
+  margin: 0;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.hub-feat__price {
+  font-size: clamp(0.8125rem, calc(0.625rem + 0.3vw), 1rem);
+  color: var(--hub-text-muted);
+  font-weight: 400;
+  margin: 0;
+  line-height: 1.4;
+}
+.hub-feat__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: clamp(0.75rem, calc(0.625rem + 0.2vw), 0.875rem);
+  font-weight: 600;
+  color: var(--zone-accent, #0076DE);
+  margin-top: 0.5rem;
+  transition: gap 0.2s ease;
+}
+.hub-feat__cta-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+.hub-feat__card:hover .hub-feat__cta { gap: 0.625rem; }
+
+/* Bottom media — product photos with breathing room (option B from earlier) */
+.hub-feat__media {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, calc(0.5rem + 0.3vw), 1.5rem);
+  overflow: hidden;
+  min-height: 0;
+}
+.hub-feat__media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transition: transform 0.4s var(--hub-ease);
+}
+.hub-feat__card:hover .hub-feat__media img {
+  transform: scale(1.04);
+}
+
+@media (max-width: 990px) {
+  .hub-feat__head { padding: 1.5rem 1.5rem 1.125rem; }
+  .hub-feat__media { padding: 1rem 1.5rem 1.5rem; }
+}
+@media (max-width: 600px) {
+  .hub-feat__card { border-radius: var(--hub-card-radius-mobile); }
+  .hub-feat__head { padding: 1.25rem 1.25rem 1rem; }
+  .hub-feat__title { font-size: 1.0625rem; }
+  .hub-feat__price { font-size: 0.875rem; }
+  .hub-feat__cta { font-size: 0.8125rem; }
+  .hub-feat__media { padding: 0.875rem 1.25rem 1.25rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-feat__media img { transition: none; }
+}
+</style>
+
+<script>
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    var sections = document.querySelectorAll('.hub-feat');
+    sections.forEach(function(section) {
+      if (section.dataset.processed === 'true') return;
+      section.dataset.processed = 'true';
+
+      var scroll = section.querySelector('[data-feat-scroll]');
+      var prev = section.querySelector('[data-direction="prev"]');
+      var next = section.querySelector('[data-direction="next"]');
+      if (!scroll || !prev || !next) return;
+
+      function scrollByCard(direction) {
+        var firstItem = scroll.querySelector('.hub-feat__item');
+        if (!firstItem) return;
+        var styles = getComputedStyle(scroll.querySelector('.hub-feat__strip'));
+        var gap = parseFloat(styles.gap) || 20;
+        var cardWidth = firstItem.getBoundingClientRect().width + gap;
+        scroll.scrollBy({ left: cardWidth * direction, behavior: 'smooth' });
+      }
+
+      function updateButtons() {
+        var maxScroll = scroll.scrollWidth - scroll.clientWidth - 1;
+        prev.disabled = scroll.scrollLeft <= 0;
+        next.disabled = scroll.scrollLeft >= maxScroll;
+      }
+
+      function checkOverflow() {
+        if (!scroll) return;
+        if (scroll.scrollWidth > scroll.clientWidth + 1) {
+          section.classList.remove('hub-feat--no-overflow');
+        } else {
+          section.classList.add('hub-feat--no-overflow');
+        }
+      }
+
+      prev.addEventListener('click', function() { scrollByCard(-1); });
+      next.addEventListener('click', function() { scrollByCard(1); });
+      scroll.addEventListener('scroll', updateButtons, { passive: true });
+
+      var resizeTimer;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+          checkOverflow();
+          updateButtons();
+        }, 150);
+      });
+
+      checkOverflow();
+      updateButtons();
+    });
+
+    if (!('IntersectionObserver' in window)) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.hub-feat--reveal').forEach(function(el) { observer.observe(el); });
+  });
+})();
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hub Featured Products",
+  "tag": "section",
+  "class": "section-hub-feat",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Section heading", "default": "Bestsellers" },
+    { "type": "collection", "id": "bestsellers_collection", "label": "Bestsellers collection", "info": "Optional. Products from the chosen collection power the carousel. Leave empty to keep using this collection's 'Hub Featured Products' metafield (current behaviour)." },
+    { "type": "color", "id": "bg_colour", "label": "Background colour", "default": "#f5f5f7" },
+    { "type": "color", "id": "accent_colour", "label": "Zone accent colour", "default": "#0076DE" },
+    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Fade in on scroll", "default": true },
+    { "type": "paragraph", "content": "Pick a 'Bestsellers collection' above to source the cards from a collection, or leave it empty to use the 'Hub Featured Products' metafield. Products render in a horizontal scrolling row of tall cards — existing product images render naturally, no special prep needed." }
+  ],
+  "presets": [ { "name": "Hub Featured Products" } ]
+}
+{% endschema %}

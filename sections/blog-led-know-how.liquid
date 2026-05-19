@@ -1,0 +1,888 @@
+{% comment %}
+  LED Know-How Blog Template v2
+  - Compact design - see results without scrolling
+  - Native Shopify tag filtering (instant, no JS loading)
+  - Horizontal category pills
+  - Counts only shown when filtered (Shopify limitation)
+{% endcomment %}
+
+{% assign current_tag = current_tags | first %}
+
+{% comment %} ===== MAIN DISPLAY PAGINATION ===== {% endcomment %}
+{% paginate blog.articles by section.settings.posts_per_page %}
+
+{% comment %} ===== SCHEMA MARKUP ===== {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ blog.title }}",
+  "description": "Expert LED lighting guides and technical resources",
+  "url": "{{ shop.url }}{{ blog.url }}",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "{{ shop.name }}",
+    "url": "{{ shop.url }}"
+  }
+}
+</script>
+
+<section class="lkh">
+
+  {% comment %} ===== COMPACT HEADER ===== {% endcomment %}
+  <header class="lkh-header">
+    <div class="lkh-header-left">
+      <nav class="lkh-breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>{{ blog.title }}</span>
+      </nav>
+      <h1 class="lkh-title">{{ blog.title }}</h1>
+    </div>
+    <div class="lkh-header-right">
+      <div class="lkh-search">
+        <svg class="lkh-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="search" id="lkh-search" placeholder="Search all guides...">
+        <button type="button" id="lkh-search-clear" class="lkh-search-clear" aria-label="Clear search">×</button>
+      </div>
+    </div>
+  </header>
+
+  {% comment %} ===== HORIZONTAL CATEGORY BAR ===== {% endcomment %}
+  <nav class="lkh-categories">
+    <a href="{{ blog.url }}" class="lkh-cat {% unless current_tag %}active{% endunless %}">
+      <span class="lkh-cat-icon">📋</span>
+      <span class="lkh-cat-name">All Guides</span>
+      {% unless current_tag %}<span class="lkh-cat-count">{{ blog.articles_count }}</span>{% endunless %}
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/fairground-lights" class="lkh-cat {% if current_tag == 'Fairground Lights' %}active{% endif %}">
+      <span class="lkh-cat-icon">🎡</span>
+      <span class="lkh-cat-name">Fairground</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/neon-flex" class="lkh-cat {% if current_tag == 'Neon Flex' %}active{% endif %}">
+      <span class="lkh-cat-icon">✨</span>
+      <span class="lkh-cat-name">Neon Flex</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/led-strips" class="lkh-cat {% if current_tag == 'LED Strips' %}active{% endif %}">
+      <span class="lkh-cat-icon">💡</span>
+      <span class="lkh-cat-name">LED Strips</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/led-modules" class="lkh-cat {% if current_tag == 'LED Modules' %}active{% endif %}">
+      <span class="lkh-cat-icon">🔘</span>
+      <span class="lkh-cat-name">Modules</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/drivers" class="lkh-cat {% if current_tag == 'Drivers' %}active{% endif %}">
+      <span class="lkh-cat-icon">⚡</span>
+      <span class="lkh-cat-name">Drivers</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/controllers" class="lkh-cat {% if current_tag == 'Controllers' or current_tag == 'DMX' or current_tag == 'Pixel' or current_tag == 'RGB' or current_tag == 'Dimmers' %}active{% endif %}">
+      <span class="lkh-cat-icon">🎮</span>
+      <span class="lkh-cat-name">Controllers</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/connectors" class="lkh-cat {% if current_tag == 'Connectors' or current_tag == 'Cables' %}active{% endif %}">
+      <span class="lkh-cat-icon">🔌</span>
+      <span class="lkh-cat-name">Connectors</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/accessories" class="lkh-cat {% if current_tag == 'Accessories' %}active{% endif %}">
+      <span class="lkh-cat-icon">🔧</span>
+      <span class="lkh-cat-name">Accessories</span>
+    </a>
+    
+    <a href="{{ blog.url }}/tagged/general" class="lkh-cat {% if current_tag == 'General' or current_tag == 'Installing' or current_tag == 'Maintenance' %}active{% endif %}">
+      <span class="lkh-cat-icon">📚</span>
+      <span class="lkh-cat-name">General</span>
+    </a>
+  </nav>
+
+  {% comment %} ===== CURRENT FILTER INDICATOR ===== {% endcomment %}
+  {% if current_tag %}
+  <div class="lkh-filter-bar">
+    <span>Showing: <strong>{{ current_tag }}</strong> ({{ paginate.items }} guide{% if paginate.items != 1 %}s{% endif %})</span>
+    <a href="{{ blog.url }}" class="lkh-filter-clear">× Clear filter</a>
+  </div>
+  {% endif %}
+
+  {% comment %} ===== SEARCH STATUS ===== {% endcomment %}
+  <div id="lkh-search-status" class="lkh-search-status"></div>
+
+  {% comment %} ===== ARTICLES GRID ===== {% endcomment %}
+  <div class="lkh-grid" id="lkh-grid">
+    {% for article in blog.articles %}
+      <article class="lkh-card" data-title="{{ article.title | escape }}" data-tags="{{ article.tags | join: ',' | downcase }}">
+        <a href="{{ article.url }}" class="lkh-card-link">
+          {% if article.image %}
+          <div class="lkh-card-img">
+            <img src="{{ article.image | img_url: '400x225', crop: 'center' }}" alt="{{ article.title | escape }}" loading="lazy" width="400" height="225">
+          </div>
+          {% endif %}
+          <div class="lkh-card-body">
+            {% if article.tags.size > 0 %}
+            <span class="lkh-card-tag">{{ article.tags.first }}</span>
+            {% endif %}
+            <h2 class="lkh-card-title">{{ article.title }}</h2>
+            <p class="lkh-card-excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 18 }}</p>
+            <span class="lkh-card-cta">Read guide →</span>
+          </div>
+        </a>
+      </article>
+    {% else %}
+      <div class="lkh-empty">
+        <p>No guides found{% if current_tag %} for "{{ current_tag }}"{% endif %}.</p>
+        <a href="{{ blog.url }}" class="lkh-btn">View all guides</a>
+      </div>
+    {% endfor %}
+  </div>
+
+  {% comment %} ===== NO SEARCH RESULTS ===== {% endcomment %}
+  <div id="lkh-no-results" class="lkh-no-results" style="display:none;">
+    <p>No guides match your search.</p>
+    <button type="button" id="lkh-clear-search" class="lkh-btn-text">Clear search</button>
+  </div>
+
+  {% comment %} ===== PAGINATION ===== {% endcomment %}
+  {% if paginate.pages > 1 %}
+  <nav class="lkh-pagination">
+    {% if paginate.previous %}
+      <a href="{{ paginate.previous.url }}" class="lkh-page-btn">← Previous</a>
+    {% endif %}
+    
+    <span class="lkh-page-info">Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+    
+    {% if paginate.next %}
+      <a href="{{ paginate.next.url }}" class="lkh-page-btn">Next →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% comment %} ===== HELP CTA ===== {% endcomment %}
+  <aside class="lkh-help">
+    <span class="lkh-help-text">Can't find what you need?</span>
+    <a href="/pages/contact" class="lkh-help-link">Get technical support →</a>
+  </aside>
+
+</section>
+{% endpaginate %}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('lkh-search');
+  const searchClear = document.getElementById('lkh-search-clear');
+  const grid = document.getElementById('lkh-grid');
+  const noResults = document.getElementById('lkh-no-results');
+  const searchStatus = document.getElementById('lkh-search-status');
+  const clearSearchBtn = document.getElementById('lkh-clear-search');
+  const pagination = document.querySelector('.lkh-pagination');
+  
+  if (!searchInput) return;
+  
+  let searchTimeout;
+  let originalCards = null;
+  let isSearching = false;
+  const blogHandle = '{{ blog.handle }}';
+  
+  // Store original grid content
+  function storeOriginalCards() {
+    if (!originalCards) {
+      originalCards = grid.innerHTML;
+    }
+  }
+  
+  // Update clear button visibility
+  function updateClearButton() {
+    if (searchClear) {
+      searchClear.classList.toggle('visible', searchInput.value.length > 0);
+    }
+  }
+  
+  searchInput.addEventListener('input', function() {
+    clearTimeout(searchTimeout);
+    updateClearButton();
+    const query = this.value.trim();
+    
+    if (query.length === 0) {
+      resetSearch();
+      return;
+    }
+    
+    if (query.length < 2) return;
+    
+    searchTimeout = setTimeout(() => {
+      performSearch(query);
+    }, 300);
+  });
+  
+  searchInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      this.value = '';
+      updateClearButton();
+      resetSearch();
+    }
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      const query = this.value.trim();
+      if (query.length >= 2) {
+        clearTimeout(searchTimeout);
+        performSearch(query);
+      }
+    }
+  });
+  
+  if (searchClear) {
+    searchClear.addEventListener('click', function() {
+      searchInput.value = '';
+      updateClearButton();
+      resetSearch();
+      searchInput.focus();
+    });
+  }
+  
+  if (clearSearchBtn) {
+    clearSearchBtn.addEventListener('click', function() {
+      searchInput.value = '';
+      updateClearButton();
+      resetSearch();
+    });
+  }
+  
+  async function performSearch(query) {
+    storeOriginalCards();
+    isSearching = true;
+    
+    // Hide pagination during search
+    if (pagination) pagination.style.display = 'none';
+    
+    // Show loading state
+    searchStatus.innerHTML = '<span>Searching all guides...</span>';
+    searchStatus.className = 'lkh-search-status loading';
+    searchStatus.style.display = 'block';
+    
+    try {
+      // Use Shopify Predictive Search API
+      const response = await fetch(
+        `/search/suggest.json?q=${encodeURIComponent(query)}&resources[type]=article&resources[limit]=20&resources[options][fields]=title,body,tag`
+      );
+      
+      if (!response.ok) throw new Error('Search failed');
+      
+      const data = await response.json();
+      const articles = data.resources?.results?.articles || [];
+      
+      // Filter to only this blog's articles
+      const blogArticles = articles.filter(article => {
+        // Article URL format: /blogs/blog-handle/article-handle
+        return article.url && article.url.includes(`/blogs/${blogHandle}/`);
+      });
+      
+      searchStatus.className = 'lkh-search-status';
+      displaySearchResults(blogArticles, query);
+      
+    } catch (error) {
+      console.error('Search error:', error);
+      searchStatus.className = 'lkh-search-status';
+      searchStatus.innerHTML = '<span>Search error. Please try again.</span>';
+      searchStatus.style.display = 'block';
+    }
+  }
+  
+  function displaySearchResults(articles, query) {
+    if (articles.length === 0) {
+      grid.innerHTML = '';
+      noResults.style.display = 'block';
+      searchStatus.innerHTML = `<span>No guides found for "${escapeHtml(query)}"</span>`;
+      searchStatus.style.display = 'block';
+      return;
+    }
+    
+    noResults.style.display = 'none';
+    searchStatus.innerHTML = `<span>${articles.length} guide${articles.length !== 1 ? 's' : ''} found for "${escapeHtml(query)}"</span>`;
+    searchStatus.style.display = 'block';
+    
+    // Build result cards
+    let html = '';
+    articles.forEach(article => {
+      const imageHtml = article.image ? `
+        <div class="lkh-card-img">
+          <img src="${article.image}" alt="${escapeHtml(article.title)}" loading="lazy">
+        </div>
+      ` : '';
+      
+      // Get first tag if available
+      const tagHtml = article.tags && article.tags.length > 0 ? `
+        <span class="lkh-card-tag">${escapeHtml(article.tags[0])}</span>
+      ` : '';
+      
+      // Create excerpt from body
+      const excerpt = article.body ? 
+        article.body.replace(/<[^>]*>/g, '').substring(0, 120) + '...' : '';
+      
+      html += `
+        <article class="lkh-card">
+          <a href="${article.url}" class="lkh-card-link">
+            ${imageHtml}
+            <div class="lkh-card-body">
+              ${tagHtml}
+              <h2 class="lkh-card-title">${highlightQuery(article.title, query)}</h2>
+              <p class="lkh-card-excerpt">${highlightQuery(excerpt, query)}</p>
+              <span class="lkh-card-cta">Read guide →</span>
+            </div>
+          </a>
+        </article>
+      `;
+    });
+    
+    grid.innerHTML = html;
+  }
+  
+  function highlightQuery(text, query) {
+    if (!text || !query) return text || '';
+    const escaped = escapeHtml(text);
+    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return escaped.replace(regex, '<mark>$1</mark>');
+  }
+  
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+  
+  function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  
+  function resetSearch() {
+    isSearching = false;
+    if (originalCards) {
+      grid.innerHTML = originalCards;
+    }
+    noResults.style.display = 'none';
+    searchStatus.style.display = 'none';
+    // Show pagination again
+    if (pagination) pagination.style.display = '';
+  }
+});
+</script>
+
+<style>
+/* ===== LED KNOW-HOW COMPACT THEME ===== */
+.lkh {
+  --lkh-primary: #0891b2;
+  --lkh-primary-dark: #0e7490;
+  --lkh-primary-light: #ecfeff;
+  --lkh-text: #1e293b;
+  --lkh-muted: #64748b;
+  --lkh-border: #e2e8f0;
+  --lkh-bg: #f8fafc;
+  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 2rem;
+}
+
+/* ===== HEADER WITH MORE SPACE ===== */
+.lkh-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1rem 0 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.lkh-header-left {
+  flex: 1;
+}
+
+.lkh-breadcrumb {
+  font-size: 0.75rem;
+  color: var(--lkh-muted);
+  margin-bottom: 0.35rem;
+}
+
+.lkh-breadcrumb a {
+  color: var(--lkh-primary);
+  text-decoration: none;
+}
+
+.lkh-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.lkh-breadcrumb span {
+  margin: 0 0.35rem;
+}
+
+.lkh-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--lkh-primary-dark);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.lkh-header-right {
+  flex-shrink: 0;
+}
+
+/* ===== MORE PROMINENT SEARCH ===== */
+.lkh-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.lkh-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  color: var(--lkh-muted);
+  pointer-events: none;
+}
+
+#lkh-search {
+  width: 240px;
+  padding: 0.6rem 2rem 0.6rem 2.25rem;
+  font-size: 0.875rem;
+  border: 2px solid var(--lkh-border);
+  border-radius: 0.5rem;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  transition: all 0.2s;
+}
+
+#lkh-search:focus {
+  outline: none;
+  border-color: var(--lkh-primary);
+  box-shadow: 0 0 0 3px rgba(8, 145, 178, 0.15);
+}
+
+#lkh-search::placeholder {
+  color: var(--lkh-muted);
+}
+
+.lkh-search-clear {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--lkh-muted);
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  display: none;
+}
+
+.lkh-search-clear:hover {
+  color: var(--lkh-text);
+}
+
+.lkh-search-clear.visible {
+  display: block;
+}
+
+/* ===== IMPROVED CATEGORY PILLS ===== */
+.lkh-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--lkh-border);
+}
+
+.lkh-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  background: white;
+  border: 1.5px solid var(--lkh-border);
+  border-radius: 2rem;
+  font-size: 0.8rem;
+  color: var(--lkh-text);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-weight: 500;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.lkh-cat:hover {
+  border-color: var(--lkh-primary);
+  background: var(--lkh-primary-light);
+  color: var(--lkh-primary-dark);
+}
+
+.lkh-cat.active {
+  background: var(--lkh-primary);
+  border-color: var(--lkh-primary);
+  color: white;
+  box-shadow: 0 2px 4px rgba(8, 145, 178, 0.3);
+}
+
+.lkh-cat-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.lkh-cat-name {
+  font-weight: 600;
+}
+
+.lkh-cat-count {
+  background: rgba(0,0,0,0.08);
+  padding: 0.1rem 0.4rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.lkh-cat.active .lkh-cat-count {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ===== FILTER BAR ===== */
+.lkh-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--lkh-primary-light);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid rgba(8, 145, 178, 0.15);
+}
+
+.lkh-filter-clear {
+  color: var(--lkh-primary-dark);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.lkh-filter-clear:hover {
+  text-decoration: underline;
+}
+
+/* ===== SEARCH STATUS ===== */
+.lkh-search-status {
+  display: none;
+  background: #d1fae5;
+  color: #065f46;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+.lkh-search-status.loading {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+/* ===== ARTICLES GRID ===== */
+.lkh-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.85rem;
+}
+
+/* ===== ARTICLE CARD ===== */
+.lkh-card {
+  background: white;
+  border: 1px solid var(--lkh-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: all 0.15s;
+}
+
+.lkh-card:hover {
+  border-color: var(--lkh-primary);
+  box-shadow: 0 2px 8px rgba(8, 145, 178, 0.1);
+}
+
+.lkh-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.lkh-card-img {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--lkh-bg);
+}
+
+.lkh-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lkh-card-body {
+  padding: 0.6rem;
+}
+
+.lkh-card-tag {
+  display: inline-block;
+  background: var(--lkh-primary-light);
+  color: var(--lkh-primary-dark);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.3rem;
+}
+
+.lkh-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--lkh-text);
+  margin: 0 0 0.25rem;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lkh-card-excerpt {
+  font-size: 0.72rem;
+  color: var(--lkh-muted);
+  margin: 0 0 0.4rem;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.lkh-card-cta {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--lkh-primary);
+}
+
+.lkh-card:hover .lkh-card-cta {
+  text-decoration: underline;
+}
+
+/* Search highlight */
+.lkh-card mark {
+  background: #fef08a;
+  color: inherit;
+  padding: 0 0.1em;
+  border-radius: 2px;
+}
+
+/* ===== EMPTY / NO RESULTS ===== */
+.lkh-empty,
+.lkh-no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem 1rem;
+  background: var(--lkh-bg);
+  border-radius: 0.5rem;
+}
+
+.lkh-empty p,
+.lkh-no-results p {
+  margin: 0 0 0.75rem;
+  color: var(--lkh-muted);
+  font-size: 0.85rem;
+}
+
+.lkh-btn {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: var(--lkh-primary);
+  color: white;
+  border: none;
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lkh-btn:hover {
+  background: var(--lkh-primary-dark);
+}
+
+.lkh-btn-text {
+  background: none;
+  border: none;
+  color: var(--lkh-primary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* ===== PAGINATION ===== */
+.lkh-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--lkh-border);
+}
+
+.lkh-page-btn {
+  padding: 0.35rem 0.75rem;
+  background: white;
+  border: 1px solid var(--lkh-border);
+  border-radius: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--lkh-text);
+  text-decoration: none;
+}
+
+.lkh-page-btn:hover {
+  border-color: var(--lkh-primary);
+  color: var(--lkh-primary);
+}
+
+.lkh-page-info {
+  font-size: 0.7rem;
+  color: var(--lkh-muted);
+}
+
+/* ===== HELP CTA ===== */
+.lkh-help {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.6rem 1rem;
+  background: var(--lkh-primary-light);
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+}
+
+.lkh-help-text {
+  color: var(--lkh-muted);
+}
+
+.lkh-help-link {
+  color: var(--lkh-primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.lkh-help-link:hover {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .lkh-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem 0 1rem;
+  }
+  
+  .lkh-title {
+    font-size: 1.4rem;
+  }
+  
+  .lkh-header-right {
+    width: 100%;
+  }
+  
+  #lkh-search {
+    width: 100%;
+  }
+  
+  .lkh-categories {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    padding-bottom: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    margin: 0 -1rem 0.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  .lkh-categories::-webkit-scrollbar {
+    height: 4px;
+  }
+  
+  .lkh-categories::-webkit-scrollbar-thumb {
+    background: var(--lkh-border);
+    border-radius: 2px;
+  }
+  
+  .lkh-cat {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.75rem;
+  }
+  
+  .lkh-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.6rem;
+  }
+  
+  .lkh-card-body {
+    padding: 0.5rem;
+  }
+  
+  .lkh-card-title {
+    font-size: 0.8rem;
+  }
+  
+  .lkh-card-excerpt {
+    display: none;
+  }
+  
+  .lkh-filter-bar {
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+  }
+  
+  .lkh-help {
+    flex-direction: column;
+    gap: 0.35rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 380px) {
+  .lkh-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+{% schema %}
+{
+  "name": "LED Know-How Blog",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "Articles per page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "default": 12
+    }
+  ]
+}
+{% endschema %}

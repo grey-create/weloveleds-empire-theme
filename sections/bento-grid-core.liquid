@@ -1,0 +1,648 @@
+{{ 'bento-grid-core.css' | asset_url | stylesheet_tag }}
+
+<div class="bento-grid-section {% if section.settings.full_width %}bento-grid-section--full-width{% endif %}" style="background-color: {{ section.settings.background_colour }};">
+  <div class="bento-grid-container" style="--bento-max-width: {{ section.settings.max_width }}px;">
+    <div class="bento-grid" style="gap: {{ section.settings.gap_size }}px; --bento-radius: {{ section.settings.border_radius }}px;">
+      
+      {%- comment -%} Tile 1: Hero (Large) {%- endcomment -%}
+      <a href="{{ section.settings.tile_1_collection.url }}" class="bento-tile bento-tile--hero">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_1_image != blank -%}
+            {{ section.settings.tile_1_image | image_url: width: 1200 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_1_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_1_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_1_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_1_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_1_overlay }}; mix-blend-mode: {{ section.settings.tile_1_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title bento-tile__title--large">
+            {%- if section.settings.tile_1_title != blank -%}
+              {{ section.settings.tile_1_title }}
+            {%- else -%}
+              {{ section.settings.tile_1_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_1_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_1_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 2: Tall {%- endcomment -%}
+      <a href="{{ section.settings.tile_2_collection.url }}" class="bento-tile bento-tile--tall">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_2_image != blank -%}
+            {{ section.settings.tile_2_image | image_url: width: 800 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_2_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_2_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_2_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_2_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_2_overlay }}; mix-blend-mode: {{ section.settings.tile_2_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title">
+            {%- if section.settings.tile_2_title != blank -%}
+              {{ section.settings.tile_2_title }}
+            {%- else -%}
+              {{ section.settings.tile_2_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_2_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_2_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 3: Medium {%- endcomment -%}
+      <a href="{{ section.settings.tile_3_collection.url }}" class="bento-tile bento-tile--medium bento-tile--pos-3">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_3_image != blank -%}
+            {{ section.settings.tile_3_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_3_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_3_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_3_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_3_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_3_overlay }}; mix-blend-mode: {{ section.settings.tile_3_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title">
+            {%- if section.settings.tile_3_title != blank -%}
+              {{ section.settings.tile_3_title }}
+            {%- else -%}
+              {{ section.settings.tile_3_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_3_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_3_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 4: Medium {%- endcomment -%}
+      <a href="{{ section.settings.tile_4_collection.url }}" class="bento-tile bento-tile--medium bento-tile--pos-4">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_4_image != blank -%}
+            {{ section.settings.tile_4_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_4_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_4_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_4_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_4_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_4_overlay }}; mix-blend-mode: {{ section.settings.tile_4_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title">
+            {%- if section.settings.tile_4_title != blank -%}
+              {{ section.settings.tile_4_title }}
+            {%- else -%}
+              {{ section.settings.tile_4_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_4_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_4_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 5: Medium {%- endcomment -%}
+      <a href="{{ section.settings.tile_5_collection.url }}" class="bento-tile bento-tile--medium bento-tile--pos-5">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_5_image != blank -%}
+            {{ section.settings.tile_5_image | image_url: width: 600 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_5_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_5_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_5_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_5_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_5_overlay }}; mix-blend-mode: {{ section.settings.tile_5_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title">
+            {%- if section.settings.tile_5_title != blank -%}
+              {{ section.settings.tile_5_title }}
+            {%- else -%}
+              {{ section.settings.tile_5_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_5_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_5_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 6: Wide {%- endcomment -%}
+      <a href="{{ section.settings.tile_6_collection.url }}" class="bento-tile bento-tile--wide">
+        <div class="bento-tile__background">
+          {%- if section.settings.tile_6_image != blank -%}
+            {{ section.settings.tile_6_image | image_url: width: 1400 | image_tag: loading: 'lazy', class: 'bento-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_6_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_6_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_6_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_6_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-tile__overlay" style="background: {{ section.settings.tile_6_overlay }}; mix-blend-mode: {{ section.settings.tile_6_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-tile__content">
+          <h2 class="bento-tile__title">
+            {%- if section.settings.tile_6_title != blank -%}
+              {{ section.settings.tile_6_title }}
+            {%- else -%}
+              {{ section.settings.tile_6_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_6_tagline != blank -%}
+            <p class="bento-tile__tagline">{{ section.settings.tile_6_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-tile__cta">Shop now <span class="bento-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bento Grid - Core",
+  "tag": "section",
+  "class": "bento-grid-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "label": "Full width layout",
+      "info": "Extends grid edge-to-edge like Apple",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "info": "Prevents tiles becoming too large on ultra-wide screens",
+      "min": 1400,
+      "max": 2400,
+      "step": 100,
+      "default": 1800,
+      "unit": "px"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour",
+      "default": "#f5f5f7"
+    },
+    {
+      "type": "range",
+      "id": "gap_size",
+      "label": "Gap between tiles",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Tile corner radius",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Tile 1: Hero (Large)"
+    },
+    {
+      "type": "collection",
+      "id": "tile_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_tagline",
+      "label": "Tagline",
+      "default": "Professional LED strips with 5-year warranty"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_1_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_1_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(6, 78, 59, 0.95) 0%, rgba(0, 0, 0, 0.9) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_1_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_1_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_1_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_1_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 2: Tall"
+    },
+    {
+      "type": "collection",
+      "id": "tile_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_tagline",
+      "label": "Tagline",
+      "default": "Colourful cabochons & carnival classics"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_2_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_2_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(219, 39, 119, 0.9) 0%, rgba(245, 158, 11, 0.9) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_2_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_2_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_2_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_2_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 3: Medium"
+    },
+    {
+      "type": "collection",
+      "id": "tile_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_tagline",
+      "label": "Tagline",
+      "default": "Sign lighting with 10-year warranty"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_3_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_3_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(49, 46, 129, 0.95) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_3_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_3_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_3_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_3_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 4: Medium"
+    },
+    {
+      "type": "collection",
+      "id": "tile_4_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_tagline",
+      "label": "Tagline",
+      "default": "Bendable neon effect lighting"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_4_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_4_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(112, 26, 117, 0.95) 0%, rgba(88, 28, 135, 0.95) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_4_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_4_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_4_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_4_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 5: Medium"
+    },
+    {
+      "type": "collection",
+      "id": "tile_5_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_tagline",
+      "label": "Tagline",
+      "default": "Reliable power for every project"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_5_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_5_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(51, 65, 85, 0.95) 0%, rgba(15, 23, 42, 0.95) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_5_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_5_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_5_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_5_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 6: Wide"
+    },
+    {
+      "type": "collection",
+      "id": "tile_6_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_tagline",
+      "label": "Tagline",
+      "default": "Wireless control made simple"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_6_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_6_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(90deg, rgba(91, 33, 182, 0.95) 0%, rgba(134, 25, 143, 0.95) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_6_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" },
+        { "value": "hard-light", "label": "Hard Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_6_fade_to_transparent",
+      "label": "Fade to transparent",
+      "info": "Adds a fade from bottom to transparent, ignoring gradient",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_6_fade_colour",
+      "label": "Fade colour (if enabled above)",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_6_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 80,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Grid - Core"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+{%- comment -%}
+  Hub carousel arrow controls (prev / next buttons).
+
+  Used by: hub-choose-route, hub-featured-products, hub-buying-guide, hub-decision-blocks.
+
+  @param prefix     {String} REQUIRED. BEM prefix for the section. One of:
+                             'hub-route', 'hub-feat', 'hub-questions', 'hub-vs'.
+                             Used to build the button class as '{prefix}__btn'.
+
+  @param wrap_class {String} OPTIONAL. Defaults to '{prefix}__nav-wrap'.
+                             Pass 'hub-feat__nav' for Bestsellers (which uses __nav not __nav-wrap).
+
+  @param wrap_label {String} OPTIONAL. Wrapper accessibility label.
+                             - When set: renders role="group" aria-label="{wrap_label}".
+                             - When blank: renders aria-hidden="true" (matches Buying Guide / Decision Blocks).
+
+  @param prev_label {String} OPTIONAL. aria-label on the prev button. Default 'Previous'.
+  @param next_label {String} OPTIONAL. aria-label on the next button. Default 'Next'.
+{%- endcomment -%}
+
+{%- assign hub_btn_class = prefix | append: '__btn' -%}
+{%- assign hub_default_wrap = prefix | append: '__nav-wrap' -%}
+{%- assign hub_final_wrap = wrap_class | default: hub_default_wrap -%}
+{%- assign hub_final_prev = prev_label | default: 'Previous' -%}
+{%- assign hub_final_next = next_label | default: 'Next' -%}
+
+<div class="{{ hub_final_wrap }}"
+{%- if wrap_label != blank %} role="group" aria-label="{{ wrap_label }}"
+{%- else %} aria-hidden="true"
+{%- endif %}>
+  <button type="button" class="{{ hub_btn_class }}" data-direction="prev" aria-label="{{ hub_final_prev }}">
+    <span aria-hidden="true">←</span>
+  </button>
+  <button type="button" class="{{ hub_btn_class }}" data-direction="next" aria-label="{{ hub_final_next }}">
+    <span aria-hidden="true">→</span>
+  </button>
+</div>

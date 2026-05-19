@@ -1,0 +1,42 @@
+<!-- FAQ Final Test -->
+<div style="background: #f0f0f0; padding: 20px; margin: 20px 0;">
+  <h3>FAQ Test for: {{ collection.title }}</h3>
+  
+  {% assign faq_sets = collection.metafields.custom.faq_sets.value %}
+  
+  {% if faq_sets %}
+    <p style="color: green;">✓ Found {{ faq_sets.size }} FAQ Set(s)</p>
+    
+    {% for faq_set in faq_sets %}
+      <div style="background: white; padding: 10px; margin: 10px 0;">
+        <h4>{{ faq_set.name.value | default: faq_set.name }}</h4>
+        <p>Type: {{ faq_set.faq_set_type.value | default: faq_set.faq_set_type }}</p>
+        <p>Active: {{ faq_set.active.value | default: faq_set.active }}</p>
+        
+        {% assign faq_json = faq_set.faqs.value | default: faq_set.faqs %}
+        {% if faq_json %}
+          <p style="color: green;">✓ FAQ JSON found</p>
+          
+          <!-- Parse and display FAQs -->
+          {% assign parsed_faqs = faq_json | parse_json %}
+          {% if parsed_faqs %}
+            <h5>Questions & Answers:</h5>
+            {% for faq in parsed_faqs %}
+              <details style="margin: 10px 0;">
+                <summary style="cursor: pointer; font-weight: bold;">{{ faq.question }}</summary>
+                <p style="padding: 10px;">{{ faq.answer }}</p>
+              </details>
+            {% endfor %}
+          {% else %}
+            <p>Could not parse JSON. Raw data:</p>
+            <pre style="font-size: 10px;">{{ faq_json | truncate: 500 }}</pre>
+          {% endif %}
+        {% else %}
+          <p style="color: red;">No FAQ data found in this set</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p style="color: red;">No FAQ Sets assigned</p>
+  {% endif %}
+</div>

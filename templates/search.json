@@ -1,0 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "1738062334a0610e97": {
+      "type": "apps",
+      "blocks": {
+        "superspeed_web_vitals_ss_content_v2_hF9izF": {
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content-v2/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "settings": {
+            "t": "<h1>Search</h1><h2>Exploring new discoveries is just one click away with our dedicated search page.</h2>",
+            "html": "",
+            "b1": "",
+            "b2": "",
+            "product": "",
+            "above_the_fold": "above_the_fold",
+            "image": "shopify://shop_images/Fairground-Strips-8.jpg",
+            "config": "# buttons\nbtn_1:Shop Now →\nbtn_1_style:primary\n\nbtn_2:Learn More\nbtn_2_style:secondary\n\nfull_screen_link:false\n\n# loading\nplaceholder:false\n\n# product\nuse_product_image:true\nuse_product_link:true\n\n# background image/video\nfill_bg:false\nfill_bg_mob:false\ncustom_widths:\n\n# content\nfill_content:false\nfill_content_mob:false\n\n# overlay\noverlay:true\noverlay_mob:true\n\n# increase image quality\nhigh_resolution:true\nhigh_resolution_mob:true\n\n# video settings\nvideo_preload:true\nvideo_controls:false\nvideo_loop:true\nvideo_autoplay:true\nvideo_muted:true\nvideo_inline:true\nvideo_play_btn:true\n\n# video settings mobile\nvideo_preload_mob:false\nvideo_controls_mob:false\nvideo_loop_mob:true\nvideo_autoplay_mob:true\nvideo_muted_mob:true\nvideo_inline_mob:true\nvideo_play_btn_mob:true\n\ndev:false",
+            "tx": "--ss-cw: 120rem;--ss-fluid: calc(50vw - var(--ss-cw) / 2);--ss-grid-m: 5rem;--ss-grid-g: 2rem;--ss-grid-cols: 15;--ss-cw-mob: 100%;--ss-fluid-mob: 0fr;--ss-grid-m-mob: 2rem;--ss-grid-g-mob: 1.5rem;--ss-grid-cols-mob: 5;--ss-p-font: monospace;--ss-p: clamp(1.25rem, 0.0348rem + 2.5316vw, 2.25rem);--ss-p-color: #ffffff;--ss-p-l: 1.4;--ss-p-w: 400;--ss-p-ma: 0 0 20px 0;--ss-p-mob: 14px;--ss-p-color-mob: #ffffff;--ss-p-l-mob: 1;--ss-p-w-mob: 400;--ss-p-ma-mob: 0 0 10px 0;--ss-h1-font: system-ui;--ss-h1: clamp(2rem, -0.4304rem + 5.0633vw, 4rem);--ss-h1-color: #ffffff;--ss-h1-l: 1.1;--ss-h1-w: 400;--ss-h1-ma: 0 0 20px 0;--ss-h1-mob: 32px;--ss-h1-color-mob: #ffffff;--ss-h1-l-mob: 1;--ss-h1-w-mob: 400;--ss-h1-ma-mob: 0 0 10px 0;--ss-h2-font: system-ui;--ss-h2: 32px;--ss-h2-color: #ffffff;--ss-h2-l: 1;--ss-h2-w: 400;--ss-h2-ma: 0 0 10px 0;--ss-h2-mob: 24px;--ss-h2-color-mob: #ffffff;--ss-h2-l-mob: 1;--ss-h2-w-mob: 400;--ss-h2-ma-mob: 0 0 10px 0;--ss-h3-font: system-ui;--ss-h3: 24px;--ss-h3-color: #ffffff;--ss-h3-l: 0.9;--ss-h3-w: 400;--ss-h3-ma: 0 0 10px 0;--ss-h3-mob: 18px;--ss-h3-color-mob: #ffffff;--ss-h3-l-mob: 1;--ss-h3-w-mob: 400;--ss-h3-ma-mob: 0 0 10px 0;--ss-h4-font: system-ui;--ss-h4: 18px;--ss-h4-color: #ffffff;--ss-h4-l: 0.4;--ss-h4-w: 400;--ss-h4-ma: 0 0 10px 0;--ss-h4-mob: 16px;--ss-h4-color-mob: #ffffff;--ss-h4-l-mob: 1;--ss-h4-w-mob: 400;--ss-h4-ma-mob: 0 0 10px 0;--ss-h5-font: system-ui;--ss-h5: 16px;--ss-h5-color: #ffffff;--ss-h5-l: 1;--ss-h5-w: 400;--ss-h5-ma: 0 0 10px 0;--ss-h5-mob: 14px;--ss-h5-color-mob: #ffffff;--ss-h5-l-mob: 1;--ss-h5-w-mob: 400;--ss-h5-ma-mob: 0 0 10px 0;--ss-h6-font: system-ui;--ss-h6: 14px;--ss-h6-color: #ffffff;--ss-h6-l: 1;--ss-h6-w: 400;--ss-h6-ma: 0 0 10px 0;--ss-h6-mob: 14px;--ss-h6-color-mob: #ffffff;--ss-h6-l-mob: 1;--ss-h6-w-mob: 400;--ss-h6-ma-mob: 0 0 10px 0;--ss-overlay: #00000090;--ss-bg-column: fa1 / fa2;--ss-bg-row: 1 / 1;--ss-bg-max-width: auto;--ss-bg-max-height: 30vh;--ss-bg-img-br: 30px;--ss-bg-ar: 2;--ss-bg-of: cover;--ss-bg-op: center;--ss-bg-jself: auto;--ss-overlay-mob: #00000090;--ss-bg-column-mob: fa1 / fa2;--ss-bg-row-mob: 1 / 1;--ss-bg-max-width-mob: auto;--ss-bg-max-height-mob: 25vh;--ss-bg-img-br-mob: 30px;--ss-bg-ar-mob: ;--ss-bg-of-mob: cover;--ss-bg-op-mob: center;--ss-bg-jself-mob: auto;--ss-cta-width: auto;--ss-cta-padding: 0px;--ss-cta-margin: 20px 0 0 0;--ss-cta-wrap: wrap;--ss-cta-direction: row;--ss-cta-gap: 20px;--ss-cta-justify: center;--ss-cta-align: stretch;--ss-cta-width-mob: auto;--ss-cta-padding-mob: 0px;--ss-cta-margin-mob: 20px 0;--ss-cta-wrap-mob: wrap;--ss-cta-gap-mob: 20px;--ss-cta-justify-mob: center;--ss-cta-align-mob: center;--ss-btn-font: system-ui;--ss-x-btn-w: auto;--ss-x-btn-h: auto;--ss-x-btn-br: 2px;--ss-x-btn-rad: 100px;--ss-x-btn-fs: 16px;--ss-btn-fw: 300;--ss-btn-lh: 1.9;--ss-btn-padding: 10px 20px;--ss-btn-margin: 0px;--ss-btn-ls: 2px;--ss-btn-gauss: ;--ss-x-btn-w-mob: auto;--ss-x-btn-h-mob: auto;--ss-x-btn-br-mob: 1px;--ss-x-btn-rad-mob: 100px;--ss-x-btn-fs-mob: 16px;--ss-btn-fw-mob: 400;--ss-btn-lh-mob: 1;--ss-btn-padding-mob: 10px 20px;--ss-btn-margin-mob: 0px;--ss-btn-ls-mob: 1px;--ss-btn-gauss-mob: ;--ss-b1-br: #000000;--ss-b1-bg: #3948FF;--ss-b1-t: #ffffff;--ss-b1-h-br: #125514;--ss-b1-h-bg: #36FF3C;--ss-b1-h-t: #000000;--ss-b2-br: #000000;--ss-b2-bg: #1A50FF7C;--ss-b2-t: #ffffff;--ss-b2-h-br: #ffffff;--ss-b2-h-bg: #ffffff;--ss-b2-h-t: #000000;--ss-wrapper-col-span: c1 / c16;--ss-wrapper-row-span: 1 / 1;--ss-wrapper-cols: subgrid;--ss-wrapper-rows: auto;--ss-wrapper-padding: 0px;--ss-wrapper-margin: 0px;--ss-wrapper-height: auto;--ss-wrapper-min-height: auto;--ss-wrapper-max-height: auto;--ss-wrapper-max-width: auto;--ss-wrapper-col-span-mob: fa1 / fa2;--ss-wrapper-row-span-mob: 1 / 1;--ss-wrapper-cols-mob: subgrid;--ss-wrapper-rows-mob: auto;--ss-wrapper-padding-mob: auto;--ss-wrapper-margin-mob: auto;--ss-wrapper-height-mob: 100%;--ss-wrapper-min-height-mob: 20vh;--ss-wrapper-max-height-mob: auto;--ss-wrapper-max-width-mob: auto;--ss-text-balance: balance;--ss-content-text-align: center;--ss-content-vertical-align: center;--ss-content-col-span: c2 / c15;--ss-content-row-span: 1 / -1;--ss-content-background: #FFFFFF00;--ss-content-padding: min(10px, 5%);--ss-content-margin: 0px;--ss-content-height: auto;--ss-content-min-height: auto;--ss-content-max-height: auto;--ss-content-max-width: auto;--ss-content-radius: 30px;--ss-content-shadow: ;--ss-text-balance-mob: unset;--ss-content-text-align-mob: center;--ss-content-vertical-align-mob: center;--ss-content-col-span-mob: c1 / c6;--ss-content-row-span-mob: 1 / -1;--ss-content-background-mob: ;--ss-content-padding-mob: 0px;--ss-content-margin-mob: 0px;--ss-content-height-mob: auto;--ss-content-min-height-mob: auto;--ss-content-max-height-mob: auto;--ss-content-max-width-mob: auto;--ss-content-radius-mob: 0px;--ss-content-shadow-mob: ;--ss-overlay-op: 1;--ss-overlay-op-mob: 0.8;",
+            "st": ""
+          }
+        }
+      },
+      "block_order": [
+        "superspeed_web_vitals_ss_content_v2_hF9izF"
+      ],
+      "settings": {
+        "include_padding": true
+      }
+    },
+    "main": {
+      "type": "static-search",
+      "blocks": {
+        "filter-1": {
+          "type": "filter",
+          "settings": {
+            "filter_groups": "expand_first",
+            "show_filter_product_count": true
+          }
+        }
+      },
+      "block_order": [
+        "filter-1"
+      ],
+      "settings": {
+        "results_per_page_range": 24,
+        "products_per_row": "4"
+      }
+    }
+  },
+  "order": [
+    "1738062334a0610e97",
+    "main"
+  ]
+}

@@ -1,0 +1,118 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe": {
+      "type": "dynamic-collection-list",
+      "blocks": {
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-1": {
+          "type": "collection",
+          "settings": {
+            "collection": "fairground-lights",
+            "title": ""
+          }
+        },
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-2": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-modules",
+            "title": ""
+          }
+        },
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-3": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-flex",
+            "title": ""
+          }
+        },
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-4": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-strip",
+            "title": ""
+          }
+        },
+        "bc31f130-5947-4b78-b7d0-b9d2ed8f8f72": {
+          "type": "collection",
+          "settings": {
+            "collection": "push-through-leds-push-through",
+            "title": ""
+          }
+        },
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-5": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-drivers",
+            "title": ""
+          }
+        },
+        "f440b38e-bbfb-4620-a585-35f2e4543a37": {
+          "type": "collection",
+          "settings": {
+            "collection": "controllers-dimmers",
+            "title": ""
+          }
+        },
+        "b7b9badb-51c9-42cd-a54b-308b3844b104": {
+          "type": "collection",
+          "settings": {
+            "collection": "connectors-cables",
+            "title": ""
+          }
+        },
+        "d7c4bb3a-a876-4a29-937a-e14969e1d1bb": {
+          "type": "collection",
+          "settings": {
+            "collection": "cables",
+            "title": ""
+          }
+        },
+        "4452d0cb-99bf-4884-a38b-ec10fc86a907": {
+          "type": "collection",
+          "settings": {
+            "collection": "spacers",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-1",
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-2",
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-3",
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-4",
+        "bc31f130-5947-4b78-b7d0-b9d2ed8f8f72",
+        "template--16747555750130__571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe-collection-5",
+        "f440b38e-bbfb-4620-a585-35f2e4543a37",
+        "b7b9badb-51c9-42cd-a54b-308b3844b104",
+        "d7c4bb3a-a876-4a29-937a-e14969e1d1bb",
+        "4452d0cb-99bf-4884-a38b-ec10fc86a907"
+      ],
+      "settings": {
+        "title": "Collection list",
+        "thumbnail_columns_desktop": 5,
+        "thumbnail_columns_mobile": 2,
+        "image-crop": "circle",
+        "cta_label": "",
+        "cta_link": "",
+        "cta_button_style": "primary"
+      }
+    },
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "settings": {}
+    }
+  },
+  "order": [
+    "571a769c-1dd6-43ad-8b7b-3dd6f6cf09fe",
+    "main"
+  ]
+}

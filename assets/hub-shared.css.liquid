@@ -1,0 +1,162 @@
+{%- comment -%}
+  Shared chassis styles for the four hub carousel sections:
+    hub-choose-route, hub-featured-products, hub-buying-guide, hub-decision-blocks.
+
+  Loaded once via {{ 'hub-shared.css' | asset_url | stylesheet_tag }} from
+  sections/hub-choose-route.liquid (earliest of the four in templates/collection.hub.json).
+
+  Per-card styling (heads, eyebrows, bodies, media, expand toggles, dividers,
+  bullets, etc.) remains inline in each section file. Inline JS untouched.
+{%- endcomment -%}
+
+:root {
+  --hub-bg: #f5f5f7;
+  --hub-text: #1c2135;
+  --hub-text-muted: #6e6e73;
+  --hub-card-bg: #ffffff;
+  --hub-card-border: rgba(28, 33, 53, 0.12);
+  --hub-card-shadow-rest: 0 1px 3px rgba(28, 33, 53, 0.04), 0 4px 10px rgba(28, 33, 53, 0.05);
+  --hub-card-shadow-hover: 0 2px 6px rgba(28, 33, 53, 0.05), 0 6px 14px rgba(28, 33, 53, 0.08);
+  --hub-card-radius: 22px;
+  --hub-card-radius-mobile: 18px;
+  --hub-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --hub-arrow-size: 40px;
+  /* Page rail — gutter on each side, no max-width container */
+  --hub-rail-pad: clamp(1.5rem, 8vw, 200px);
+}
+
+/* Buying Guide and Decision Blocks use a smaller arrow chip */
+.hub-questions, .hub-vs { --hub-arrow-size: 36px; }
+
+/* === Full-bleed section wrapper === */
+.hub-route, .hub-feat, .hub-questions, .hub-vs {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0 1.5rem 4rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* === Container rail padding === */
+.hub-route__container, .hub-feat__container, .hub-questions__container, .hub-vs__container {
+  padding-left: var(--hub-rail-pad);
+  padding-right: var(--hub-rail-pad);
+}
+
+/* === Scroll mechanic === */
+.hub-route__scroll, .hub-feat__scroll, .hub-questions__scroll, .hub-vs__scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.hub-route__scroll::-webkit-scrollbar,
+.hub-feat__scroll::-webkit-scrollbar,
+.hub-questions__scroll::-webkit-scrollbar,
+.hub-vs__scroll::-webkit-scrollbar { display: none; }
+
+/* === Strip flex (Choose Route + Bestsellers — Buying Guide / Decision Blocks fold this into __scroll) === */
+.hub-route__strip, .hub-feat__strip {
+  display: flex;
+  gap: 1.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* === Item base sizing (desktop) === */
+.hub-route__item, .hub-feat__item, .hub-questions__item, .hub-vs__item {
+  flex: 0 0 320px;
+  scroll-snap-align: start;
+  margin: 0;
+}
+
+/* === Arrow chip === */
+.hub-route__btn, .hub-feat__btn, .hub-questions__btn, .hub-vs__btn {
+  width: var(--hub-arrow-size);
+  height: var(--hub-arrow-size);
+  border-radius: 999px;
+  background: var(--hub-card-bg);
+  border: 1px solid var(--hub-card-border);
+  color: var(--hub-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.hub-route__btn:hover,
+.hub-feat__btn:hover,
+.hub-questions__btn:hover,
+.hub-vs__btn:hover {
+  border-color: var(--zone-accent, #0076DE);
+  color: var(--zone-accent, #0076DE);
+}
+.hub-route__btn:active,
+.hub-feat__btn:active,
+.hub-questions__btn:active,
+.hub-vs__btn:active {
+  transform: scale(0.95);
+}
+.hub-route__btn:disabled,
+.hub-feat__btn:disabled,
+.hub-questions__btn:disabled,
+.hub-vs__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* === Reveal-on-scroll animation === */
+.hub-route--reveal,
+.hub-feat--reveal,
+.hub-questions--reveal,
+.hub-vs--reveal {
+  transform: translateY(24px);
+  transition: transform 0.7s ease;
+}
+.hub-route--reveal.is-revealed,
+.hub-feat--reveal.is-revealed,
+.hub-questions--reveal.is-revealed,
+.hub-vs--reveal.is-revealed {
+  transform: translateY(0);
+}
+
+/* === Mobile: hide arrow chips ≤ 990px === */
+@media (max-width: 990px) {
+  .hub-route__nav-wrap,
+  .hub-feat__nav,
+  .hub-questions__nav-wrap,
+  .hub-vs__nav-wrap {
+    display: none;
+  }
+}
+
+/* === Mobile: section padding override ≤ 600px === */
+@media (max-width: 600px) {
+  .hub-route, .hub-feat, .hub-questions, .hub-vs {
+    padding: 0 1.25rem 2.5rem;
+  }
+}
+
+/* === Reduced motion === */
+@media (prefers-reduced-motion: reduce) {
+  .hub-route--reveal,
+  .hub-feat--reveal,
+  .hub-questions--reveal,
+  .hub-vs--reveal {
+    transform: none;
+    transition: none;
+  }
+  .hub-route__card,
+  .hub-feat__card,
+  .hub-questions__card,
+  .hub-vs__card {
+    transition: none;
+  }
+}

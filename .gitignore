@@ -1,0 +1,7 @@
+node_modules/
+.shopify/
+.claude/
+.probe/
+*.log
+.DS_Store
+Thumbs.db

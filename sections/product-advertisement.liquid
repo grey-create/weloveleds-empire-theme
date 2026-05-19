@@ -1,0 +1,164 @@
+{% comment %} Product Page Advertisement Section {% endcomment %}
+
+{% assign product_promotion = null %}
+{% for promotion in shop.metaobjects.product_page_advertisement.values %}
+  {% if promotion.active %}
+    {% assign show_promo = false %}
+    
+    {% comment %} Check if this product is specifically targeted {% endcomment %}
+    {% if promotion.target_products contains product %}
+      {% assign show_promo = true %}
+    {% endif %}
+    
+    {% comment %} Check if product's collection is targeted {% endcomment %}
+    {% unless show_promo %}
+      {% for collection in product.collections %}
+        {% if promotion.target_collections contains collection %}
+          {% assign show_promo = true %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
+    {% endunless %}
+    
+    {% comment %} Show if no specific targeting (universal ad) {% endcomment %}
+    {% unless show_promo %}
+      {% if promotion.target_products == blank and promotion.target_collections == blank %}
+        {% assign show_promo = true %}
+      {% endif %}
+    {% endunless %}
+    
+    {% if show_promo %}
+      {% assign product_promotion = promotion %}
+      {% break %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if product_promotion %}
+  <div class="product-promo-section" {% if product_promotion.background_color %}style="background-color: {{ product_promotion.background_color }}"{% endif %}>
+    <div class="promo-content">
+      {% if product_promotion.ad_image %}
+        <img src="{{ product_promotion.ad_image | img_url: '300x300' }}" alt="{{ product_promotion.ad_title }}">
+      {% endif %}
+      
+      <div class="promo-text">
+        {% if product_promotion.ad_title %}
+          <h3>{{ product_promotion.ad_title }}</h3>
+        {% endif %}
+        {% if product_promotion.ad_subtitle %}
+          <p><strong>{{ product_promotion.ad_subtitle }}</strong></p>
+        {% endif %}
+        {% if product_promotion.ad_description %}
+          <div>{{ product_promotion.ad_description }}</div>
+        {% endif %}
+        
+        {% if product_promotion.button_text and product_promotion.button_url %}
+          <a href="{{ product_promotion.button_url }}" class="promo-button">
+            {{ product_promotion.button_text }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<style>
+  .product-promo-section {
+    margin: 2rem 0;
+    padding: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border: 2px solid #dee2e6;
+    position: relative;
+  }
+  
+  .product-promo-section::before {
+    content: "ADVERTISEMENT";
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 1px;
+    border-radius: 3px;
+    z-index: 10;
+  }
+  
+  .promo-content {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+  
+  .promo-content img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  
+  .promo-text {
+    flex: 1;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  
+  .promo-text h3 {
+    margin: 0 0 0.5rem 0;
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.2rem;
+  }
+  
+  .promo-text p {
+    margin: 0 0 1rem 0;
+    color: #555;
+    line-height: 1.4;
+  }
+  
+  .promo-button {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    color: white !important;
+    padding: 12px 24px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(238, 90, 36, 0.3);
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-block;
+  }
+  
+  .promo-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(238, 90, 36, 0.4);
+  }
+  
+  @media (max-width: 768px) {
+    .promo-content {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .promo-content img {
+      max-width: 150px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Advertisement",
+  "tag": "section",
+  "class": "section",
+  "enabled_on": {
+    "templates": ["product"]
+  }
+}
+{% endschema %}

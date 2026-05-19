@@ -1,0 +1,39 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page",
+      "disabled": true,
+      "custom_css": [],
+      "settings": {}
+    },
+    "christmas_closure_cQnCBj": {
+      "type": "christmas-closure",
+      "name": "Christmas Closure",
+      "settings": {
+        "heading": "Merry Christmas from WeLoveLEDs!",
+        "subheading": "As the festive season approaches, we're preparing to close for a well-deserved break.",
+        "year": "2025",
+        "closing_time": "12:00 PM",
+        "closing_date": "Tuesday 23rd December 2025",
+        "reopening_time": "7:45 AM",
+        "reopening_date": "Monday 5th January 2026",
+        "last_dpd_date": "Monday 22nd December 2025",
+        "order_cutoff_date": "20th December",
+        "new_year": "2026"
+      }
+    }
+  },
+  "order": [
+    "main",
+    "christmas_closure_cQnCBj"
+  ]
+}

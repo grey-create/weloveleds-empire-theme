@@ -1,0 +1,672 @@
+/* ==========================================================================
+   MODERN FOOTER
+   Trade signup, navigation, BSGA badge, social links, and payment icons
+   ========================================================================== */
+
+.modern-footer-section {
+  margin: 0;
+  padding: 0;
+}
+
+.modern-footer {
+  background: #1c2135;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   SIGNUP BAND
+   ========================================================================== */
+
+.modern-footer__signup {
+  background: linear-gradient(135deg, #0076DE 0%, #005bb5 100%);
+  padding: 2.5rem 0;
+}
+
+.modern-footer__signup-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.modern-footer__signup-content {
+  flex: 1;
+  max-width: 400px;
+}
+
+.modern-footer__signup-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem 0;
+}
+
+.modern-footer__signup-text {
+  font-size: 0.9375rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.modern-footer__signup-form {
+  flex: 1;
+  max-width: 580px;
+}
+
+.modern-footer__form {
+  width: 100%;
+}
+
+.modern-footer__form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.625rem;
+}
+
+.modern-footer__input-group {
+  position: relative;
+}
+
+.modern-footer__input,
+.modern-footer__select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 0.9375rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.modern-footer__select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+.modern-footer__select option {
+  background: #1c2135;
+  color: #ffffff;
+}
+
+.modern-footer__input::placeholder,
+.modern-footer__select:invalid {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.modern-footer__input:focus,
+.modern-footer__select:focus {
+  outline: none;
+  border-color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.modern-footer__form-submit {
+  margin-top: 0.75rem;
+}
+
+.modern-footer__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0076DE;
+  background: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.modern-footer__submit:hover {
+  background: #f0f7ff;
+  transform: translateY(-1px);
+}
+
+.modern-footer__submit:disabled {
+  opacity: 0.7;
+  cursor: wait;
+  transform: none;
+}
+
+.modern-footer__submit-arrow {
+  transition: transform 0.2s ease;
+}
+
+.modern-footer__submit:hover .modern-footer__submit-arrow {
+  transform: translateX(3px);
+}
+
+.modern-footer__form-success {
+  text-align: center;
+}
+
+.modern-footer__success {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+}
+
+.modern-footer__signup-note {
+  margin: 0.75rem 0 0 0;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+}
+
+/* ==========================================================================
+   TRUST SIGNALS
+   ========================================================================== */
+
+.modern-footer__trust {
+  background: #151928;
+  padding: 1rem 0;
+}
+
+.modern-footer__trust-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem 2.5rem;
+}
+
+.modern-footer__trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.modern-footer__trust-icon {
+  font-size: 1rem;
+}
+
+.modern-footer__trust-text {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   MAIN FOOTER — 5-Column Grid
+   ========================================================================== */
+
+.modern-footer__main {
+  padding: 3rem 0;
+}
+
+.modern-footer__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr 0.8fr 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Company Column */
+.modern-footer__column--company {
+  padding-right: 0.5rem;
+}
+
+.modern-footer__logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+}
+
+.modern-footer__address {
+  font-style: normal;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.25rem;
+}
+
+.modern-footer__contact {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modern-footer__contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.modern-footer__contact-link:hover {
+  color: #d6e9f9;
+}
+
+.modern-footer__icon {
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+
+/* Navigation Columns */
+.modern-footer__column {
+  min-width: 0;
+}
+
+.modern-footer__heading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  margin: 0 0 1rem 0;
+}
+
+.modern-footer__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.modern-footer__links li {
+  margin-bottom: 0.625rem;
+}
+
+.modern-footer__link {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.modern-footer__link:hover {
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   BSGA BADGE COLUMN
+   ========================================================================== */
+
+.modern-footer__column--bsga {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.modern-footer__bsga-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.625rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 1.25rem 1rem 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  max-width: 200px;
+}
+
+.modern-footer__bsga-badge:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.modern-footer__bsga-logo {
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
+}
+
+.modern-footer__bsga-name {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.modern-footer__bsga-org {
+  display: block;
+  font-size: 0.6875rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ==========================================================================
+   SOCIAL COLUMN
+   ========================================================================== */
+
+.modern-footer__social {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.modern-footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.modern-footer__social-link:hover {
+  background: #0076DE;
+  transform: translateY(-2px);
+}
+
+/* Trade CTA Box */
+.modern-footer__trade-cta {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.modern-footer__trade-title {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+}
+
+.modern-footer__trade-text {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 1rem 0;
+}
+
+.modern-footer__trade-button {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #1c2135;
+  background: #d6e9f9;
+  border-radius: 50px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.modern-footer__trade-button:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   BOTTOM BAR
+   ========================================================================== */
+
+.modern-footer__bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem 0;
+}
+
+.modern-footer__bottom-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.modern-footer__copyright {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.modern-footer__legal {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.modern-footer__legal-link {
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.modern-footer__legal-link:hover {
+  color: #ffffff;
+}
+
+.modern-footer__payments {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.modern-footer__payment-icon {
+  height: 24px;
+  width: auto;
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+
+/* Tablet — 2 columns */
+@media screen and (max-width: 1024px) {
+  .modern-footer__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+  
+  .modern-footer__column--company {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding-right: 0;
+  }
+  
+  .modern-footer__logo {
+    grid-column: span 2;
+  }
+  
+  .modern-footer__column--bsga {
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile — single column, centred */
+@media screen and (max-width: 768px) {
+  .modern-footer__signup {
+    padding: 2rem 0;
+  }
+  
+  .modern-footer__signup-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .modern-footer__signup-content {
+    max-width: 100%;
+  }
+  
+  .modern-footer__signup-form {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .modern-footer__form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .modern-footer__signup-note {
+    text-align: center;
+  }
+  
+  .modern-footer__trust-container {
+    gap: 0.75rem 1.5rem;
+  }
+  
+  .modern-footer__trust-text {
+    font-size: 0.75rem;
+  }
+  
+  .modern-footer__main {
+    padding: 2.5rem 0;
+  }
+  
+  .modern-footer__container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .modern-footer__column--company {
+    grid-column: span 1;
+    display: block;
+    text-align: center;
+    padding-right: 0;
+  }
+  
+  .modern-footer__contact {
+    align-items: center;
+  }
+  
+  .modern-footer__column {
+    text-align: center;
+  }
+  
+  .modern-footer__column--bsga {
+    justify-content: center;
+  }
+  
+  .modern-footer__bsga-badge {
+    max-width: 220px;
+  }
+  
+  .modern-footer__social {
+    justify-content: center;
+  }
+  
+  .modern-footer__bottom-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .modern-footer__legal {
+    justify-content: center;
+  }
+  
+  .modern-footer__payments {
+    justify-content: center;
+  }
+}
+
+/* Small mobile */
+@media screen and (max-width: 480px) {
+  .modern-footer__signup {
+    padding: 1.5rem 0;
+  }
+  
+  .modern-footer__signup-container {
+    padding: 0 1rem;
+  }
+  
+  .modern-footer__signup-title {
+    font-size: 1.25rem;
+  }
+  
+  .modern-footer__signup-text {
+    font-size: 0.875rem;
+  }
+  
+  .modern-footer__input,
+  .modern-footer__select {
+    padding: 0.6875rem 0.875rem;
+    font-size: 0.875rem;
+  }
+  
+  .modern-footer__submit {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.9375rem;
+  }
+  
+  .modern-footer__trust-container {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .modern-footer__trust-item {
+    justify-content: center;
+  }
+  
+  .modern-footer__container {
+    padding: 0 1rem;
+  }
+  
+  .modern-footer__bottom-container {
+    padding: 0 1rem;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+
+.modern-footer__input:focus-visible,
+.modern-footer__select:focus-visible,
+.modern-footer__submit:focus-visible,
+.modern-footer__link:focus-visible,
+.modern-footer__contact-link:focus-visible,
+.modern-footer__social-link:focus-visible,
+.modern-footer__legal-link:focus-visible,
+.modern-footer__trade-button:focus-visible,
+.modern-footer__bsga-badge:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modern-footer__submit,
+  .modern-footer__link,
+  .modern-footer__social-link,
+  .modern-footer__trade-button,
+  .modern-footer__bsga-badge,
+  .modern-footer__input,
+  .modern-footer__select {
+    transition: none;
+  }
+}

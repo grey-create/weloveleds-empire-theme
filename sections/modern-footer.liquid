@@ -1,0 +1,596 @@
+{% comment %}
+  Modern Footer for WeLoveLEDs
+  Includes trade signup, navigation columns, BSGA badge, social links, and payment icons
+{% endcomment %}
+
+{{ 'modern-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="modern-footer">
+  
+  {%- comment -%} Signup Band - Hidden on trade discount page {%- endcomment -%}
+  {% unless request.path contains '/pages/trade-discount' %}
+  <div class="modern-footer__signup">
+    <div class="modern-footer__signup-container">
+      <div class="modern-footer__signup-content">
+        <h3 class="modern-footer__signup-title">{{ section.settings.signup_title }}</h3>
+        <p class="modern-footer__signup-text">{{ section.settings.signup_text }}</p>
+      </div>
+      <div class="modern-footer__signup-form">
+        <form id="footer-trade-form" class="modern-footer__form">
+          
+          <div class="modern-footer__form-grid">
+            <div class="modern-footer__input-group">
+              <input 
+                type="text" 
+                id="footer_first_name"
+                name="first_name" 
+                placeholder="First Name"
+                class="modern-footer__input"
+                required
+                autocomplete="given-name"
+              >
+            </div>
+            <div class="modern-footer__input-group">
+              <input 
+                type="email" 
+                id="footer_email"
+                name="email" 
+                placeholder="Email Address"
+                class="modern-footer__input"
+                required
+                autocomplete="email"
+              >
+            </div>
+            <div class="modern-footer__input-group">
+              <input 
+                type="text" 
+                id="footer_company"
+                name="company" 
+                placeholder="Company Name"
+                class="modern-footer__input"
+                required
+                autocomplete="organization"
+              >
+            </div>
+            <div class="modern-footer__input-group">
+              <select id="footer_trade_type" name="trade_type" class="modern-footer__select" required>
+                <option value="" disabled selected>Trade Type</option>
+                <option value="Sign Maker">Sign Maker / Signage</option>
+                <option value="Electrician">Electrician</option>
+                <option value="Display & Exhibition">Display & Exhibition</option>
+                <option value="Event Production">Event Production</option>
+                <option value="Shop Fitting">Shop Fitting / Retail</option>
+                <option value="Architect / Designer">Architect / Designer</option>
+                <option value="Fairground / Amusement">Fairground / Amusement</option>
+                <option value="Film & TV">Film & TV</option>
+                <option value="Installer">General Installer</option>
+                <option value="Reseller">Reseller / Distributor</option>
+                <option value="Other">Other Trade</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="modern-footer__form-submit">
+            <button type="submit" class="modern-footer__submit">
+              <span class="modern-footer__btn-text">{{ section.settings.signup_button }}</span>
+              <span class="modern-footer__submit-arrow">→</span>
+            </button>
+          </div>
+        </form>
+        
+        <div id="footer-form-success" class="modern-footer__form-success" style="display: none;">
+          <p class="modern-footer__success">{{ section.settings.signup_success }}</p>
+        </div>
+        
+        <p id="footer-form-note" class="modern-footer__signup-note">{{ section.settings.signup_note }}</p>
+      </div>
+    </div>
+  </div>
+  {% endunless %}
+  
+  {%- comment -%} Trust Signals {%- endcomment -%}
+  <div class="modern-footer__trust">
+    <div class="modern-footer__trust-container">
+      <div class="modern-footer__trust-item">
+        <span class="modern-footer__trust-icon">🇬🇧</span>
+        <span class="modern-footer__trust-text">UK-Based</span>
+      </div>
+      <div class="modern-footer__trust-item">
+        <span class="modern-footer__trust-icon">📅</span>
+        <span class="modern-footer__trust-text">Operating Since 2012</span>
+      </div>
+      <div class="modern-footer__trust-item">
+        <span class="modern-footer__trust-icon">👥</span>
+        <span class="modern-footer__trust-text">8,000+ Trade Customers</span>
+      </div>
+      <div class="modern-footer__trust-item">
+        <span class="modern-footer__trust-icon">✅</span>
+        <span class="modern-footer__trust-text">Up to 10-Year Warranties</span>
+      </div>
+      <div class="modern-footer__trust-item">
+        <span class="modern-footer__trust-icon">🚚</span>
+        <span class="modern-footer__trust-text">Fast & Free UK Delivery</span>
+      </div>
+    </div>
+  </div>
+  
+  {%- comment -%} Main Footer {%- endcomment -%}
+  <div class="modern-footer__main">
+    <div class="modern-footer__container">
+      
+      {%- comment -%} Company Info {%- endcomment -%}
+      <div class="modern-footer__column modern-footer__column--company">
+        <h4 class="modern-footer__logo">{{ section.settings.company_name }}</h4>
+        <address class="modern-footer__address">
+          {{ section.settings.address | newline_to_br }}
+        </address>
+        <div class="modern-footer__contact">
+          {% if section.settings.phone != blank %}
+            <a href="tel:{{ section.settings.phone | remove: ' ' }}" class="modern-footer__contact-link">
+              <svg class="modern-footer__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              {{ section.settings.phone }}
+            </a>
+          {% endif %}
+          {% if section.settings.email != blank %}
+            <a href="mailto:{{ section.settings.email }}" class="modern-footer__contact-link">
+              <svg class="modern-footer__icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              {{ section.settings.email }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+      
+      {%- comment -%} Navigation Columns, BSGA Badge, and Social {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when 'menu' %}
+            <div class="modern-footer__column" {{ block.shopify_attributes }}>
+              <h4 class="modern-footer__heading">{{ block.settings.heading }}</h4>
+              {% if block.settings.menu != blank %}
+                <ul class="modern-footer__links">
+                  {% for link in linklists[block.settings.menu].links %}
+                    <li>
+                      <a href="{{ link.url }}" class="modern-footer__link">{{ link.title }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+            </div>
+          
+          {% when 'bsga' %}
+            <div class="modern-footer__column modern-footer__column--bsga" {{ block.shopify_attributes }}>
+              <a href="{{ block.settings.bsga_link }}" target="_blank" rel="noopener" class="modern-footer__bsga-badge" title="{{ block.settings.bsga_title }}">
+                {% if block.settings.bsga_image != blank %}
+                  <img 
+                    src="{{ block.settings.bsga_image | image_url: width: 280 }}" 
+                    alt="{{ block.settings.bsga_title }}" 
+                    class="modern-footer__bsga-logo"
+                    width="140" 
+                    height="140"
+                    loading="lazy"
+                  >
+                {% elsif block.settings.bsga_image_url != blank %}
+                  <img 
+                    src="{{ block.settings.bsga_image_url }}" 
+                    alt="{{ block.settings.bsga_title }}" 
+                    class="modern-footer__bsga-logo"
+                    width="140" 
+                    height="140"
+                    loading="lazy"
+                  >
+                {% endif %}
+                <span class="modern-footer__bsga-name">{{ block.settings.bsga_title }}</span>
+                <span class="modern-footer__bsga-org">{{ block.settings.bsga_subtitle }}</span>
+              </a>
+            </div>
+          
+          {% when 'social' %}
+            <div class="modern-footer__column modern-footer__column--social" {{ block.shopify_attributes }}>
+              <h4 class="modern-footer__heading">{{ block.settings.heading }}</h4>
+              <div class="modern-footer__social">
+                {% if block.settings.facebook != blank %}
+                  <a href="{{ block.settings.facebook }}" class="modern-footer__social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                    </svg>
+                  </a>
+                {% endif %}
+                {% if block.settings.instagram != blank %}
+                  <a href="{{ block.settings.instagram }}" class="modern-footer__social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+                    </svg>
+                  </a>
+                {% endif %}
+                {% if block.settings.linkedin != blank %}
+                  <a href="{{ block.settings.linkedin }}" class="modern-footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                    </svg>
+                  </a>
+                {% endif %}
+                {% if block.settings.youtube != blank %}
+                  <a href="{{ block.settings.youtube }}" class="modern-footer__social-link" aria-label="YouTube" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                      <path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                    </svg>
+                  </a>
+                {% endif %}
+                {% if block.settings.email_icon %}
+                  <a href="mailto:{{ section.settings.email }}" class="modern-footer__social-link" aria-label="Email">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </a>
+                {% endif %}
+              </div>
+              
+              {% if block.settings.show_trade_cta %}
+                <div class="modern-footer__trade-cta">
+                  <p class="modern-footer__trade-title">{{ block.settings.trade_title }}</p>
+                  <p class="modern-footer__trade-text">{{ block.settings.trade_text }}</p>
+                  <a href="{{ block.settings.trade_link }}" class="modern-footer__trade-button">
+                    {{ block.settings.trade_button }}
+                  </a>
+                </div>
+              {% endif %}
+            </div>
+        {% endcase %}
+      {% endfor %}
+      
+    </div>
+  </div>
+  
+  {%- comment -%} Bottom Bar {%- endcomment -%}
+  <div class="modern-footer__bottom">
+    <div class="modern-footer__bottom-container">
+      <p class="modern-footer__copyright">
+        © {{ 'now' | date: '%Y' }} {{ section.settings.company_name }} — Part of The Sign Group Ltd
+      </p>
+      
+      {% if section.settings.legal_menu != blank %}
+        <nav class="modern-footer__legal">
+          {% for link in linklists[section.settings.legal_menu].links %}
+            <a href="{{ link.url }}" class="modern-footer__legal-link">{{ link.title }}</a>
+          {% endfor %}
+        </nav>
+      {% endif %}
+      
+      {% if section.settings.show_payment_icons %}
+        <div class="modern-footer__payments">
+          {% for type in shop.enabled_payment_types %}
+            {{ type | payment_type_svg_tag: class: 'modern-footer__payment-icon' }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  
+</footer>
+
+<script>
+(function() {
+  var form = document.getElementById('footer-trade-form');
+  var successEl = document.getElementById('footer-form-success');
+  var noteEl = document.getElementById('footer-form-note');
+  
+  if (!form) return;
+  
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    var btn = form.querySelector('.modern-footer__submit');
+    var btnText = btn.querySelector('.modern-footer__btn-text');
+    var originalText = btnText.textContent;
+    
+    var email = document.getElementById('footer_email').value;
+    var firstName = document.getElementById('footer_first_name').value;
+    var company = document.getElementById('footer_company').value;
+    var tradeType = document.getElementById('footer_trade_type').value;
+    
+    btnText.textContent = 'Sending...';
+    btn.disabled = true;
+    
+    fetch('https://a.klaviyo.com/client/subscriptions/?company_id=VuRsCE', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'revision': '2024-02-15'
+      },
+      body: JSON.stringify({
+        data: {
+          type: 'subscription',
+          attributes: {
+            custom_source: 'Footer Signup',
+            profile: {
+              data: {
+                type: 'profile',
+                attributes: {
+                  email: email,
+                  first_name: firstName,
+                  organization: company,
+                  properties: {
+                    trade_type: tradeType
+                  }
+                }
+              }
+            }
+          },
+          relationships: {
+            list: {
+              data: {
+                type: 'list',
+                id: 'UNpDKm'
+              }
+            }
+          }
+        }
+      })
+    })
+    .then(function(response) {
+      form.style.display = 'none';
+      successEl.style.display = 'block';
+      if (noteEl) noteEl.style.display = 'none';
+    })
+    .catch(function(error) {
+      console.error('Error:', error);
+      btnText.textContent = originalText;
+      btn.disabled = false;
+      alert('Something went wrong. Please try again or contact sales@weloveleds.co.uk');
+    });
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Modern Footer",
+  "tag": "section",
+  "class": "modern-footer-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trade Signup"
+    },
+    {
+      "type": "text",
+      "id": "signup_title",
+      "label": "Signup title",
+      "default": "Trade Discount: Get 10% Off"
+    },
+    {
+      "type": "textarea",
+      "id": "signup_text",
+      "label": "Signup description",
+      "default": "Join 8,000+ trade professionals. Get your exclusive discount code, plus new product alerts and trade tips."
+    },
+    {
+      "type": "text",
+      "id": "signup_button",
+      "label": "Button text",
+      "default": "Get My 10% Discount Code"
+    },
+    {
+      "type": "text",
+      "id": "signup_success",
+      "label": "Success message",
+      "default": "You're in! Check your inbox for your exclusive 10% discount code."
+    },
+    {
+      "type": "text",
+      "id": "signup_note",
+      "label": "Note below form",
+      "default": "We respect your privacy. Unsubscribe anytime."
+    },
+    {
+      "type": "header",
+      "content": "Company Information"
+    },
+    {
+      "type": "text",
+      "id": "company_name",
+      "label": "Company name",
+      "default": "WeLoveLEDs™"
+    },
+    {
+      "type": "textarea",
+      "id": "address",
+      "label": "Address",
+      "default": "Unit 3 Maple Park,\nLowfields Avenue,\nLeeds, West Yorkshire,\nLS12 6HH"
+    },
+    {
+      "type": "text",
+      "id": "phone",
+      "label": "Phone number",
+      "default": "0113 252 4706"
+    },
+    {
+      "type": "text",
+      "id": "email",
+      "label": "Email address",
+      "default": "sales@weloveleds.co.uk"
+    },
+    {
+      "type": "header",
+      "content": "Bottom Bar"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal links menu",
+      "info": "Privacy, Terms, Cookies etc."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ],
+  "blocks": [
+    {
+      "type": "menu",
+      "name": "Menu Column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Quick Links"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "bsga",
+      "name": "BSGA Badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "bsga_title",
+          "label": "Title",
+          "default": "BSGA Commercial Partner"
+        },
+        {
+          "type": "text",
+          "id": "bsga_subtitle",
+          "label": "Subtitle",
+          "default": "British Sign & Graphics Association"
+        },
+        {
+          "type": "image_picker",
+          "id": "bsga_image",
+          "label": "Badge image",
+          "info": "Upload via Content > Files. Recommended: 280x280px PNG with transparent background."
+        },
+        {
+          "type": "text",
+          "id": "bsga_image_url",
+          "label": "Or paste image URL",
+          "info": "Alternative: paste a Shopify CDN URL directly if preferred over image picker.",
+          "default": "https://cdn.shopify.com/s/files/1/1070/8974/files/BSGA_Commercial_Mark_280px.png?v=1770982465"
+        },
+        {
+          "type": "url",
+          "id": "bsga_link",
+          "label": "Badge link",
+          "info": "Links to your BSGA members profile."
+        }
+      ]
+    },
+    {
+      "type": "social",
+      "name": "Social & Trade CTA",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Follow Us"
+        },
+        {
+          "type": "url",
+          "id": "facebook",
+          "label": "Facebook URL"
+        },
+        {
+          "type": "url",
+          "id": "instagram",
+          "label": "Instagram URL"
+        },
+        {
+          "type": "url",
+          "id": "linkedin",
+          "label": "LinkedIn URL"
+        },
+        {
+          "type": "url",
+          "id": "youtube",
+          "label": "YouTube URL"
+        },
+        {
+          "type": "checkbox",
+          "id": "email_icon",
+          "label": "Show email icon",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Trade CTA Box"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_trade_cta",
+          "label": "Show trade CTA",
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "trade_title",
+          "label": "Title",
+          "default": "Trade Discounts"
+        },
+        {
+          "type": "text",
+          "id": "trade_text",
+          "label": "Description",
+          "default": "Get 10% off every order"
+        },
+        {
+          "type": "text",
+          "id": "trade_button",
+          "label": "Button text",
+          "default": "Sign Up Free"
+        },
+        {
+          "type": "url",
+          "id": "trade_link",
+          "label": "Button link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Modern Footer",
+      "blocks": [
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Customer Care"
+          }
+        },
+        {
+          "type": "menu",
+          "settings": {
+            "heading": "Quick Links"
+          }
+        },
+        {
+          "type": "bsga",
+          "settings": {
+            "bsga_title": "BSGA Commercial Partner",
+            "bsga_subtitle": "British Sign & Graphics Association",
+            "bsga_image_url": "https://cdn.shopify.com/s/files/1/1070/8974/files/BSGA_Commercial_Mark_280px.png?v=1770982465"
+          }
+        },
+        {
+          "type": "social"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

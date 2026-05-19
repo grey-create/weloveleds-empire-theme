@@ -1,0 +1,626 @@
+{{ 'bento-grid-3x2.css' | asset_url | stylesheet_tag }}
+
+<div class="bento-2x2-section" style="background-color: {{ section.settings.background_colour }};">
+  <div class="bento-2x2-container">
+    <div class="bento-2x2-grid" style="gap: {{ section.settings.gap_size }}px; --tile-radius: {{ section.settings.border_radius }}px; --tile-height: {{ section.settings.tile_height }}px;">
+      
+      {%- comment -%} Tile 1 {%- endcomment -%}
+      <a href="{{ section.settings.tile_1_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_1_image != blank -%}
+            {{ section.settings.tile_1_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_1_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_1_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_1_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_1_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_1_overlay }}; mix-blend-mode: {{ section.settings.tile_1_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_1_title != blank -%}
+              {{ section.settings.tile_1_title }}
+            {%- else -%}
+              {{ section.settings.tile_1_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_1_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_1_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 2 {%- endcomment -%}
+      <a href="{{ section.settings.tile_2_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_2_image != blank -%}
+            {{ section.settings.tile_2_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_2_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_2_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_2_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_2_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_2_overlay }}; mix-blend-mode: {{ section.settings.tile_2_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_2_title != blank -%}
+              {{ section.settings.tile_2_title }}
+            {%- else -%}
+              {{ section.settings.tile_2_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_2_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_2_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 3 {%- endcomment -%}
+      <a href="{{ section.settings.tile_3_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_3_image != blank -%}
+            {{ section.settings.tile_3_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_3_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_3_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_3_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_3_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_3_overlay }}; mix-blend-mode: {{ section.settings.tile_3_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_3_title != blank -%}
+              {{ section.settings.tile_3_title }}
+            {%- else -%}
+              {{ section.settings.tile_3_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_3_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_3_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 4 {%- endcomment -%}
+      <a href="{{ section.settings.tile_4_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_4_image != blank -%}
+            {{ section.settings.tile_4_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_4_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_4_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_4_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_4_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_4_overlay }}; mix-blend-mode: {{ section.settings.tile_4_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_4_title != blank -%}
+              {{ section.settings.tile_4_title }}
+            {%- else -%}
+              {{ section.settings.tile_4_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_4_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_4_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 5 {%- endcomment -%}
+      <a href="{{ section.settings.tile_5_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_5_image != blank -%}
+            {{ section.settings.tile_5_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_5_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_5_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_5_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_5_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_5_overlay }}; mix-blend-mode: {{ section.settings.tile_5_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_5_title != blank -%}
+              {{ section.settings.tile_5_title }}
+            {%- else -%}
+              {{ section.settings.tile_5_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_5_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_5_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+      {%- comment -%} Tile 6 {%- endcomment -%}
+      <a href="{{ section.settings.tile_6_collection.url }}" class="bento-2x2-tile">
+        <div class="bento-2x2-tile__background">
+          {%- if section.settings.tile_6_image != blank -%}
+            {{ section.settings.tile_6_image | image_url: width: 1000 | image_tag: loading: 'lazy', class: 'bento-2x2-tile__image' }}
+          {%- endif -%}
+          {%- if section.settings.tile_6_fade_to_transparent -%}
+            {%- assign fade_opacity = section.settings.tile_6_fade_opacity | divided_by: 100.0 -%}
+            <div class="bento-2x2-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.tile_6_fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.tile_6_blend_mode }};"></div>
+          {%- else -%}
+            <div class="bento-2x2-tile__overlay" style="background: {{ section.settings.tile_6_overlay }}; mix-blend-mode: {{ section.settings.tile_6_blend_mode }};"></div>
+          {%- endif -%}
+        </div>
+        <div class="bento-2x2-tile__content">
+          <h2 class="bento-2x2-tile__title">
+            {%- if section.settings.tile_6_title != blank -%}
+              {{ section.settings.tile_6_title }}
+            {%- else -%}
+              {{ section.settings.tile_6_collection.title }}
+            {%- endif -%}
+          </h2>
+          {%- if section.settings.tile_6_tagline != blank -%}
+            <p class="bento-2x2-tile__tagline">{{ section.settings.tile_6_tagline }}</p>
+          {%- endif -%}
+          <span class="bento-2x2-tile__cta">Shop now <span class="bento-2x2-tile__arrow">→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bento Grid 3x2",
+  "tag": "section",
+  "class": "bento-3x2-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour",
+      "default": "#f5f5f7"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1400,
+      "max": 2400,
+      "step": 100,
+      "default": 1800,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "tile_height",
+      "label": "Tile height",
+      "min": 280,
+      "max": 500,
+      "step": 20,
+      "default": 380,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "gap_size",
+      "label": "Gap between tiles",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "default": 16,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Tile 1"
+    },
+    {
+      "type": "collection",
+      "id": "tile_1_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_1_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_1_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_1_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_1_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_1_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_1_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_1_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 2"
+    },
+    {
+      "type": "collection",
+      "id": "tile_2_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_2_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_2_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_2_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_2_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_2_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_2_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_2_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 3"
+    },
+    {
+      "type": "collection",
+      "id": "tile_3_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_3_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_3_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_3_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_3_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_3_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_3_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_3_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 4"
+    },
+    {
+      "type": "collection",
+      "id": "tile_4_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_4_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_4_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_4_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_4_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_4_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_4_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_4_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 5"
+    },
+    {
+      "type": "collection",
+      "id": "tile_5_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_5_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_5_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_5_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_5_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_5_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_5_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_5_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    },
+    {
+      "type": "header",
+      "content": "Tile 6"
+    },
+    {
+      "type": "collection",
+      "id": "tile_6_collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_title",
+      "label": "Custom title"
+    },
+    {
+      "type": "text",
+      "id": "tile_6_tagline",
+      "label": "Tagline"
+    },
+    {
+      "type": "image_picker",
+      "id": "tile_6_image",
+      "label": "Background image"
+    },
+    {
+      "type": "color_background",
+      "id": "tile_6_overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "tile_6_blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "tile_6_fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "tile_6_fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "tile_6_fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 50,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Grid 3x2"
+    }
+  ]
+}
+{% endschema %}

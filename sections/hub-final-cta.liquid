@@ -1,0 +1,145 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign subtitle = section.settings.subtitle
+  assign btn_label = section.settings.btn_label
+  assign btn_url = section.settings.btn_url
+-%}
+
+{%- if heading != blank or btn_label != blank -%}
+<section class="hub-final-cta" data-section-id="{{ section.id }}">
+  <div class="hub-final-cta__container">
+    <div class="hub-final-cta__inner">
+      {%- if heading != blank -%}
+        <h2 class="hub-final-cta__heading">{{ heading | escape }}</h2>
+      {%- endif -%}
+      {%- if subtitle != blank -%}
+        <p class="hub-final-cta__subtitle">{{ subtitle | escape }}</p>
+      {%- endif -%}
+      {%- if btn_label != blank -%}
+        <a href="{{ btn_url | default: '#' }}"
+           class="hub-final-cta__btn"
+           {%- if btn_url contains 'wa.me' %} target="_blank" rel="noopener noreferrer"{% endif -%}>
+          {{ btn_label | escape }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.hub-final-cta {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  /* bottom raised 1.5rem -> 4rem to match the 4rem top so the navy block is
+     balanced top & bottom and lifts off the next section (normal section gap,
+     not the oversized dead band that originally caused the white gap). */
+  padding: 4rem 1.5rem 4rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f5f5f7;
+}
+.hub-final-cta__container {
+  padding-left: var(--hub-rail-pad);
+  padding-right: var(--hub-rail-pad);
+}
+.hub-final-cta__inner {
+  background-color: #1c2135;
+  background-image: linear-gradient(135deg, #0a1530 0%, #1c2135 50%, #1d2236 100%);
+  border-radius: 24px;
+  padding: 4.5rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hub-final-cta__inner::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  right: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(217, 70, 239, 0.15) 0%, rgba(217, 70, 239, 0) 70%);
+  pointer-events: none;
+}
+.hub-final-cta__inner::after {
+  content: '';
+  position: absolute;
+  bottom: -30%;
+  left: -10%;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(0, 118, 222, 0.15) 0%, rgba(0, 118, 222, 0) 70%);
+  pointer-events: none;
+}
+.hub-final-cta__heading {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  position: relative;
+  z-index: 1;
+}
+.hub-final-cta__subtitle {
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0 auto 2rem;
+  max-width: 580px;
+  line-height: 1.55;
+  position: relative;
+  z-index: 1;
+}
+.hub-final-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  background: #ffffff;
+  color: #1c2135;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: -0.005em;
+  transition: background 0.2s ease, transform 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+.hub-final-cta__btn:hover {
+  background: #fdcd6a;
+  transform: translateY(-2px);
+}
+@media (max-width: 749px) {
+  .hub-final-cta { padding: 3rem 1.25rem 3rem; } /* bottom 1.25rem -> 3rem to match the 3rem top */
+  .hub-final-cta__inner {
+    padding: 3rem 1.5rem;
+    border-radius: 20px;
+  }
+  .hub-final-cta__subtitle { margin-bottom: 1.5rem; }
+  .hub-final-cta__btn {
+    padding: 0.875rem 1.75rem;
+    width: 100%;
+    max-width: 300px;
+  }
+}
+</style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Hub Final CTA",
+  "tag": "section",
+  "class": "section-hub-final-cta",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Need Help Choosing?" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Speak to our team for product advice, trade quotes and technical help." },
+    { "type": "text", "id": "btn_label", "label": "Button label", "default": "Contact Us" },
+    { "type": "url", "id": "btn_url", "label": "Button URL" }
+  ],
+  "presets": [ { "name": "Hub Final CTA" } ]
+}
+{% endschema %}

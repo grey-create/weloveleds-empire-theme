@@ -1,0 +1,114 @@
+<div class="promo-banner">
+  <div class="promo-container">
+    <div class="promo-grid">
+      <div class="promo-item">
+        <svg class="promo-icon" viewBox="0 0 24 24">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span class="promo-text">Expert Support</span>
+      </div>
+      
+      <div class="promo-item">
+        <svg class="promo-icon" viewBox="0 0 24 24">
+          <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+          <polyline points="3.27,6.96 12,12.01 20.73,6.96"/>
+          <line x1="12" y1="22.08" x2="12" y2="12"/>
+        </svg>
+        <span class="promo-text">Free UK Shipping</span>
+      </div>
+      
+      <div class="promo-item">
+        <svg class="promo-icon" viewBox="0 0 24 24">
+          <path d="M9 12l2 2 4-4"/>
+          <circle cx="12" cy="12" r="9"/>
+        </svg>
+        <span class="promo-text">Up to 10yrs Warranty</span>
+      </div>
+      
+      <div class="promo-item">
+        <svg class="promo-icon" viewBox="0 0 24 24">
+          <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6.28"/>
+          <circle cx="9" cy="19" r="1"/>
+          <circle cx="17" cy="19" r="1"/>
+        </svg>
+        <span class="promo-text">14 day returns</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .promo-banner {
+    background: linear-gradient(135deg, #6b46c1 0%, #9333ea 100%);
+    color: white;
+    padding: 12px 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  .promo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .promo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    align-items: center;
+  }
+
+  .promo-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .promo-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    flex-shrink: 0;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .promo-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  @media (max-width: 768px) {
+    .promo-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+    
+    .promo-text {
+      font-size: 12px;
+    }
+    
+    .promo-icon {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .promo-grid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    
+    .promo-banner {
+      padding: 8px 0;
+    }
+  }
+</style>

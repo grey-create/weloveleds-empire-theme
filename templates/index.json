@@ -1,0 +1,651 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "dynamic_highlights_banner_rUNt7C": {
+      "type": "dynamic-highlights-banner",
+      "blocks": {
+        "highlight_TiNBRr": {
+          "type": "highlight",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p>Largest B2B stockist of LEDs</p>",
+            "link": ""
+          }
+        },
+        "highlight_q8i3a6": {
+          "type": "highlight",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p>Up to 10yr warranty</p>",
+            "link": ""
+          }
+        },
+        "highlight_GYFpCf": {
+          "type": "highlight",
+          "disabled": true,
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p>FREE Delivery on orders over £175*</p>",
+            "link": ""
+          }
+        },
+        "highlight_PRTGiB": {
+          "type": "highlight",
+          "settings": {
+            "icon": "none",
+            "title": "",
+            "text": "<p>Get 10% off your first order! Sign up <span style=\"text-decoration:underline\">here</span> for exclusive discount!</p>",
+            "link": "shopify://pages/sign-up"
+          }
+        }
+      },
+      "block_order": [
+        "highlight_TiNBRr",
+        "highlight_q8i3a6",
+        "highlight_GYFpCf",
+        "highlight_PRTGiB"
+      ],
+      "disabled": true,
+      "custom_css": [
+        "div {margin-top: 0px; padding-top: 2px; padding-bottom: 2px;}",
+        "p {font-size: 0.8rem;}"
+      ],
+      "settings": {
+        "section_spacing": true,
+        "section_width": "full-width",
+        "icon_layout": "center",
+        "color": "#ffffff",
+        "icon_color": "#fdcd68",
+        "background_color": "#0076de",
+        "mobile_layout": "grid"
+      }
+    },
+    "bento_hero_JEwgib": {
+      "type": "bento-hero",
+      "disabled": true,
+      "name": "Bento Hero",
+      "settings": {
+        "background_colour": "#f5f5f7",
+        "max_width": 1800,
+        "tile_height": 480,
+        "border_radius": 0,
+        "collection": "led-strip",
+        "custom_title": "",
+        "tagline": "Professional LED strips with 5-year warranty",
+        "overlay": "linear-gradient(135deg, rgba(6, 78, 59, 0.9), rgba(0, 0, 0, 0.8) 100%)",
+        "blend_mode": "normal",
+        "fade_to_transparent": false,
+        "fade_colour": "#000000",
+        "fade_opacity": 70
+      }
+    },
+    "flexible_hero_9B3LMt": {
+      "type": "flexible-hero",
+      "blocks": {
+        "statement_4dDN3U": {
+          "type": "statement",
+          "settings": {
+            "is_h1": true,
+            "bg_style": "gradient",
+            "bg_colour": "#f5f5f7",
+            "bg_gradient_end": "#ceceea",
+            "dark_text": true,
+            "preheading": "UK's Leading Trade Supplier",
+            "headline": "LEDs For Signs, Displays & Décor",
+            "subheading": "Trusted by 8,000+ sign makers, electricians, and lighting contractors since 2012.",
+            "button_text": "",
+            "button_link": ""
+          }
+        },
+        "collections_MYntVG": {
+          "type": "collections",
+          "disabled": true,
+          "settings": {
+            "bg_style": "gradient",
+            "bg_colour": "#f5f5f7",
+            "bg_gradient_end": "#ceceea",
+            "dark_text": true,
+            "spotlight_heading": "collection spotlight",
+            "layout": "cards",
+            "collection_1": "led-strip",
+            "collection_1_title": "",
+            "collection_2": "fairground-lights",
+            "collection_2_title": "",
+            "collection_3": "led-flex",
+            "collection_3_title": ""
+          }
+        },
+        "offer_PefPBV": {
+          "type": "offer",
+          "disabled": true,
+          "settings": {
+            "is_h1": false,
+            "bg_style": "default",
+            "bg_colour": "#f5f5f7",
+            "bg_gradient_end": "#e8e8ed",
+            "dark_text": true,
+            "badge_text": "LIMITED TIME",
+            "badge_colour": "#0076de",
+            "headline": "10% Off For Trade Customers",
+            "subheading": "rrrrr",
+            "code": "",
+            "button_text": "Shop Now",
+            "button_link": ""
+          }
+        },
+        "image_rGzMMQ": {
+          "type": "image",
+          "disabled": true,
+          "settings": {
+            "is_h1": false,
+            "image": "shopify://shop_images/bf-banner-2025-2400x900-PINK.jpg",
+            "overlay_opacity": 0,
+            "content_position": "left",
+            "preheading": "",
+            "headline": "New Collection",
+            "subheading": "",
+            "button_text": "Shop Now",
+            "button_link": ""
+          }
+        },
+        "spotlight_cGwWNV": {
+          "type": "spotlight",
+          "disabled": true,
+          "settings": {
+            "bg_style": "default",
+            "bg_colour": "#f5f5f7",
+            "bg_gradient_end": "#e8e8ed",
+            "dark_text": true,
+            "spotlight_heading": "Product Spotlight",
+            "layout": "cards",
+            "product_1": "classic-128-led-light-sheet-120-beam-angle-no-lens",
+            "product_1_title": "",
+            "product_1_unit": "",
+            "product_2": "rock-rgb1-led-module",
+            "product_2_title": "",
+            "product_2_unit": "",
+            "product_3": "12mm-x-30mm-standoff-fixing",
+            "product_3_title": "",
+            "product_3_unit": ""
+          }
+        }
+      },
+      "block_order": [
+        "statement_4dDN3U",
+        "collections_MYntVG",
+        "offer_PefPBV",
+        "image_rGzMMQ",
+        "spotlight_cGwWNV"
+      ],
+      "name": "Flexible Hero",
+      "settings": {
+        "background_style": "solid",
+        "background_colour": "#f5f5f7",
+        "gradient_start": "#f5f5f7",
+        "gradient_end": "#ceceea",
+        "gradient_angle": 135,
+        "autoplay": true,
+        "interval": 6000
+      }
+    },
+    "bento_grid_2x2_qCjjBg": {
+      "type": "bento-grid-3x2",
+      "name": "Bento Grid 2x2",
+      "settings": {
+        "background_colour": "#ffffff",
+        "max_width": 1800,
+        "tile_height": 380,
+        "gap_size": 16,
+        "border_radius": 0,
+        "tile_1_collection": "led-strip",
+        "tile_1_title": "",
+        "tile_1_tagline": "Professional LED strips with 1-5 year warranties",
+        "tile_1_image": "shopify://shop_images/LED-Strip-1200x660.jpg",
+        "tile_1_overlay": "",
+        "tile_1_blend_mode": "normal",
+        "tile_1_fade_to_transparent": false,
+        "tile_1_fade_colour": "#000000",
+        "tile_1_fade_opacity": 50,
+        "tile_2_collection": "fairground-lights",
+        "tile_2_title": "",
+        "tile_2_tagline": "Colourful cabochons & carnival classics",
+        "tile_2_image": "shopify://shop_images/LED-Cabochons-2000x1121_70ef0c1e-b9b2-44d7-a879-e568b9c1b09a.jpg",
+        "tile_2_overlay": "",
+        "tile_2_blend_mode": "normal",
+        "tile_2_fade_to_transparent": false,
+        "tile_2_fade_colour": "#000000",
+        "tile_2_fade_opacity": 50,
+        "tile_3_collection": "led-flex",
+        "tile_3_title": "",
+        "tile_3_tagline": "Bendable neon effect lighting",
+        "tile_3_image": "shopify://shop_images/LED-Flex-1200x660_efcc9a81-41a4-47da-a23b-68e6b1d99e7a.jpg",
+        "tile_3_overlay": "",
+        "tile_3_blend_mode": "normal",
+        "tile_3_fade_to_transparent": false,
+        "tile_3_fade_colour": "#000000",
+        "tile_3_fade_opacity": 50,
+        "tile_4_collection": "led-modules",
+        "tile_4_title": "",
+        "tile_4_tagline": "Sign lighting with 10-year warranty",
+        "tile_4_image": "shopify://shop_images/LED-Modules-1200x660.jpg",
+        "tile_4_overlay": "",
+        "tile_4_blend_mode": "normal",
+        "tile_4_fade_to_transparent": false,
+        "tile_4_fade_colour": "#000000",
+        "tile_4_fade_opacity": 50,
+        "tile_5_collection": "led-drivers",
+        "tile_5_title": "",
+        "tile_5_tagline": "Reliable power for every project",
+        "tile_5_image": "shopify://shop_images/LED-Drivers-1200x660.jpg",
+        "tile_5_overlay": "",
+        "tile_5_blend_mode": "normal",
+        "tile_5_fade_to_transparent": false,
+        "tile_5_fade_colour": "#000000",
+        "tile_5_fade_opacity": 50,
+        "tile_6_collection": "controllers-dimmers",
+        "tile_6_title": "",
+        "tile_6_tagline": "Wireless control made simple",
+        "tile_6_image": "shopify://shop_images/LED-Controllers-1200x660.jpg",
+        "tile_6_overlay": "",
+        "tile_6_blend_mode": "normal",
+        "tile_6_fade_to_transparent": false,
+        "tile_6_fade_colour": "#000000",
+        "tile_6_fade_opacity": 50
+      }
+    },
+    "collection_pills_aUpHFV": {
+      "type": "collection-pills",
+      "blocks": {
+        "collection_dXLACF": {
+          "type": "collection",
+          "settings": {
+            "collection": "clear-led-components",
+            "title": ""
+          }
+        },
+        "collection_DM4x8V": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-light-sheet",
+            "title": ""
+          }
+        },
+        "collection_ptLj6i": {
+          "type": "collection",
+          "settings": {
+            "collection": "colour-changing-cabochons",
+            "title": ""
+          }
+        },
+        "collection_6Xtbp3": {
+          "type": "collection",
+          "settings": {
+            "collection": "push-through-leds-push-through",
+            "title": ""
+          }
+        },
+        "collection_xYWcnD": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-tubes",
+            "title": ""
+          }
+        },
+        "collection_Kkiew4": {
+          "type": "collection",
+          "settings": {
+            "collection": "spacers",
+            "title": ""
+          }
+        },
+        "collection_7Qirc9": {
+          "type": "collection",
+          "settings": {
+            "collection": "tools-accessories",
+            "title": ""
+          }
+        },
+        "collection_G7d6Jb": {
+          "type": "collection",
+          "settings": {
+            "collection": "25mm-round-360-24v",
+            "title": ""
+          }
+        },
+        "collection_ExWzie": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-drivers",
+            "title": ""
+          }
+        },
+        "collection_fabhCM": {
+          "type": "collection",
+          "settings": {
+            "collection": "cabochons",
+            "title": ""
+          }
+        },
+        "collection_Y3KEcQ": {
+          "type": "collection",
+          "settings": {
+            "collection": "led-flex",
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_dXLACF",
+        "collection_DM4x8V",
+        "collection_ptLj6i",
+        "collection_6Xtbp3",
+        "collection_xYWcnD",
+        "collection_Kkiew4",
+        "collection_7Qirc9",
+        "collection_G7d6Jb",
+        "collection_ExWzie",
+        "collection_fabhCM",
+        "collection_Y3KEcQ"
+      ],
+      "disabled": true,
+      "name": "Collection Pills",
+      "settings": {
+        "heading": "",
+        "background_colour": "#f5f5f7",
+        "show_images": false
+      }
+    },
+    "bento_wide_banner_pVWEdP": {
+      "type": "bento-wide-banner",
+      "disabled": true,
+      "name": "Bento Wide Banner",
+      "settings": {
+        "bg_style": "gradient",
+        "background_colour": "#ffffff",
+        "gradient_end": "#ceceea",
+        "gradient_angle": 135,
+        "gradient_preset": "light_grey",
+        "max_width": 1800,
+        "tile_height": 280,
+        "border_radius": 0,
+        "collection": "clearance",
+        "custom_title": "",
+        "tagline": "With discounts of up to 60%",
+        "text_colour": "#ffffff",
+        "button_colour": "#ffffff",
+        "button_text_colour": "#1c2135",
+        "image": "shopify://shop_images/1120_x_800_LEDs_Stock.jpg",
+        "overlay": "linear-gradient(151deg, rgba(245, 245, 247, 1), rgba(206, 206, 234, 1) 100%)",
+        "blend_mode": "multiply",
+        "fade_to_transparent": true,
+        "fade_colour": "#000000",
+        "fade_opacity": 80
+      }
+    },
+    "bento_carousel_xKpanf": {
+      "type": "bento-carousel",
+      "blocks": {
+        "slide_UYVwUM": {
+          "type": "slide",
+          "settings": {
+            "collection": "clear-led-components",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/Clear_Components_ed263c7d-ae4e-4499-9902-03779e185f03.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_R3Htz6": {
+          "type": "slide",
+          "settings": {
+            "collection": "led-light-sheet",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/Classic128LEDFlexibleSheetNoLensON3000K_2075acd2-198f-4991-af9c-22e327beaadd.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_ELAaWh": {
+          "type": "slide",
+          "settings": {
+            "collection": "colour-changing-cabochons",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/60mm-RGB-Cabochon-1.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_8dkfXV": {
+          "type": "slide",
+          "settings": {
+            "collection": "push-through-leds-push-through",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/DOT9-5v-L_62eff10d-9838-4610-8fd5-2ee292b8d1e9.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_xWiWJx": {
+          "type": "slide",
+          "settings": {
+            "collection": "led-tubes",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/LED_Tubes_edd0bf21-33c7-4ae3-ab0b-8cfe51c749a4.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_4dnDhr": {
+          "type": "slide",
+          "settings": {
+            "collection": "spacers",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/30mm_Spacers.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_Hb3Pnc": {
+          "type": "slide",
+          "settings": {
+            "collection": "tools-accessories",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/tOOLS.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        },
+        "slide_MrdqMn": {
+          "type": "slide",
+          "settings": {
+            "collection": "25mm-round-360-24v",
+            "custom_title": "",
+            "tagline": "",
+            "image": "shopify://shop_images/LED-360-Flex.jpg",
+            "overlay": "linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 50%)",
+            "fade_to_transparent": true,
+            "fade_colour": "#000000",
+            "fade_opacity": 70
+          }
+        }
+      },
+      "block_order": [
+        "slide_UYVwUM",
+        "slide_R3Htz6",
+        "slide_ELAaWh",
+        "slide_8dkfXV",
+        "slide_xWiWJx",
+        "slide_4dnDhr",
+        "slide_Hb3Pnc",
+        "slide_MrdqMn"
+      ],
+      "disabled": true,
+      "name": "Bento Carousel",
+      "settings": {
+        "heading": "",
+        "background_colour": "#ffffff",
+        "max_width": 1800,
+        "border_radius": 0,
+        "autoplay": true,
+        "interval": 5000
+      }
+    },
+    "tabbed_discovery_eNcCdw": {
+      "type": "tabbed-discovery",
+      "blocks": {
+        "collection_tab_fMPaDa": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "cables",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_WmWY8t": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "cabochons",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_QnjTLY": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "led-light-sheet",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_NQYFpi": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "clear-led-components",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_NUUy3U": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "tools-accessories",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_dWegkA": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "colour-changing-cabochons",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_zTeeXg": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "push-through-leds-push-through",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_VhxcFr": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "led-tubes",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_mLk4pE": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "25mm-round-360-24v",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_hpmyKR": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "standoff-fixings",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_rNdyga": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "spacers",
+            "tab_title": ""
+          }
+        },
+        "collection_tab_849BQP": {
+          "type": "collection_tab",
+          "settings": {
+            "collection": "clearance",
+            "tab_title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_tab_fMPaDa",
+        "collection_tab_WmWY8t",
+        "collection_tab_QnjTLY",
+        "collection_tab_NQYFpi",
+        "collection_tab_NUUy3U",
+        "collection_tab_dWegkA",
+        "collection_tab_zTeeXg",
+        "collection_tab_VhxcFr",
+        "collection_tab_mLk4pE",
+        "collection_tab_hpmyKR",
+        "collection_tab_rNdyga",
+        "collection_tab_849BQP"
+      ],
+      "name": "Tabbed Discovery",
+      "settings": {
+        "heading": "More to Explore",
+        "bg_style": "gradient_preset",
+        "background_colour": "#f5f5f7",
+        "gradient_end": "#ceceea",
+        "gradient_angle": 135,
+        "gradient_preset": "light_grey",
+        "products_per_tab": 4
+      }
+    }
+  },
+  "order": [
+    "dynamic_highlights_banner_rUNt7C",
+    "bento_hero_JEwgib",
+    "flexible_hero_9B3LMt",
+    "bento_grid_2x2_qCjjBg",
+    "collection_pills_aUpHFV",
+    "bento_wide_banner_pVWEdP",
+    "bento_carousel_xKpanf",
+    "tabbed_discovery_eNcCdw"
+  ]
+}

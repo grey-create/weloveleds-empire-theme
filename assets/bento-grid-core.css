@@ -1,0 +1,401 @@
+/* ==========================================================================
+   BENTO GRID - CORE COLLECTIONS
+   ========================================================================== */
+
+.bento-grid-section {
+  padding: 0;
+  margin: 0;
+}
+
+/* Full Width Mode - breaks out of theme container */
+.bento-grid-section--full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+.bento-grid-container {
+  max-width: var(--bento-max-width, 1800px);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Tighter padding for full-width mode */
+.bento-grid-section--full-width .bento-grid-container {
+  padding: 2rem 1rem;
+}
+
+/* Even tighter on larger screens for that Apple edge-to-edge feel */
+@media screen and (min-width: 1200px) {
+  .bento-grid-section--full-width .bento-grid-container {
+    padding: 2rem 2rem;
+  }
+}
+
+/* Grid Layout
+   ========================================================================== */
+
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 280px) 280px 240px;
+  /* gap is set inline via section settings */
+}
+
+/* Larger tiles on bigger screens */
+@media screen and (min-width: 1200px) {
+  .bento-grid {
+    grid-template-rows: repeat(2, 320px) 320px 260px;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .bento-grid {
+    grid-template-rows: repeat(2, 360px) 360px 280px;
+  }
+}
+
+/* Tile Positions */
+.bento-tile--hero {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+}
+
+.bento-tile--tall {
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
+}
+
+.bento-tile--pos-3 {
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+}
+
+.bento-tile--pos-4 {
+  grid-column: 2 / 3;
+  grid-row: 3 / 4;
+}
+
+.bento-tile--pos-5 {
+  grid-column: 3 / 4;
+  grid-row: 3 / 4;
+}
+
+.bento-tile--wide {
+  grid-column: 1 / 4;
+  grid-row: 4 / 5;
+}
+
+/* Base Tile Styles
+   ========================================================================== */
+
+.bento-tile {
+  position: relative;
+  display: block;
+  border-radius: var(--bento-radius, 24px);
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              box-shadow 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.bento-tile:hover {
+  transform: scale(1.02);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.bento-tile--wide:hover {
+  transform: scale(1.01);
+}
+
+/* Background & Overlay
+   ========================================================================== */
+
+.bento-tile__background {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.bento-tile__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.bento-tile:hover .bento-tile__image {
+  transform: scale(1.05);
+}
+
+.bento-tile__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  /* background is set inline via section settings */
+}
+
+/* Content
+   ========================================================================== */
+
+.bento-tile__content {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.5rem;
+}
+
+.bento-tile--hero .bento-tile__content,
+.bento-tile--wide .bento-tile__content {
+  padding: 2rem;
+}
+
+/* Typography
+   ========================================================================== */
+
+.bento-tile__title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.25rem 0;
+  line-height: 1.2;
+}
+
+.bento-tile__title--large {
+  font-size: 1.75rem;
+}
+
+.bento-tile--hero .bento-tile__title {
+  font-size: 2rem;
+}
+
+/* Larger typography on bigger screens */
+@media screen and (min-width: 1200px) {
+  .bento-tile__title {
+    font-size: 1.5rem;
+  }
+  
+  .bento-tile--hero .bento-tile__title {
+    font-size: 2.5rem;
+  }
+  
+  .bento-tile__tagline {
+    font-size: 1rem;
+  }
+  
+  .bento-tile--hero .bento-tile__tagline,
+  .bento-tile--wide .bento-tile__tagline {
+    font-size: 1.125rem;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .bento-tile__title {
+    font-size: 1.75rem;
+  }
+  
+  .bento-tile--hero .bento-tile__title {
+    font-size: 3rem;
+  }
+}
+
+.bento-tile__tagline {
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.bento-tile--hero .bento-tile__tagline,
+.bento-tile--wide .bento-tile__tagline {
+  font-size: 1rem;
+}
+
+/* CTA / Shop Now
+   ========================================================================== */
+
+.bento-tile__cta {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 0.75rem;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bento-tile:hover .bento-tile__cta {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.bento-tile__arrow {
+  margin-left: 0.25rem;
+  transition: transform 0.3s ease;
+}
+
+.bento-tile:hover .bento-tile__arrow {
+  transform: translateX(4px);
+}
+
+/* Tablet Layout (2 columns)
+   ========================================================================== */
+
+@media screen and (max-width: 1024px) {
+  .bento-grid-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 240px) repeat(2, 200px) 200px;
+  }
+  
+  .bento-tile--hero {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+  }
+  
+  .bento-tile--tall {
+    grid-column: 1 / 2;
+    grid-row: 3 / 4;
+  }
+  
+  .bento-tile--pos-3 {
+    grid-column: 2 / 3;
+    grid-row: 3 / 4;
+  }
+  
+  .bento-tile--pos-4 {
+    grid-column: 1 / 2;
+    grid-row: 4 / 5;
+  }
+  
+  .bento-tile--pos-5 {
+    grid-column: 2 / 3;
+    grid-row: 4 / 5;
+  }
+  
+  .bento-tile--wide {
+    grid-column: 1 / 3;
+    grid-row: 5 / 6;
+  }
+}
+
+/* Mobile Layout (single column with variations)
+   ========================================================================== */
+
+@media screen and (max-width: 600px) {
+  .bento-grid-container {
+    padding: 1rem 0.75rem;
+  }
+  
+  .bento-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: 320px repeat(5, 200px);
+  }
+  
+  .bento-tile--hero {
+    grid-column: 1;
+    grid-row: 1 / 2;
+  }
+  
+  .bento-tile--tall {
+    grid-column: 1;
+    grid-row: 2 / 3;
+  }
+  
+  .bento-tile--pos-3 {
+    grid-column: 1;
+    grid-row: 3 / 4;
+  }
+  
+  .bento-tile--pos-4 {
+    grid-column: 1;
+    grid-row: 4 / 5;
+  }
+  
+  .bento-tile--pos-5 {
+    grid-column: 1;
+    grid-row: 5 / 6;
+  }
+  
+  .bento-tile--wide {
+    grid-column: 1;
+    grid-row: 6 / 7;
+  }
+  
+  /* Adjust typography for mobile */
+  .bento-tile--hero .bento-tile__title {
+    font-size: 1.5rem;
+  }
+  
+  .bento-tile__title {
+    font-size: 1.125rem;
+  }
+  
+  .bento-tile__tagline {
+    font-size: 0.8125rem;
+  }
+  
+  .bento-tile__content {
+    padding: 1.25rem;
+  }
+  
+  .bento-tile--hero .bento-tile__content,
+  .bento-tile--wide .bento-tile__content {
+    padding: 1.5rem;
+  }
+  
+  /* Show CTA on mobile since no hover */
+  .bento-tile__cta {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Accessibility
+   ========================================================================== */
+
+.bento-tile:focus {
+  outline: 3px solid #0076DE;
+  outline-offset: 2px;
+}
+
+.bento-tile:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.bento-tile:focus-visible {
+  outline: 3px solid #0076DE;
+  outline-offset: 2px;
+}
+
+/* Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .bento-tile,
+  .bento-tile__image,
+  .bento-tile__cta,
+  .bento-tile__arrow {
+    transition: none;
+  }
+  
+  .bento-tile:hover {
+    transform: none;
+  }
+  
+  .bento-tile:hover .bento-tile__image {
+    transform: none;
+  }
+}

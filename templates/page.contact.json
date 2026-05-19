@@ -1,0 +1,149 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "page-contact",
+      "custom_css": [
+        "{background-color: #403187; padding-top: 10px; padding-bottom: 10px;}",
+        " {color: #ffffff;}",
+        "h1 {color: #ffffff;}"
+      ],
+      "settings": {}
+    },
+    "dynamic_rich_text_7nYKDb": {
+      "type": "dynamic-rich-text",
+      "disabled": true,
+      "settings": {
+        "width": "regular",
+        "title": "",
+        "text": "<p><strong>WeLoveLEDs (Part of The Sign Group)</strong></p><p>Unit 3 Maple Park, Lowfields Avenue</p><p>Leeds, West Yorkshire</p><p>LS12 6HH</p>",
+        "heading_size": "medium",
+        "text_alignment": "center"
+      }
+    },
+    "36274985-0108-4a4c-955c-4d68fc874f0b": {
+      "type": "pxs-image-with-text-overlay",
+      "disabled": true,
+      "settings": {
+        "section_height": "small",
+        "image": "shopify://shop_images/Wiring-Guide-Visual.jpg",
+        "title": "Did you know...",
+        "text": "<p><br/>we can provide wiring diagrams to help you with your project. </p><p>Buy any kit or group of products and tell us how you want to use them. We will then produce an easy to understand diagram to help you put everything together.</p><p><br/></p><p><strong>Get in touch using the details above and we'd be happy to help.</strong></p>",
+        "content_position": "center-center",
+        "color": "#ffffff",
+        "overlay_background": "#000000",
+        "overlay_opacity": 69,
+        "link": "",
+        "button_text": ""
+      }
+    },
+    "superspeed_apps_3zM9ew": {
+      "type": "superspeed-apps",
+      "settings": {
+        "show_section": "none",
+        "use_slideshow": false,
+        "grid_id": "1c",
+        "include_margins": true,
+        "ss-x-mw": 1440,
+        "enable_height": "auto",
+        "ss-v-min-h": 0,
+        "ss-v-max-h": 60,
+        "ss-bg-color": "#ffffff",
+        "ss-text-color": "#000000",
+        "ss-xg-gap": 20,
+        "ss-mx-pad": 1,
+        "ss-x-pt": 0,
+        "ss-x-pb": 0,
+        "ss-x-pl": 0,
+        "ss-x-pr": 0,
+        "ss-mx-mar": 1,
+        "ss-x-mt": 0,
+        "ss-x-mb": 0,
+        "ss-x-ml": 0,
+        "ss-x-mr": 0,
+        "ss-lh": "1.4",
+        "ss-x-h1-fs": 48,
+        "ss-x-h2-fs": 32,
+        "ss-x-h3-fs": 24,
+        "ss-x-h4-fs": 18,
+        "ss-x-p-fs": 16,
+        "reverse": false,
+        "grid_id_mob": "1c",
+        "enable_height_mob": "auto",
+        "ss-v-min-h-mob": 0,
+        "ss-v-max-h-mob": 60,
+        "ss-xg-gap-mob": 20,
+        "ss-mx-pad-mob": 1,
+        "ss-x-pt-mob": 0,
+        "ss-x-pb-mob": 0,
+        "ss-x-pl-mob": 0,
+        "ss-x-pr-mob": 0,
+        "ss-mx-mar-mob": 1,
+        "ss-x-mt-mob": 0,
+        "ss-x-mb-mob": 0,
+        "ss-x-ml-mob": 0,
+        "ss-x-mr-mob": 0,
+        "ss-lh-mob": "1.4",
+        "ss-x-h1-fs-mob": 48,
+        "ss-x-h2-fs-mob": 32,
+        "ss-x-h3-fs-mob": 24,
+        "ss-x-h4-fs-mob": 18,
+        "ss-x-p-fs-mob": 16,
+        "loop": false,
+        "add_arrows": false,
+        "add_dots": false,
+        "ss-arrow-color": "#ffffff",
+        "ss-dots-color": "#000000",
+        "ss-dots-color-active": "#ffffff",
+        "auto_rotate": 6,
+        "ss-x-h1-font-fam": "inter_n4",
+        "ss-x-h2-font-fam": "inter_n4",
+        "ss-x-h3-font-fam": "inter_n4",
+        "ss-x-div-font-fam": "inter_n4",
+        "ss-x-p-font-fam": "inter_n4",
+        "ss-x-btn-fs": 16,
+        "ss-x-btn-w": 160,
+        "ss-x-btn-h": 40,
+        "ss-x-btn-rad": 3,
+        "ss-x-btn-br": 1,
+        "ss-x-btn-fs-mob": 16,
+        "ss-x-btn-w-mob": 160,
+        "ss-x-btn-h-mob": 40,
+        "ss-x-btn-rad-mob": 3,
+        "ss-x-btn-br-mob": 1,
+        "ss-x-btn-font-fam": "inter_n4",
+        "ss-b1-t": "#ffffff",
+        "ss-b1-bg": "#000000",
+        "ss-b1-br": "#000000",
+        "ss-b1-h-t": "#ffffff",
+        "ss-b1-h-bg": "#333333",
+        "ss-b1-h-br": "#000000",
+        "ss-x-secbtn-font-fam": "inter_n4",
+        "ss-b2-t": "#ffffff",
+        "ss-b2-bg": "rgba(0,0,0,0)",
+        "ss-b2-br": "#ffffff",
+        "ss-b2-h-t": "#ffffff",
+        "ss-b2-h-bg": "#000000",
+        "ss-b2-h-br": "#000000",
+        "ss-x-bgap": 20,
+        "ss-overlay": "#000000",
+        "ss-p-overlay-opacity": 30,
+        "image_hover": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "dynamic_rich_text_7nYKDb",
+    "36274985-0108-4a4c-955c-4d68fc874f0b",
+    "superspeed_apps_3zM9ew"
+  ]
+}

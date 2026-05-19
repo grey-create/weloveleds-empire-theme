@@ -1,0 +1,159 @@
+{% comment %}
+  Festive Snowfall Effect - WeLoveLEDs
+  Pure CSS animated snowfall overlay
+  Lightweight - no JavaScript required
+{% endcomment %}
+
+{% if section.settings.enable_snowfall %}
+<div class="snowfall-container" aria-hidden="true">
+  {% for i in (1..50) %}
+    <div class="snowflake sf-{{ i }}"></div>
+  {% endfor %}
+</div>
+
+<style>
+  .snowfall-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    overflow: hidden;
+  }
+
+  .snowflake {
+    position: absolute;
+    width: var(--size, 8px);
+    height: var(--size, 8px);
+    background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.4) 50%, transparent 70%);
+    border-radius: 50%;
+    opacity: var(--opacity, 0.7);
+    top: var(--start-y, -10px);
+    left: var(--pos-x);
+    animation: snowfall-drift var(--duration) linear infinite;
+    animation-delay: var(--delay);
+  }
+
+  @keyframes snowfall-drift {
+    0% {
+      transform: translateY(0) translateX(0) rotate(0deg);
+      opacity: var(--opacity, 0.7);
+    }
+    25% {
+      transform: translateY(25vh) translateX(var(--drift-1)) rotate(90deg);
+    }
+    50% {
+      transform: translateY(50vh) translateX(var(--drift-2)) rotate(180deg);
+    }
+    75% {
+      transform: translateY(75vh) translateX(var(--drift-3)) rotate(270deg);
+    }
+    100% {
+      transform: translateY(calc(100vh + 20px)) translateX(var(--drift-4)) rotate(360deg);
+      opacity: 0;
+    }
+  }
+
+  /* Randomised snowflake properties - each unique for natural effect */
+  .sf-1 { --pos-x: 3%; --size: 6px; --duration: 14s; --delay: -2s; --opacity: 0.6; --start-y: -5%; --drift-1: 25px; --drift-2: -15px; --drift-3: 30px; --drift-4: 10px; }
+  .sf-2 { --pos-x: 97%; --size: 9px; --duration: 11s; --delay: -8s; --opacity: 0.8; --start-y: -12%; --drift-1: -20px; --drift-2: 25px; --drift-3: -10px; --drift-4: 20px; }
+  .sf-3 { --pos-x: 21%; --size: 5px; --duration: 16s; --delay: -4s; --opacity: 0.5; --start-y: -8%; --drift-1: 15px; --drift-2: -30px; --drift-3: 20px; --drift-4: -15px; }
+  .sf-4 { --pos-x: 78%; --size: 8px; --duration: 12s; --delay: -11s; --opacity: 0.7; --start-y: -3%; --drift-1: -35px; --drift-2: 10px; --drift-3: -25px; --drift-4: 5px; }
+  .sf-5 { --pos-x: 45%; --size: 7px; --duration: 15s; --delay: -6s; --opacity: 0.9; --start-y: -15%; --drift-1: 20px; --drift-2: -20px; --drift-3: 35px; --drift-4: -25px; }
+  .sf-6 { --pos-x: 62%; --size: 4px; --duration: 18s; --delay: -1s; --opacity: 0.4; --start-y: -7%; --drift-1: -10px; --drift-2: 30px; --drift-3: -15px; --drift-4: 25px; }
+  .sf-7 { --pos-x: 8%; --size: 10px; --duration: 10s; --delay: -9s; --opacity: 0.75; --start-y: -20%; --drift-1: 30px; --drift-2: -5px; --drift-3: 15px; --drift-4: -20px; }
+  .sf-8 { --pos-x: 89%; --size: 6px; --duration: 13s; --delay: -3s; --opacity: 0.55; --start-y: -2%; --drift-1: -25px; --drift-2: 15px; --drift-3: -30px; --drift-4: 10px; }
+  .sf-9 { --pos-x: 34%; --size: 8px; --duration: 17s; --delay: -14s; --opacity: 0.85; --start-y: -10%; --drift-1: 15px; --drift-2: -25px; --drift-3: 5px; --drift-4: -15px; }
+  .sf-10 { --pos-x: 56%; --size: 5px; --duration: 11s; --delay: -7s; --opacity: 0.65; --start-y: -18%; --drift-1: -15px; --drift-2: 35px; --drift-3: -20px; --drift-4: 30px; }
+  
+  .sf-11 { --pos-x: 15%; --size: 7px; --duration: 14s; --delay: -5s; --opacity: 0.7; --start-y: -6%; --drift-1: 35px; --drift-2: -10px; --drift-3: 25px; --drift-4: -5px; }
+  .sf-12 { --pos-x: 83%; --size: 9px; --duration: 12s; --delay: -12s; --opacity: 0.8; --start-y: -14%; --drift-1: -30px; --drift-2: 20px; --drift-3: -35px; --drift-4: 15px; }
+  .sf-13 { --pos-x: 27%; --size: 4px; --duration: 19s; --delay: -2s; --opacity: 0.45; --start-y: -9%; --drift-1: 10px; --drift-2: -35px; --drift-3: 30px; --drift-4: -25px; }
+  .sf-14 { --pos-x: 71%; --size: 6px; --duration: 15s; --delay: -10s; --opacity: 0.6; --start-y: -4%; --drift-1: -20px; --drift-2: 5px; --drift-3: -10px; --drift-4: 20px; }
+  .sf-15 { --pos-x: 41%; --size: 8px; --duration: 11s; --delay: -8s; --opacity: 0.9; --start-y: -16%; --drift-1: 25px; --drift-2: -15px; --drift-3: 20px; --drift-4: -30px; }
+  .sf-16 { --pos-x: 93%; --size: 5px; --duration: 16s; --delay: -4s; --opacity: 0.5; --start-y: -11%; --drift-1: -35px; --drift-2: 25px; --drift-3: -5px; --drift-4: 35px; }
+  .sf-17 { --pos-x: 6%; --size: 7px; --duration: 13s; --delay: -13s; --opacity: 0.75; --start-y: -1%; --drift-1: 20px; --drift-2: -30px; --drift-3: 35px; --drift-4: -10px; }
+  .sf-18 { --pos-x: 52%; --size: 10px; --duration: 10s; --delay: -6s; --opacity: 0.85; --start-y: -19%; --drift-1: -10px; --drift-2: 30px; --drift-3: -25px; --drift-4: 5px; }
+  .sf-19 { --pos-x: 38%; --size: 6px; --duration: 18s; --delay: -1s; --opacity: 0.55; --start-y: -8%; --drift-1: 30px; --drift-2: -5px; --drift-3: 15px; --drift-4: -35px; }
+  .sf-20 { --pos-x: 67%; --size: 8px; --duration: 14s; --delay: -9s; --opacity: 0.7; --start-y: -13%; --drift-1: -25px; --drift-2: 15px; --drift-3: -20px; --drift-4: 25px; }
+  
+  .sf-21 { --pos-x: 12%; --size: 5px; --duration: 12s; --delay: -7s; --opacity: 0.6; --start-y: -5%; --drift-1: 15px; --drift-2: -20px; --drift-3: 10px; --drift-4: -15px; }
+  .sf-22 { --pos-x: 86%; --size: 7px; --duration: 17s; --delay: -3s; --opacity: 0.8; --start-y: -17%; --drift-1: -15px; --drift-2: 35px; --drift-3: -30px; --drift-4: 20px; }
+  .sf-23 { --pos-x: 29%; --size: 9px; --duration: 11s; --delay: -11s; --opacity: 0.9; --start-y: -2%; --drift-1: 35px; --drift-2: -10px; --drift-3: 25px; --drift-4: -5px; }
+  .sf-24 { --pos-x: 74%; --size: 4px; --duration: 15s; --delay: -5s; --opacity: 0.45; --start-y: -10%; --drift-1: -30px; --drift-2: 20px; --drift-3: -15px; --drift-4: 30px; }
+  .sf-25 { --pos-x: 48%; --size: 6px; --duration: 13s; --delay: -14s; --opacity: 0.65; --start-y: -7%; --drift-1: 10px; --drift-2: -25px; --drift-3: 30px; --drift-4: -20px; }
+  .sf-26 { --pos-x: 95%; --size: 8px; --duration: 16s; --delay: -2s; --opacity: 0.75; --start-y: -15%; --drift-1: -20px; --drift-2: 10px; --drift-3: -35px; --drift-4: 15px; }
+  .sf-27 { --pos-x: 2%; --size: 5px; --duration: 10s; --delay: -8s; --opacity: 0.5; --start-y: -3%; --drift-1: 25px; --drift-2: -15px; --drift-3: 5px; --drift-4: -25px; }
+  .sf-28 { --pos-x: 59%; --size: 7px; --duration: 14s; --delay: -10s; --opacity: 0.85; --start-y: -12%; --drift-1: -35px; --drift-2: 30px; --drift-3: -10px; --drift-4: 35px; }
+  .sf-29 { --pos-x: 23%; --size: 10px; --duration: 12s; --delay: -4s; --opacity: 0.7; --start-y: -6%; --drift-1: 20px; --drift-2: -35px; --drift-3: 20px; --drift-4: -10px; }
+  .sf-30 { --pos-x: 81%; --size: 6px; --duration: 18s; --delay: -12s; --opacity: 0.6; --start-y: -20%; --drift-1: -10px; --drift-2: 25px; --drift-3: -25px; --drift-4: 5px; }
+  
+  .sf-31 { --pos-x: 17%; --size: 8px; --duration: 11s; --delay: -6s; --opacity: 0.8; --start-y: -9%; --drift-1: 30px; --drift-2: -5px; --drift-3: 35px; --drift-4: -30px; }
+  .sf-32 { --pos-x: 69%; --size: 5px; --duration: 15s; --delay: -1s; --opacity: 0.55; --start-y: -4%; --drift-1: -25px; --drift-2: 15px; --drift-3: -5px; --drift-4: 25px; }
+  .sf-33 { --pos-x: 36%; --size: 9px; --duration: 13s; --delay: -9s; --opacity: 0.9; --start-y: -18%; --drift-1: 15px; --drift-2: -30px; --drift-3: 15px; --drift-4: -15px; }
+  .sf-34 { --pos-x: 91%; --size: 4px; --duration: 17s; --delay: -7s; --opacity: 0.4; --start-y: -1%; --drift-1: -15px; --drift-2: 35px; --drift-3: -20px; --drift-4: 30px; }
+  .sf-35 { --pos-x: 5%; --size: 7px; --duration: 10s; --delay: -13s; --opacity: 0.7; --start-y: -14%; --drift-1: 35px; --drift-2: -20px; --drift-3: 30px; --drift-4: -5px; }
+  .sf-36 { --pos-x: 54%; --size: 6px; --duration: 14s; --delay: -3s; --opacity: 0.65; --start-y: -8%; --drift-1: -30px; --drift-2: 10px; --drift-3: -15px; --drift-4: 20px; }
+  .sf-37 { --pos-x: 32%; --size: 8px; --duration: 16s; --delay: -11s; --opacity: 0.75; --start-y: -11%; --drift-1: 10px; --drift-2: -25px; --drift-3: 25px; --drift-4: -35px; }
+  .sf-38 { --pos-x: 76%; --size: 5px; --duration: 12s; --delay: -5s; --opacity: 0.5; --start-y: -16%; --drift-1: -20px; --drift-2: 30px; --drift-3: -35px; --drift-4: 10px; }
+  .sf-39 { --pos-x: 44%; --size: 10px; --duration: 11s; --delay: -8s; --opacity: 0.85; --start-y: -3%; --drift-1: 25px; --drift-2: -10px; --drift-3: 5px; --drift-4: -25px; }
+  .sf-40 { --pos-x: 88%; --size: 7px; --duration: 15s; --delay: -14s; --opacity: 0.6; --start-y: -13%; --drift-1: -35px; --drift-2: 20px; --drift-3: -30px; --drift-4: 35px; }
+  
+  .sf-41 { --pos-x: 10%; --size: 6px; --duration: 13s; --delay: -2s; --opacity: 0.7; --start-y: -7%; --drift-1: 20px; --drift-2: -35px; --drift-3: 10px; --drift-4: -20px; }
+  .sf-42 { --pos-x: 64%; --size: 9px; --duration: 18s; --delay: -10s; --opacity: 0.8; --start-y: -19%; --drift-1: -10px; --drift-2: 25px; --drift-3: -25px; --drift-4: 15px; }
+  .sf-43 { --pos-x: 25%; --size: 4px; --duration: 10s; --delay: -6s; --opacity: 0.45; --start-y: -5%; --drift-1: 30px; --drift-2: -15px; --drift-3: 35px; --drift-4: -10px; }
+  .sf-44 { --pos-x: 79%; --size: 8px; --duration: 14s; --delay: -4s; --opacity: 0.9; --start-y: -10%; --drift-1: -25px; --drift-2: 5px; --drift-3: -10px; --drift-4: 30px; }
+  .sf-45 { --pos-x: 50%; --size: 5px; --duration: 12s; --delay: -12s; --opacity: 0.55; --start-y: -2%; --drift-1: 15px; --drift-2: -30px; --drift-3: 20px; --drift-4: -35px; }
+  .sf-46 { --pos-x: 19%; --size: 7px; --duration: 16s; --delay: -1s; --opacity: 0.75; --start-y: -15%; --drift-1: -35px; --drift-2: 35px; --drift-3: -5px; --drift-4: 25px; }
+  .sf-47 { --pos-x: 72%; --size: 6px; --duration: 11s; --delay: -9s; --opacity: 0.6; --start-y: -6%; --drift-1: 10px; --drift-2: -20px; --drift-3: 30px; --drift-4: -15px; }
+  .sf-48 { --pos-x: 40%; --size: 10px; --duration: 17s; --delay: -7s; --opacity: 0.85; --start-y: -12%; --drift-1: -20px; --drift-2: 15px; --drift-3: -35px; --drift-4: 5px; }
+  .sf-49 { --pos-x: 85%; --size: 8px; --duration: 13s; --delay: -3s; --opacity: 0.5; --start-y: -17%; --drift-1: 35px; --drift-2: -25px; --drift-3: 15px; --drift-4: -30px; }
+  .sf-50 { --pos-x: 7%; --size: 5px; --duration: 15s; --delay: -11s; --opacity: 0.7; --start-y: -4%; --drift-1: -15px; --drift-2: 30px; --drift-3: -20px; --drift-4: 20px; }
+
+  /* Reduce snowflakes on mobile for performance */
+  @media (max-width: 768px) {
+    .sf-31, .sf-32, .sf-33, .sf-34, .sf-35,
+    .sf-36, .sf-37, .sf-38, .sf-39, .sf-40,
+    .sf-41, .sf-42, .sf-43, .sf-44, .sf-45,
+    .sf-46, .sf-47, .sf-48, .sf-49, .sf-50 {
+      display: none;
+    }
+  }
+
+  /* Respect reduced motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    .snowflake {
+      animation: none;
+      display: none;
+    }
+  }
+</style>
+{% endif %}
+
+{% schema %}
+{
+  "name": "❄️ Festive Snowfall",
+  "tag": "section",
+  "class": "festive-snowfall",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_snowfall",
+      "label": "Enable Snowfall Effect",
+      "default": true,
+      "info": "Toggle the falling snow animation on/off"
+    },
+    {
+      "type": "paragraph",
+      "content": "Pure CSS snowfall effect - no impact on site speed. Automatically reduces on mobile and respects user motion preferences."
+    }
+  ],
+  "presets": [
+    {
+      "name": "❄️ Festive Snowfall"
+    }
+  ]
+}
+{% endschema %}

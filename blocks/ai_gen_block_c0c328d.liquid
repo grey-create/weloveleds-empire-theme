@@ -1,0 +1,217 @@
+{% doc %}
+  @prompt
+    Dividing horizontal line
+
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-divider-{{ ai_gen_id }} {
+    width: 100%;
+    margin: {{ block.settings.margin_top }}px 0 {{ block.settings.margin_bottom }}px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-divider-line-{{ ai_gen_id }} {
+    width: {{ block.settings.line_width }}%;
+    height: {{ block.settings.line_thickness }}px;
+    background-color: {{ block.settings.line_color }};
+    border: none;
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  .ai-divider-with-text-{{ ai_gen_id }} {
+    display: flex;
+    align-items: center;
+    width: {{ block.settings.line_width }}%;
+  }
+
+  .ai-divider-text-{{ ai_gen_id }} {
+    color: {{ block.settings.text_color }};
+    font-size: {{ block.settings.text_size }}px;
+    font-weight: {{ block.settings.text_weight }};
+    white-space: nowrap;
+    padding: 0 {{ block.settings.text_spacing }}px;
+    background-color: {{ block.settings.background_color }};
+  }
+
+  .ai-divider-line-left-{{ ai_gen_id }},
+  .ai-divider-line-right-{{ ai_gen_id }} {
+    flex: 1;
+    height: {{ block.settings.line_thickness }}px;
+    background-color: {{ block.settings.line_color }};
+    border-radius: {{ block.settings.border_radius }}px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-divider-{{ ai_gen_id }} {
+      margin: {{ block.settings.margin_top | times: 0.7 | round }}px 0 {{ block.settings.margin_bottom | times: 0.7 | round }}px 0;
+    }
+
+    .ai-divider-text-{{ ai_gen_id }} {
+      font-size: {{ block.settings.text_size | times: 0.9 | round }}px;
+      padding: 0 {{ block.settings.text_spacing | times: 0.8 | round }}px;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-divider-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  {% if block.settings.divider_text != blank %}
+    <div class="ai-divider-with-text-{{ ai_gen_id }}">
+      <div class="ai-divider-line-left-{{ ai_gen_id }}"></div>
+      <span class="ai-divider-text-{{ ai_gen_id }}">{{ block.settings.divider_text }}</span>
+      <div class="ai-divider-line-right-{{ ai_gen_id }}"></div>
+    </div>
+  {% else %}
+    <div class="ai-divider-line-{{ ai_gen_id }}"></div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Dividing line",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Line style"
+    },
+    {
+      "type": "range",
+      "id": "line_width",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Line width",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "line_thickness",
+      "min": 1,
+      "max": 10,
+      "step": 1,
+      "unit": "px",
+      "label": "Line thickness",
+      "default": 1
+    },
+    {
+      "type": "color",
+      "id": "line_color",
+      "label": "Line color",
+      "default": "#dddddd"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Border radius",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "divider_text",
+      "label": "Divider text"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "text_size",
+      "min": 10,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "label": "Text size",
+      "default": 14
+    },
+    {
+      "type": "select",
+      "id": "text_weight",
+      "label": "Text weight",
+      "options": [
+        {
+          "value": "300",
+          "label": "Light"
+        },
+        {
+          "value": "400",
+          "label": "Normal"
+        },
+        {
+          "value": "500",
+          "label": "Medium"
+        },
+        {
+          "value": "600",
+          "label": "Semi bold"
+        },
+        {
+          "value": "700",
+          "label": "Bold"
+        }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "text_spacing",
+      "min": 5,
+      "max": 30,
+      "step": 1,
+      "unit": "px",
+      "label": "Text spacing",
+      "default": 15
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Text background color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 30
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Bottom margin",
+      "default": 30
+    }
+  ],
+  "presets": [
+    {
+      "name": "Dividing line"
+    }
+  ],
+  "tag": null
+}
+{% endschema %}

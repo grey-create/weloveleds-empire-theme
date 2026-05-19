@@ -1,0 +1,918 @@
+{% comment %}
+  LED Know-How Article Template
+  - Matches blog listing teal theme
+  - Working TOC, breadcrumbs, tag-based related articles
+{% endcomment %}
+
+{% comment %} ===== FIND RELATED ARTICLES BY MATCHING TAGS ===== {% endcomment %}
+{% assign related_articles = "" | split: "" %}
+{% assign current_tags = article.tags | join: "," | downcase | split: "," %}
+
+{% for other_article in blog.articles %}
+  {% if other_article.id != article.id and related_articles.size < 3 %}
+    {% assign match_found = false %}
+    {% for other_tag in other_article.tags %}
+      {% assign other_tag_down = other_tag | downcase %}
+      {% if current_tags contains other_tag_down %}
+        {% assign match_found = true %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
+    {% if match_found %}
+      {% assign related_articles = related_articles | push: other_article %}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% comment %} Fill remaining slots with recent articles if needed {% endcomment %}
+{% if related_articles.size < 3 %}
+  {% for other_article in blog.articles %}
+    {% if other_article.id != article.id and related_articles.size < 3 %}
+      {% unless related_articles contains other_article %}
+        {% assign related_articles = related_articles | push: other_article %}
+      {% endunless %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+<article class="lkh-article">
+
+  {% comment %} ===== TOP BAR WITH BREADCRUMB AND BACK LINK ===== {% endcomment %}
+  <div class="lkh-article-topbar">
+    <nav class="lkh-article-breadcrumb">
+      <a href="/">Home</a>
+      <span class="lkh-breadcrumb-sep">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a>
+      <span class="lkh-breadcrumb-sep">/</span>
+      <span class="lkh-breadcrumb-current">{{ article.title | truncate: 50 }}</span>
+    </nav>
+    <a href="{{ blog.url }}" class="lkh-back-btn">← Back to all guides</a>
+  </div>
+
+  <div class="lkh-article-layout">
+    
+    {% comment %} ===== SIDEBAR TOC ===== {% endcomment %}
+    <aside class="lkh-article-sidebar" id="lkh-toc-sidebar">
+      <div class="lkh-toc">
+        <h3 class="lkh-toc-title">Contents</h3>
+        <ul class="lkh-toc-list" id="lkh-toc-list">
+          <!-- Populated by JavaScript -->
+        </ul>
+      </div>
+      
+      {% if article.tags.size > 0 %}
+      <div class="lkh-sidebar-section">
+        <h4 class="lkh-sidebar-heading">Topics</h4>
+        <div class="lkh-sidebar-tags">
+          {% for tag in article.tags limit: 4 %}
+            <a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="lkh-sidebar-tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      
+      <div class="lkh-sidebar-section">
+        <h4 class="lkh-sidebar-heading">Need Help?</h4>
+        <a href="/pages/contact" class="lkh-sidebar-btn">Technical Support</a>
+        <a href="mailto:sales@weloveleds.co.uk" class="lkh-sidebar-btn secondary">Email Us</a>
+      </div>
+    </aside>
+
+    {% comment %} ===== MAIN CONTENT ===== {% endcomment %}
+    <div class="lkh-article-main">
+      
+      {% comment %} ===== ARTICLE HEADER ===== {% endcomment %}
+      <header class="lkh-article-header">
+        {% if article.tags.size > 0 %}
+        <div class="lkh-article-tags">
+          {% for tag in article.tags limit: 3 %}
+            <a href="{{ blog.url }}/tagged/{{ tag | handleize }}" class="lkh-article-tag">{{ tag }}</a>
+          {% endfor %}
+        </div>
+        {% endif %}
+        
+        <h1 class="lkh-article-title">{{ article.title }}</h1>
+        
+        <div class="lkh-article-meta">
+          <span class="lkh-read-time">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            {{ article.content | strip_html | number_of_words | divided_by: 200 | at_least: 1 }} min read
+          </span>
+          <span class="lkh-publish-date">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            {{ article.published_at | date: '%d %b %Y' }}
+          </span>
+        </div>
+      </header>
+
+      {% comment %} ===== ARTICLE CONTENT ===== {% endcomment %}
+      <div class="lkh-article-content rte" id="lkh-article-content">
+        {{ article.content }}
+      </div>
+
+      {% comment %} ===== CTA SECTION ===== {% endcomment %}
+      <div class="lkh-article-cta">
+        <h3>Need help with your LED project?</h3>
+        <p>Our experts provide free technical advice and product recommendations.</p>
+        <div class="lkh-cta-buttons">
+          <a href="/pages/contact" class="lkh-cta-btn primary">Get Technical Support</a>
+          <a href="/collections/all" class="lkh-cta-btn secondary">Browse Products</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  {% comment %} ===== SIMPLE ARTICLE NAVIGATION ===== {% endcomment %}
+  <nav class="lkh-article-nav">
+    {% if blog.previous_article %}
+      <a href="{{ blog.previous_article.url }}" class="lkh-nav-btn">← Previous</a>
+    {% else %}
+      <span class="lkh-nav-btn disabled">← Previous</span>
+    {% endif %}
+    
+    <a href="{{ blog.url }}" class="lkh-nav-btn back">All Guides</a>
+    
+    {% if blog.next_article %}
+      <a href="{{ blog.next_article.url }}" class="lkh-nav-btn">Next →</a>
+    {% else %}
+      <span class="lkh-nav-btn disabled">Next →</span>
+    {% endif %}
+  </nav>
+
+  {% comment %} ===== RELATED ARTICLES ===== {% endcomment %}
+  {% if related_articles.size > 0 %}
+  <section class="lkh-related">
+    <h3 class="lkh-related-title">Related Guides</h3>
+    <div class="lkh-related-grid">
+      {% for related in related_articles limit: 3 %}
+      <a href="{{ related.url }}" class="lkh-related-card">
+        {% if related.image %}
+        <div class="lkh-related-img">
+          <img src="{{ related.image | img_url: '400x225', crop: 'center' }}" alt="{{ related.title | escape }}" loading="lazy">
+        </div>
+        {% endif %}
+        <div class="lkh-related-body">
+          {% if related.tags.size > 0 %}
+          <span class="lkh-related-tag">{{ related.tags.first }}</span>
+          {% endif %}
+          <h4 class="lkh-related-card-title">{{ related.title | truncate: 60 }}</h4>
+          <span class="lkh-related-cta">Read guide →</span>
+        </div>
+      </a>
+      {% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+</article>
+
+{% comment %} ===== SCHEMA MARKUP ===== {% endcomment %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt | default: article.content | strip_html | truncate: 160 | json }},
+  "image": {% if article.image %}"{{ article.image | img_url: '1200x630' }}"{% else %}null{% endif %},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "dateModified": "{{ article.updated_at | default: article.published_at | date: '%Y-%m-%dT%H:%M:%S%z' }}",
+  "author": {
+    "@type": "Organization",
+    "name": "WeLoveLEDs"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WeLoveLEDs",
+    "url": "{{ shop.url }}"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ shop.url }}{{ article.url }}"
+  }
+}
+</script>
+
+<style>
+/* ===== LED KNOW-HOW ARTICLE STYLES ===== */
+.lkh-article {
+  --lkh-primary: #0891b2;
+  --lkh-primary-dark: #0e7490;
+  --lkh-primary-light: #ecfeff;
+  --lkh-text: #1e293b;
+  --lkh-muted: #64748b;
+  --lkh-border: #e2e8f0;
+  --lkh-bg: #f8fafc;
+  
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem 3rem;
+}
+
+/* ===== TOP BAR ===== */
+.lkh-article-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--lkh-border);
+  margin-bottom: 1.5rem;
+}
+
+.lkh-article-breadcrumb {
+  font-size: 0.8rem;
+  color: var(--lkh-muted);
+}
+
+.lkh-article-breadcrumb a {
+  color: var(--lkh-primary);
+  text-decoration: none;
+}
+
+.lkh-article-breadcrumb a:hover {
+  text-decoration: underline;
+}
+
+.lkh-breadcrumb-sep {
+  margin: 0 0.5rem;
+  color: var(--lkh-border);
+}
+
+.lkh-breadcrumb-current {
+  color: var(--lkh-text);
+}
+
+.lkh-back-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  background: var(--lkh-primary);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0.35rem;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.lkh-back-btn:hover {
+  background: var(--lkh-primary-dark);
+}
+
+/* ===== LAYOUT ===== */
+.lkh-article-layout {
+  display: flex;
+  gap: 2.5rem;
+}
+
+/* ===== SIDEBAR ===== */
+.lkh-article-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  font-size: 0.85rem;
+}
+
+.lkh-toc {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--lkh-border);
+}
+
+.lkh-toc-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--lkh-muted);
+  margin: 0 0 0.75rem;
+}
+
+.lkh-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lkh-toc-list li {
+  margin: 0;
+}
+
+.lkh-toc-list a {
+  display: block;
+  padding: 0.35rem 0.5rem;
+  color: var(--lkh-text);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  border-radius: 0 4px 4px 0;
+  transition: all 0.15s;
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.lkh-toc-list a:hover {
+  background: var(--lkh-primary-light);
+  border-left-color: var(--lkh-primary);
+  color: var(--lkh-primary-dark);
+}
+
+.lkh-toc-list a.active {
+  background: var(--lkh-primary-light);
+  border-left-color: var(--lkh-primary);
+  color: var(--lkh-primary-dark);
+  font-weight: 600;
+}
+
+.lkh-toc-list li.child a {
+  padding-left: 1rem;
+  font-size: 0.75rem;
+  color: var(--lkh-muted);
+}
+
+.lkh-sidebar-section {
+  margin-bottom: 1.5rem;
+}
+
+.lkh-sidebar-heading {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--lkh-muted);
+  margin: 0 0 0.5rem;
+}
+
+.lkh-sidebar-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.lkh-sidebar-tag {
+  display: inline-block;
+  background: var(--lkh-primary-light);
+  color: var(--lkh-primary-dark);
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.lkh-sidebar-tag:hover {
+  background: var(--lkh-primary);
+  color: white;
+}
+
+.lkh-sidebar-btn {
+  display: block;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+  background: var(--lkh-primary);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  transition: all 0.15s;
+}
+
+.lkh-sidebar-btn:hover {
+  background: var(--lkh-primary-dark);
+}
+
+.lkh-sidebar-btn.secondary {
+  background: white;
+  color: var(--lkh-text);
+  border: 1px solid var(--lkh-border);
+}
+
+.lkh-sidebar-btn.secondary:hover {
+  background: var(--lkh-bg);
+  border-color: var(--lkh-primary);
+  color: var(--lkh-primary);
+}
+
+/* ===== MAIN CONTENT ===== */
+.lkh-article-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ===== ARTICLE HEADER ===== */
+.lkh-article-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--lkh-border);
+}
+
+.lkh-article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.75rem;
+}
+
+.lkh-article-tag {
+  display: inline-block;
+  background: var(--lkh-primary);
+  color: white;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.lkh-article-tag:hover {
+  background: var(--lkh-primary-dark);
+}
+
+.lkh-article-title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 700;
+  color: var(--lkh-text);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+}
+
+.lkh-article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--lkh-muted);
+  font-size: 0.85rem;
+}
+
+.lkh-read-time,
+.lkh-publish-date {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.lkh-read-time svg,
+.lkh-publish-date svg {
+  opacity: 0.7;
+}
+
+/* ===== ARTICLE CONTENT ===== */
+.lkh-article-content {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--lkh-text);
+}
+
+.lkh-article-content h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--lkh-text);
+  margin: 2.5rem 0 1rem;
+  scroll-margin-top: 120px;
+}
+
+.lkh-article-content h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--lkh-text);
+  margin: 2rem 0 0.75rem;
+  scroll-margin-top: 120px;
+}
+
+.lkh-article-content h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--lkh-text);
+  margin: 1.5rem 0 0.5rem;
+}
+
+.lkh-article-content p {
+  margin: 0 0 1.25rem;
+}
+
+.lkh-article-content ul,
+.lkh-article-content ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.lkh-article-content li {
+  margin-bottom: 0.5rem;
+}
+
+.lkh-article-content a {
+  color: var(--lkh-primary);
+  text-decoration: underline;
+}
+
+.lkh-article-content a:hover {
+  color: var(--lkh-primary-dark);
+}
+
+.lkh-article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.lkh-article-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--lkh-primary-light);
+  border-left: 4px solid var(--lkh-primary);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+}
+
+.lkh-article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.9rem;
+}
+
+.lkh-article-content th,
+.lkh-article-content td {
+  padding: 0.75rem;
+  border: 1px solid var(--lkh-border);
+  text-align: left;
+}
+
+.lkh-article-content th {
+  background: var(--lkh-bg);
+  font-weight: 600;
+}
+
+.lkh-article-content code {
+  background: var(--lkh-bg);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+}
+
+.lkh-article-content pre {
+  background: var(--lkh-text);
+  color: white;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.lkh-article-content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* ===== CTA SECTION ===== */
+.lkh-article-cta {
+  background: linear-gradient(135deg, var(--lkh-primary-dark) 0%, #0f766e 100%);
+  color: white;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.lkh-article-cta h3 {
+  font-size: 1.25rem;
+  margin: 0 0 0.5rem;
+  color: white;
+}
+
+.lkh-article-cta p {
+  margin: 0 0 1.25rem;
+  opacity: 0.9;
+}
+
+.lkh-cta-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.lkh-cta-btn {
+  display: inline-block;
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.35rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.lkh-cta-btn.primary {
+  background: white;
+  color: var(--lkh-primary-dark);
+}
+
+.lkh-cta-btn.primary:hover {
+  background: var(--lkh-primary-light);
+}
+
+.lkh-cta-btn.secondary {
+  background: transparent;
+  color: white;
+  border: 2px solid white;
+}
+
+.lkh-cta-btn.secondary:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* ===== SIMPLE NAVIGATION ===== */
+.lkh-article-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--lkh-border);
+}
+
+.lkh-nav-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: white;
+  border: 1px solid var(--lkh-border);
+  border-radius: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--lkh-text);
+  text-decoration: none;
+  transition: all 0.15s;
+}
+
+.lkh-nav-btn:hover {
+  border-color: var(--lkh-primary);
+  color: var(--lkh-primary);
+}
+
+.lkh-nav-btn.back {
+  background: var(--lkh-primary);
+  border-color: var(--lkh-primary);
+  color: white;
+  font-weight: 600;
+}
+
+.lkh-nav-btn.back:hover {
+  background: var(--lkh-primary-dark);
+  border-color: var(--lkh-primary-dark);
+}
+
+.lkh-nav-btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ===== RELATED ARTICLES ===== */
+.lkh-related {
+  margin: 3rem 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--lkh-border);
+}
+
+.lkh-related-title {
+  text-align: center;
+  font-size: 1.25rem;
+  color: var(--lkh-text);
+  margin: 0 0 1.5rem;
+}
+
+.lkh-related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.lkh-related-card {
+  display: block;
+  background: white;
+  border: 1px solid var(--lkh-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.15s;
+}
+
+.lkh-related-card:hover {
+  border-color: var(--lkh-primary);
+  box-shadow: 0 4px 12px rgba(8, 145, 178, 0.1);
+}
+
+.lkh-related-img {
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: var(--lkh-bg);
+}
+
+.lkh-related-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.lkh-related-card:hover .lkh-related-img img {
+  transform: scale(1.05);
+}
+
+.lkh-related-body {
+  padding: 0.75rem;
+}
+
+.lkh-related-tag {
+  display: inline-block;
+  background: var(--lkh-primary-light);
+  color: var(--lkh-primary-dark);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.6rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.lkh-related-card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--lkh-text);
+  margin: 0 0 0.35rem;
+  line-height: 1.3;
+}
+
+.lkh-related-cta {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--lkh-primary);
+}
+
+.lkh-related-card:hover .lkh-related-cta {
+  text-decoration: underline;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  .lkh-article-sidebar {
+    display: none;
+  }
+  
+  .lkh-related-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .lkh-article-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .lkh-back-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .lkh-article-breadcrumb {
+    font-size: 0.75rem;
+  }
+  
+  .lkh-breadcrumb-current {
+    display: none;
+  }
+  
+  .lkh-article-title {
+    font-size: 1.35rem;
+  }
+  
+  .lkh-article-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  
+  .lkh-article-nav {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  
+  .lkh-nav-btn {
+    flex: 1;
+    text-align: center;
+    min-width: 80px;
+  }
+  
+  .lkh-nav-btn.back {
+    order: -1;
+    flex: 100%;
+  }
+  
+  .lkh-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .lkh-cta-btn {
+    width: 100%;
+    max-width: 250px;
+    text-align: center;
+  }
+  
+  .lkh-article-cta {
+    padding: 1.5rem;
+  }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // ===== BUILD TABLE OF CONTENTS =====
+  const content = document.getElementById('lkh-article-content');
+  const tocList = document.getElementById('lkh-toc-list');
+  
+  if (content && tocList) {
+    const headings = content.querySelectorAll('h2, h3');
+    
+    if (headings.length > 0) {
+      headings.forEach((heading, index) => {
+        // Create ID if not exists
+        if (!heading.id) {
+          heading.id = 'section-' + index;
+        }
+        
+        const li = document.createElement('li');
+        if (heading.tagName === 'H3') {
+          li.className = 'child';
+        }
+        
+        const link = document.createElement('a');
+        link.href = '#' + heading.id;
+        link.textContent = heading.textContent;
+        
+        // Smooth scroll
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          // Update URL without scroll
+          history.pushState(null, null, this.href);
+        });
+        
+        li.appendChild(link);
+        tocList.appendChild(li);
+      });
+      
+      // ===== ACTIVE STATE ON SCROLL =====
+      const tocLinks = tocList.querySelectorAll('a');
+      
+      function updateActiveLink() {
+        let currentSection = null;
+        
+        headings.forEach(heading => {
+          const rect = heading.getBoundingClientRect();
+          if (rect.top <= 150) {
+            currentSection = heading.id;
+          }
+        });
+        
+        tocLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === '#' + currentSection) {
+            link.classList.add('active');
+          }
+        });
+      }
+      
+      window.addEventListener('scroll', updateActiveLink, { passive: true });
+      updateActiveLink();
+      
+    } else {
+      // Hide TOC if no headings
+      const tocSection = document.querySelector('.lkh-toc');
+      if (tocSection) tocSection.style.display = 'none';
+    }
+  }
+});
+</script>
+
+{% schema %}
+{
+  "name": "LED Know-How Article",
+  "tag": "section",
+  "class": "section",
+  "settings": []
+}
+{% endschema %}

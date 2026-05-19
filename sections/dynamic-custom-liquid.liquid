@@ -1,0 +1,35 @@
+<script
+  type="application/json"
+  data-section-type="custom-liquid"
+  data-section-id="{{ section.id }}"
+>
+</script>
+
+{%- capture custom_liquid_output -%}{{ section.settings.custom_liquid }}{%- endcapture -%}
+{%- assign custom_liquid_output = custom_liquid_output | strip -%}
+{%- if custom_liquid_output != blank -%}
+<section class="custom-liquid--container">
+  {{ section.settings.custom_liquid }}
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.custom_liquid.name",
+  "class": "custom-liquid--section",
+  "settings": [
+    {
+      "type": "liquid",
+      "id": "custom_liquid",
+      "label": "t:sections.custom_liquid.custom_liquid.label"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.custom_liquid.presets.custom_liquid.name",
+      "category": "t:sections.custom_liquid.presets.custom_liquid.category"
+    }
+  ]
+}
+
+{% endschema %}

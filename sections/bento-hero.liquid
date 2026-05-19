@@ -1,0 +1,159 @@
+{{ 'bento-hero.css' | asset_url | stylesheet_tag }}
+
+<div class="bento-hero-section" style="background-color: {{ section.settings.background_colour }};">
+  <div class="bento-hero-container">
+    
+    <a href="{{ section.settings.collection.url }}" class="bento-hero-tile" style="--tile-radius: {{ section.settings.border_radius }}px; --tile-height: {{ section.settings.tile_height }}px;">
+      <div class="bento-hero-tile__background">
+        {%- if section.settings.image != blank -%}
+          {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'eager', class: 'bento-hero-tile__image' }}
+        {%- endif -%}
+        {%- if section.settings.fade_to_transparent -%}
+          {%- assign fade_opacity = section.settings.fade_opacity | divided_by: 100.0 -%}
+          <div class="bento-hero-tile__overlay" style="background: linear-gradient(to top, {{ section.settings.fade_colour | color_modify: 'alpha', fade_opacity }}, transparent); mix-blend-mode: {{ section.settings.blend_mode }};"></div>
+        {%- else -%}
+          <div class="bento-hero-tile__overlay" style="background: {{ section.settings.overlay }}; mix-blend-mode: {{ section.settings.blend_mode }};"></div>
+        {%- endif -%}
+      </div>
+      <div class="bento-hero-tile__content">
+        <h2 class="bento-hero-tile__title">
+          {%- if section.settings.custom_title != blank -%}
+            {{ section.settings.custom_title }}
+          {%- else -%}
+            {{ section.settings.collection.title }}
+          {%- endif -%}
+        </h2>
+        {%- if section.settings.tagline != blank -%}
+          <p class="bento-hero-tile__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+        <span class="bento-hero-tile__cta">Shop now <span class="bento-hero-tile__arrow">→</span></span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Bento Hero",
+  "tag": "section",
+  "class": "bento-hero-wrapper",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "color",
+      "id": "background_colour",
+      "label": "Background colour",
+      "default": "#f5f5f7"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1400,
+      "max": 2400,
+      "step": 100,
+      "default": 1800,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "tile_height",
+      "label": "Tile height",
+      "min": 300,
+      "max": 600,
+      "step": 20,
+      "default": 480,
+      "unit": "px"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 4,
+      "default": 24,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Tile Content"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom title",
+      "info": "Leave blank to use collection title"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Professional LED strips with 5-year warranty"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "header",
+      "content": "Overlay Settings"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay",
+      "label": "Overlay gradient",
+      "default": "linear-gradient(135deg, rgba(6, 78, 59, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%)"
+    },
+    {
+      "type": "select",
+      "id": "blend_mode",
+      "label": "Blend mode",
+      "options": [
+        { "value": "normal", "label": "Normal" },
+        { "value": "multiply", "label": "Multiply" },
+        { "value": "overlay", "label": "Overlay" },
+        { "value": "soft-light", "label": "Soft Light" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "fade_to_transparent",
+      "label": "Use simple fade instead",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "fade_colour",
+      "label": "Fade colour",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "fade_opacity",
+      "label": "Fade opacity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "default": 70,
+      "unit": "%"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bento Hero"
+    }
+  ]
+}
+{% endschema %}

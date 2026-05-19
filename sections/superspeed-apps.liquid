@@ -1,0 +1,402 @@
+{% comment %}
+Copyright (c) Superspeed | https://superspeedapp.com NOTICE: All information contained herein is property of Superspeed.
+The intellectual and technical concepts contained herein are proprietary to Superspeed and are protected by trade secret and copyright law.
+Reproduction of this code is strictly forbidden unless prior written permission is obtained from Superspeed. If violated, legal action will be taken.
+{% endcomment %}
+
+{%- liquid
+  assign id = section.id
+  assign set = section.settings
+  assign grid_id = set.grid_id
+  assign grid_id_mob = set.grid_id_mob
+  assign in = section.index
+-%}
+
+{%- capture slide_settings -%}
+{%- if set.use_slideshow -%}
+{%- assign grid_id = '1ss' -%}
+data-ss-slider='{
+  "initial": 0,
+  "loop": {{ set.loop | json }},
+  "add_arrows": {{ set.add_arrows | json }},
+  "add_dots": {{ set.add_dots | json }},
+  "auto_rotate": {{ set.auto_rotate | times: 1000 | json }}
+}'
+{%- endif -%}
+{%- endcapture -%}
+
+{%- capture css_vars -%}
+{%- for setting in set -%}{%- if setting contains 'ss-' -%}
+    {%- assign unit = nil -%}
+    {%- if setting contains 'ss-x' -%}{%- assign unit = 'px' -%}{%- endif -%}
+    {%- if setting contains 'ss-v' -%}{%- assign unit = 'vh' -%}{%- endif -%}
+    {%- if setting contains 'ss-p' -%}{%- assign unit = '%' -%}{%- endif -%}
+
+{%- if setting contains 'font-fam' -%}
+  --{{ setting }}: {{ set[setting].family }};
+{%- else -%}
+  --{{ setting }}: {{ set[setting] }}{%- if unit -%}{{ unit }}{%- endif -%};
+{% endif -%}
+{%- endif -%}{%- endfor -%}
+{%- endcapture -%}
+
+{%- capture show_style -%}{%- if set.show_section == 'mobile' -%}ss:block md-ss:ss:hidden{%- elsif set.show_section == 'desktop' -%}ss:hidden md-ss:ss:block{%- endif -%}{%- endcapture -%}
+
+<section data-in="{{ in }}" id="ss-sec-{{ id }}" style="{{ css_vars | strip_newlines }}" class="{{- show_style -}} {% if set.add_dots  %}ss-has-dots{% endif %} {% if set.add_arrows %}ss-has-arrows{% endif %}">
+  <div id="ss-apps-{{ id }}" {{ slide_settings | lstrip | strip_newlines }} class="ss-l{{ grid_id }} ss-m{{ grid_id_mob }}">
+    {%- for block in section.blocks -%}
+      <div class="ss-item {% if set.image_hover %}ss-hover{% endif %} ss-item--{{ forloop.index }} {% if set.reverse and forloop.first %}ss:reverse{% endif %}" {% if request.design_mode %}style="outline: 2px dashed blue;"{% endif %}>
+        {% render block %}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- style -%}
+  #ss-apps-{{ id }} {
+    display: {%- if set.use_slideshow -%}flex{%- else -%}grid{%- endif -%};
+    width: 100%;
+    {%- if set.enable_height == 'custom' -%}
+    min-height: var(--ss-v-min-h);
+    max-height: var(--ss-v-max-h);
+    {%- endif -%}
+    grid-template-rows: auto;
+    overflow: hidden;
+    background-color: var(--ss-bg-color);
+    color: var(--ss-text-color);
+    margin: calc(var(--ss-x-mt) * var(--ss-mx-mar)) calc(var(--ss-x-mr) * var(--ss-mx-mar)) calc(var(--ss-x-mb) * var(--ss-mx-mar)) calc(var(--ss-x-ml) * var(--ss-mx-mar));
+    padding: calc(var(--ss-x-pt) * var(--ss-mx-pad)) calc(var(--ss-x-pr) * var(--ss-mx-pad)) calc(var(--ss-x-pb) * var(--ss-mx-pad)) calc(var(--ss-x-pl) * var(--ss-mx-pad));
+    gap: var(--ss-xg-gap);
+    {%- if set.include_margins -%}
+    max-width: var(--ss-x-mw);
+    margin-right: auto;
+    margin-left: auto;
+    {%- endif -%}
+  }
+
+  @media (max-width: 767.9px) {
+    #ss-apps-{{ id }} {
+      background-color: var(--ss-bg-color);
+      color: var(--ss-text-color);
+      margin: calc(var(--ss-x-mt-mob) * var(--ss-mx-mar-mob)) calc(var(--ss-x-mr-mob) * var(--ss-mx-mar-mob)) calc(var(--ss-x-mb-mob) * var(--ss-mx-mar-mob)) calc(var(--ss-x-ml-mob) * var(--ss-mx-mar-mob));
+      padding: calc(var(--ss-x-pt-mob) * var(--ss-mx-pad-mob)) calc(var(--ss-x-pr-mob) * var(--ss-mx-pad-mob)) calc(var(--ss-x-pb-mob) * var(--ss-mx-pad-mob)) calc(var(--ss-x-pl-mob) * var(--ss-mx-pad-mob));
+      gap: var(--ss-xg-gap-mob);
+      {%- if set.enable_height_mob == "custom" -%}
+      min-height: var(--ss-v-min-h-mob);
+      max-height: var(--ss-v-max-h-mob);
+      {%- endif -%}
+    }
+  }
+
+  {%- if set.use_slideshow == false -%}
+    @media (min-width: 768px) {
+      {%- if set.grid_id == "1a" -%}
+        #ss-apps-{{ id }}.ss-l1a {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+              "main r1"
+              "main r2";
+        }
+        #ss-apps-{{ id }}.ss-l1a .ss-item--1 { grid-area: main; }
+        #ss-apps-{{ id }}.ss-l1a .ss-item--2 { grid-area: r1; }
+        #ss-apps-{{ id }}.ss-l1a .ss-item--3 { grid-area: r2; }
+      {%- endif -%}
+
+      {%- if set.grid_id == "1b" -%}
+        #ss-apps-{{ id }}.ss-l1b {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+              "l1 main"
+              "l2 main";
+        }
+        #ss-apps-{{ id }}.ss-l1b .ss-item--1 { grid-area: l1; }
+        #ss-apps-{{ id }}.ss-l1b .ss-item--2 { grid-area: l2; }
+        #ss-apps-{{ id }}.ss-l1b .ss-item--3 { grid-area: main; }
+      {%- endif -%}
+
+      {%- if set.grid_id == "1c5" -%}
+        #ss-apps-{{ id }}.ss-l1c5 {
+          grid-template-columns: 1fr 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
+          grid-template-areas:
+            "l1 c1 r1"
+            "l2 c1 r2";
+        }
+        #ss-apps-{{ id }}.ss-l1c5 .ss-item--1 { grid-area: l1; }
+        #ss-apps-{{ id }}.ss-l1c5 .ss-item--2 { grid-area: l2; }
+        #ss-apps-{{ id }}.ss-l1c5 .ss-item--3 { grid-area: c1; }
+        #ss-apps-{{ id }}.ss-l1c5 .ss-item--4 { grid-area: r1; }
+        #ss-apps-{{ id }}.ss-l1c5 .ss-item--5 { grid-area: r2; }
+      {%- endif -%}
+    }
+
+    @media (max-width: 767px) {
+      #ss-apps-{{ id }} .ss\:reverse { order: 9999; }
+      {%- if grid_id_mob == "1c" -%}
+        #ss-apps-{{ id }}.ss-m1c {
+          grid-template-columns: 1fr;
+        }
+      {%- endif -%}
+
+      {%- if grid_id_mob == "2c" -%}
+        #ss-apps-{{ id }}.ss-m2c {
+          grid-template-columns: 1fr 1fr;
+        }
+      {%- endif -%}
+
+      {%- if grid_id_mob == "3c" -%}
+        #ss-apps-{{ id }}.ss-m3c {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+      {%- endif -%}
+
+      {%- if grid_id_mob == "4c" -%}
+        #ss-apps-{{ id }}.ss-m4c {
+          grid-template-columns: 1fr 1fr 1fr 1fr;
+        }
+      {%- endif -%}
+
+      {%- if grid_id_mob == "2c1c" -%}
+        #ss-apps-{{ id }}.ss-m2c1c {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+            "l1 l2"
+            "r1 r2"
+            "c1 c1";
+        }
+        #ss-apps-{{ id }}.ss-m2c1c .ss-item--1 { grid-area: l1; }
+        #ss-apps-{{ id }}.ss-m2c1c .ss-item--2 { grid-area: l2; }
+        #ss-apps-{{ id }}.ss-m2c1c .ss-item--3 { grid-area: c1; }
+        #ss-apps-{{ id }}.ss-m2c1c .ss-item--4 { grid-area: r1; }
+        #ss-apps-{{ id }}.ss-m2c1c .ss-item--5 { grid-area: r2; }
+      {%- endif -%}
+      {%- if grid_id_mob == "1c2c" -%}
+        #ss-apps-{{ id }}.ss-m1c2c {
+          grid-template-columns: 1fr 1fr;
+          grid-template-areas:
+            "c1 c1"
+            "l1 l2"
+            "r1 r2";
+        }
+        #ss-apps-{{ id }}.ss-m1c2c .ss-item--1 { grid-area: l1; }
+        #ss-apps-{{ id }}.ss-m1c2c .ss-item--2 { grid-area: l2; }
+        #ss-apps-{{ id }}.ss-m1c2c .ss-item--3 { grid-area: c1; }
+        #ss-apps-{{ id }}.ss-m1c2c .ss-item--4 { grid-area: r1; }
+        #ss-apps-{{ id }}.ss-m1c2c .ss-item--5 { grid-area: r2; }
+      {%- endif -%}
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "Superspeed Apps",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select", "id": "show_section", "default": "none", "label": "Show section",
+      "options": [
+        { "value": "none", "label": "Everywhere" },
+        { "value": "mobile", "label": "Mobile" },
+        { "value": "desktop", "label": "Desktop" }
+      ],
+      "info": "The breakpoint is at 768px"
+    },
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Desktop Settings" },
+    { "type": "checkbox", "id": "use_slideshow", "default": false, "label": "Use Slideshow"},
+    {
+      "type": "select", "id": "grid_id", "default": "1c", "label": "Grid ID",
+      "options": [
+        { "value": "1c", "label": "1 cols" },
+        { "value": "2c", "label": "2 cols" },
+        { "value": "3c", "label": "3 cols" },
+        { "value": "4c", "label": "4 cols" },
+        { "value": "5c", "label": "5 cols" },
+        { "value": "1a", "label": "Collage (1 large / 2 small)" },
+        { "value": "1b", "label": "Collage (2 small / 1 large)" },
+        { "value": "1c5", "label": "Collage (2 small / 1 large / 2 small)" }
+      ],
+      "info": "The grid layout is skipped when slideshow option is enabled."
+    },
+    { "type": "checkbox", "id": "include_margins", "default": true, "label": "Container Max Width"},
+    { "type": "range", "id": "ss-x-mw", "min": 600, "max": 1600, "step": 10, "unit": "px", "label": "Max Width", "default": 1440 },
+    {
+      "type": "select", "id": "enable_height", "default": "auto", "label": "Height type",
+      "options": [{ "value": "auto", "label": "Auto" }, { "value": "custom", "label": "Custom" }],
+      "info": "Choose custom if you want to set min and max height."
+    },
+    { "type": "range", "id": "ss-v-min-h", "min": 0, "max": 100, "step": 1, "unit": "vh", "label": "Min Height", "default": 0 },
+    { "type": "range", "id": "ss-v-max-h", "min": 1, "max": 100, "step": 1, "unit": "vh", "label": "Max Height", "default": 60 },
+    { "type": "color", "id": "ss-bg-color", "label": "Section Background color", "default": "#fff" },
+    { "type": "color", "id": "ss-text-color", "label": "Text color", "default": "#000" },
+    { "type": "range", "id": "ss-xg-gap", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Grid Gap", "default": 20 },
+    { "type": "paragraph", "content": "Padding spacing on desktop" },
+    { "type": "range", "id": "ss-mx-pad", "min": 1, "max": 10, "step": 1, "unit": "x", "label": "Padding Multiplier", "default": 1 },
+    { "type": "range", "id": "ss-x-pt", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Top", "default": 0 },
+    { "type": "range", "id": "ss-x-pb", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Bottom", "default": 0 },
+    { "type": "range", "id": "ss-x-pl", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Left", "default": 0 },
+    { "type": "range", "id": "ss-x-pr", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Right", "default": 0 },
+    { "type": "paragraph", "content": "Margin spacing on desktop" },
+    { "type": "range", "id": "ss-mx-mar", "min": 1, "max": 10, "step": 1, "unit": "x", "label": "Margin Multiplier", "default": 1 },
+    { "type": "range", "id": "ss-x-mt", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Top", "default": 0 },
+    { "type": "range", "id": "ss-x-mb", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Bottom", "default": 0 },
+    { "type": "range", "id": "ss-x-ml", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Left", "default": 0 },
+    { "type": "range", "id": "ss-x-mr", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Right", "default": 0 },
+    { "type": "header", "content": "Font Styling" },
+    {
+      "type": "select", "id": "ss-lh", "default": "1.4", "label": "Line Height",
+      "options": [
+        { "value": "0.8", "label": "0.8" },
+        { "value": "0.9", "label": "0.9" },
+        { "value": "1", "label": "1" },
+        { "value": "1.1", "label": "1.1" },
+        { "value": "1.2", "label": "1.2" },
+        { "value": "1.3", "label": "1.3" },
+        { "value": "1.4", "label": "1.4" },
+        { "value": "1.5", "label": "1.5" },
+        { "value": "1.6", "label": "1.5" },
+        { "value": "1.7", "label": "1.7" },
+        { "value": "1.8", "label": "1.8" }
+      ]
+    },
+    { "type": "range", "id": "ss-x-h1-fs", "label": "H1 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 48 },
+    { "type": "range", "id": "ss-x-h2-fs", "label": "H2 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 32 },
+    { "type": "range", "id": "ss-x-h3-fs", "label": "H3 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 24 },
+    { "type": "range", "id": "ss-x-h4-fs", "label": "H4 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 18 },
+    { "type": "range", "id": "ss-x-p-fs", "label": "P Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 16 },
+
+
+
+
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Mobile Settings" },
+    { "type": "checkbox", "id": "reverse", "label": "Reverse order", "default": false },
+    {
+      "type": "select", "id": "grid_id_mob", "default": "1c", "label": "Grid ID",
+      "options": [
+        { "value": "1c", "label": "1 cols" },
+        { "value": "2c", "label": "2 cols" },
+        { "value": "3c", "label": "3 cols" },
+        { "value": "4c", "label": "4 cols" },
+        { "value": "2c1c", "label": "2 small - 1 large" },
+        { "value": "1c2c", "label": "1 large - 2 small" }
+      ],
+      "info": "The grid layout is skipped when slideshow option is enabled."
+    },
+    { "type": "paragraph", "content": "All stylings below this section are applied on screen sizes under 768px" },
+    {
+      "type": "select", "id": "enable_height_mob", "default": "auto", "label": "Height type",
+      "options": [{ "value": "auto", "label": "Auto" }, { "value": "custom", "label": "Custom" }],
+      "info": "Choose custom if you want to set min and max height."
+    },
+    { "type": "range", "id": "ss-v-min-h-mob", "min": 0, "max": 100, "step": 1, "unit": "vh", "label": "Min Height", "default": 0 },
+    { "type": "range", "id": "ss-v-max-h-mob", "min": 1, "max": 100, "step": 1, "unit": "vh", "label": "Max Height", "default": 60 },
+    { "type": "range", "id": "ss-xg-gap-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Grid Gap", "default": 20 },
+    { "type": "paragraph", "content": "Padding spacing on mobile" },
+    { "type": "range", "id": "ss-mx-pad-mob", "min": 1, "max": 10, "step": 1, "unit": "x", "label": "Padding Multiplier", "default": 1 },
+    { "type": "range", "id": "ss-x-pt-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Top", "default": 0 },
+    { "type": "range", "id": "ss-x-pb-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Bottom", "default": 0 },
+    { "type": "range", "id": "ss-x-pl-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Left", "default": 0 },
+    { "type": "range", "id": "ss-x-pr-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Padding Right", "default": 0 },
+    { "type": "paragraph", "content": "Margin spacing on mobile" },
+    { "type": "range", "id": "ss-mx-mar-mob", "min": 1, "max": 10, "step": 1, "unit": "x", "label": "Margin Multiplier", "default": 1 },
+    { "type": "range", "id": "ss-x-mt-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Top", "default": 0 },
+    { "type": "range", "id": "ss-x-mb-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Bottom", "default": 0 },
+    { "type": "range", "id": "ss-x-ml-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Left", "default": 0 },
+    { "type": "range", "id": "ss-x-mr-mob", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Margin Right", "default": 0 },
+
+    { "type": "header", "content": "Font Styling" },
+    {
+      "type": "select", "id": "ss-lh-mob", "default": "1.4", "label": "Line Height",
+      "options": [
+        { "value": "0.8", "label": "0.8" },
+        { "value": "0.9", "label": "0.9" },
+        { "value": "1", "label": "1" },
+        { "value": "1.1", "label": "1.1" },
+        { "value": "1.2", "label": "1.2" },
+        { "value": "1.3", "label": "1.3" },
+        { "value": "1.4", "label": "1.4" },
+        { "value": "1.5", "label": "1.5" },
+        { "value": "1.6", "label": "1.5" },
+        { "value": "1.7", "label": "1.7" },
+        { "value": "1.8", "label": "1.8" }
+      ]
+    },
+    { "type": "range", "id": "ss-x-h1-fs-mob", "label": "H1 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 48 },
+    { "type": "range", "id": "ss-x-h2-fs-mob", "label": "H2 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 32 },
+    { "type": "range", "id": "ss-x-h3-fs-mob", "label": "H3 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 24 },
+    { "type": "range", "id": "ss-x-h4-fs-mob", "label": "H4 Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 18 },
+    { "type": "range", "id": "ss-x-p-fs-mob", "label": "P Font Size", "min": 10, "max": 110, "step": 1, "unit": "px",  "default": 16 },
+
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Slideshow Settings" },
+    { "type": "paragraph", "content": "To activate the slideshow settings, choose Slideshow in the GRID ID sections." },
+    { "type": "checkbox", "id": "loop", "label": "Loop slides", "default": false },
+    { "type": "checkbox", "id": "add_arrows", "label": "Enable slide arrows", "default": false, "info": "For best performance leave arrows disabled." },
+    { "type": "checkbox", "id": "add_dots", "label": "Enable navigation dots", "default": false, "info": "For best performance leave dots disabled." },
+    { "type": "color", "id": "ss-arrow-color", "label": "Arrows color", "default": "#fff" },
+    { "type": "color", "id": "ss-dots-color", "label": "Dot color", "default": "#000" },
+    { "type": "color", "id": "ss-dots-color-active", "label": "Dot active colors", "default": "#fff" },
+    { "type": "range", "id": "auto_rotate", "min": 0, "max": 30, "step": 1, "unit": "s", "label": "Change slides every", "default": 6, "info": "If set to 0s, the auto rotate is disabled."},
+
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Font Family" },
+    { "type": "paragraph", "content": "We don't load your fonts here. This only applies the font family to your headings." },
+    { "type": "font_picker", "id": "ss-x-h1-font-fam", "default": "inter_n4", "label": "H1 Font Family" },
+    { "type": "font_picker", "id": "ss-x-h2-font-fam", "default": "inter_n4", "label": "H2 Font Family" },
+    { "type": "font_picker", "id": "ss-x-h3-font-fam", "default": "inter_n4", "label": "H3 Font Family" },
+    { "type": "font_picker", "id": "ss-x-div-font-fam", "default": "inter_n4", "label": "DIV Font Family" },
+    { "type": "font_picker", "id": "ss-x-p-font-fam", "default": "inter_n4", "label": "P Font Family" },
+
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Button Size Desktop" },
+    { "type": "range", "id": "ss-x-btn-fs", "label": "Button Font Size", "min": 10, "max": 30, "step": 1, "unit": "px",  "default": 16 },
+    { "type": "range", "id": "ss-x-btn-w", "label": "Button Width", "min": 50, "max": 400, "step": 10, "unit": "px", "default": 160 },
+    { "type": "range", "id": "ss-x-btn-h", "label": "Button Height",  "min": 10, "max": 100, "step": 1, "unit": "px", "default": 40 },
+    { "type": "range", "id": "ss-x-btn-rad", "label": "Button Radius",  "min": 0, "max": 100, "step": 1, "unit": "px",  "default": 3 },
+    { "type": "range", "id": "ss-x-btn-br", "label": "Button Border Size",  "min": 0, "max": 5, "step": 1, "unit": "px",  "default": 1 },
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Button Size Mobile" },
+    { "type": "range", "id": "ss-x-btn-fs-mob", "label": "Button Font Size", "min": 10, "max": 30, "step": 1, "unit": "px",  "default": 16 },
+    { "type": "range", "id": "ss-x-btn-w-mob", "label": "Button Width", "min": 50, "max": 400, "step": 10, "unit": "px", "default": 160 },
+    { "type": "range", "id": "ss-x-btn-h-mob", "label": "Button Height",  "min": 10, "max": 100, "step": 1, "unit": "px", "default": 40 },
+    { "type": "range", "id": "ss-x-btn-rad-mob", "label": "Button Radius",  "min": 0, "max": 100, "step": 1, "unit": "px",  "default": 3 },
+    { "type": "range", "id": "ss-x-btn-br-mob", "label": "Button Border Size",  "min": 0, "max": 5, "step": 1, "unit": "px",  "default": 1 },
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Button Primary" },
+    { "type": "font_picker", "id": "ss-x-btn-font-fam", "default": "inter_n4", "label": "Button Font Family" },
+    { "type": "color", "id": "ss-b1-t", "label": "Text color", "default": "#fff" },
+    { "type": "color", "id": "ss-b1-bg", "label": "Background color", "default": "#000" },
+    { "type": "color", "id": "ss-b1-br", "label": "Border color", "default": "#000" },
+    { "type": "color", "id": "ss-b1-h-t", "label": "Hover: Text color", "default": "#fff" },
+    { "type": "color", "id": "ss-b1-h-bg", "label": "Hover: Background color", "default": "#333" },
+    { "type": "color", "id": "ss-b1-h-br", "label": "Hover: Border color", "default": "#000" },
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Button Secondary" },
+    { "type": "font_picker", "id": "ss-x-secbtn-font-fam", "default": "inter_n4", "label": "Button Font Family" },
+    { "type": "color", "id": "ss-b2-t", "label": "Text color", "default": "#fff" },
+    { "type": "color", "id": "ss-b2-bg", "label": "Background color", "default": "transparent" },
+    { "type": "color", "id": "ss-b2-br", "label": "Border color", "default": "#fff" },
+    { "type": "color", "id": "ss-b2-h-t", "label": "Hover: Text color", "default": "#fff" },
+    { "type": "color", "id": "ss-b2-h-bg", "label": "Hover: Background color", "default": "#000" },
+    { "type": "color", "id": "ss-b2-h-br", "label": "Hover: Border color", "default": "#000" },
+    { "type": "range", "id": "ss-x-bgap", "min": 0, "max": 100, "step": 1, "unit": "px", "label": "Button Gap", "default": 20 },
+
+    { "type": "paragraph", "content": "______________________________________" },
+    { "type": "header", "content": "Overlay" },
+    { "type": "color", "id": "ss-overlay", "label": "Overlay background color", "default": "#000" },
+    { "type": "range", "id": "ss-p-overlay-opacity", "min": 0, "max": 100, "step": 1, "unit": "%", "label": "Overlay opacity", "default": 30 },
+    { "type": "checkbox", "id": "image_hover", "default": false, "label": "Image Hover animation"}
+  ],
+  "blocks": [
+    { "type": "@app" }
+  ],
+  "presets": [
+    {
+      "name": "Superspeed Apps"
+    }
+  ]
+}
+{% endschema %}
