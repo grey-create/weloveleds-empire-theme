@@ -1,0 +1,171 @@
+/* =============================================================================
+   WLL TOKENS — global design foundation
+   -----------------------------------------------------------------------------
+   Promotes the fairground hub's chassis (assets/hub-shared.css.liquid) into a
+   site-wide token layer so the homepage, collection pages and product pages can
+   share one design language.
+
+   ADDITIVE ONLY. This file declares CSS custom properties and a small set of
+   OPT-IN utility classes (all namespaced `wll-`). Declaring variables and unused
+   classes changes nothing on screen — tokens only take effect where referenced.
+   Loaded globally from layout/theme.liquid, immediately after theme.css.
+
+   Source of truth for: navy, rail, radius, shadows, type scale, pill buttons,
+   motion. When we restyle a section we point it at these tokens.
+   Created 2026-06-26.
+   ========================================================================== */
+
+:root {
+  /* --- Brand colour ------------------------------------------------------- */
+  --wll-navy: #1B2034;              /* canonical brand navy (standardised) */
+  --wll-navy-2: #1c2135;            /* hub chassis navy (mid gradient stop) */
+  --wll-navy-3: #1d2236;            /* lighter navy (gradient stop)        */
+  --wll-navy-deep: #0a1530;         /* deep navy (gradient stop)           */
+  --wll-navy-gradient: linear-gradient(135deg, #0a1530 0%, #1c2135 50%, #1d2236 100%);
+
+  --wll-bg: #f5f5f7;                /* page background (light Apple grey)   */
+  --wll-text: #1B2034;             /* primary text                         */
+  --wll-text-muted: #6e6e73;       /* secondary / muted text               */
+
+  --wll-card-bg: #ffffff;
+  --wll-card-border: rgba(28, 33, 53, 0.12);
+
+  /* Accents (one per zone / role) */
+  --wll-accent-blue: #0076DE;
+  --wll-accent-magenta: #d946ef;
+  --wll-accent-yellow: #fdcd6a;     /* pale — darken to #c98a10 as text on white */
+  --wll-accent-yellow-text: #c98a10;
+  --wll-accent-green: #10b981;
+  --wll-accent-orange: #f97316;
+  --wll-whatsapp: #25D366;
+
+  /* Soft colour glows used behind the navy hero / final-cta */
+  --wll-glow-magenta: rgba(217, 70, 239, 0.12);
+  --wll-glow-blue: rgba(0, 118, 222, 0.15);
+
+  /* --- Radius ------------------------------------------------------------- */
+  --wll-radius-card: 22px;
+  --wll-radius-card-mobile: 18px;
+  --wll-radius-lg: 24px;            /* big blocks (final-cta inner)         */
+  --wll-radius-pill: 999px;
+
+  /* --- Shadow (two-tier, barely-there) ------------------------------------ */
+  --wll-shadow-rest: 0 1px 3px rgba(28, 33, 53, 0.04), 0 4px 10px rgba(28, 33, 53, 0.05);
+  --wll-shadow-hover: 0 2px 6px rgba(28, 33, 53, 0.05), 0 6px 14px rgba(28, 33, 53, 0.08);
+
+  /* --- Motion ------------------------------------------------------------- */
+  --wll-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --wll-dur-fast: 0.2s;
+  --wll-dur-card: 0.25s;
+  --wll-dur-reveal: 0.7s;
+  --wll-lift-hover: -2px;           /* button / small lift                  */
+  --wll-lift-card: -4px;            /* card lift                            */
+  --wll-reveal-rise: 24px;
+
+  /* --- Layout rail -------------------------------------------------------- */
+  /* Signature gutter: full-bleed sections pad content in by this on each side.
+     ~48px @ 600px → ~115px @ 1440px → 200px @ 4K. */
+  --wll-rail: clamp(1.5rem, 8vw, 200px);
+
+  /* --- Type --------------------------------------------------------------- */
+  --wll-font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --wll-tracking-tight: -0.025em;   /* headings                             */
+  --wll-tracking-snug: -0.018em;
+  --wll-tracking-eyebrow: 0.14em;   /* uppercase eyebrow tags               */
+
+  /* Fluid type scale lifted from the hub sections */
+  --wll-fs-display: clamp(1.75rem, 3.5vw, 2.5rem);    /* hero / final-cta h  */
+  --wll-fs-zone: clamp(1.25rem, 2vw, 1.625rem);       /* zone headings       */
+  --wll-fs-card-title: 1.375rem;
+  --wll-fs-lead: clamp(1.125rem, 1.8vw, 1.375rem);    /* hero subtitle       */
+  --wll-fs-eyebrow: 0.75rem;
+}
+
+/* =============================================================================
+   OPT-IN UTILITIES — namespaced `wll-`, applied to nothing by default.
+   Use these when restyling a section so the patterns stay consistent.
+   ========================================================================== */
+
+/* Full-bleed section + rail gutter (the hub's signature alignment) */
+.wll-bleed {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+.wll-rail-pad {
+  padding-left: var(--wll-rail);
+  padding-right: var(--wll-rail);
+}
+
+/* Pill button — primary (white → yellow on hover, lift) */
+.wll-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9375rem 1.75rem;
+  border-radius: var(--wll-radius-pill);
+  font-family: var(--wll-font);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--wll-dur-fast) ease, color var(--wll-dur-fast) ease,
+              transform var(--wll-dur-fast) ease, border-color var(--wll-dur-fast) ease;
+}
+.wll-btn--primary { background: var(--wll-navy); color: #ffffff; }
+.wll-btn--primary:hover { background: var(--wll-accent-yellow); color: var(--wll-navy); transform: translateY(var(--wll-lift-hover)); }
+.wll-btn--on-navy { background: #ffffff; color: var(--wll-navy); }
+.wll-btn--on-navy:hover { background: var(--wll-accent-yellow); color: var(--wll-navy); transform: translateY(var(--wll-lift-hover)); }
+.wll-btn--ghost { background: transparent; color: var(--wll-navy); border-color: var(--wll-card-border); }
+.wll-btn--ghost:hover { border-color: var(--wll-accent-blue); color: var(--wll-accent-blue); }
+
+/* Card — white surface, hairline border, soft shadow, hover lift */
+.wll-card {
+  background: var(--wll-card-bg);
+  border: 1px solid var(--wll-card-border);
+  border-radius: var(--wll-radius-card);
+  box-shadow: var(--wll-shadow-rest);
+  transition: transform var(--wll-dur-card) var(--wll-ease), box-shadow var(--wll-dur-card) ease;
+}
+.wll-card:hover {
+  transform: translateY(var(--wll-lift-card));
+  box-shadow: var(--wll-shadow-hover);
+}
+@media (max-width: 600px) {
+  .wll-card { border-radius: var(--wll-radius-card-mobile); }
+}
+
+/* Eyebrow tag — tiny uppercase accent label */
+.wll-eyebrow {
+  font-family: var(--wll-font);
+  font-size: var(--wll-fs-eyebrow);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--wll-tracking-eyebrow);
+  color: var(--wll-accent-blue);
+  margin: 0 0 1rem;
+}
+
+/* Heading — Inter, tight tracking */
+.wll-heading {
+  font-family: var(--wll-font);
+  font-weight: 600;
+  letter-spacing: var(--wll-tracking-tight);
+  color: var(--wll-text);
+  line-height: 1.15;
+}
+
+/* Reveal-on-scroll (add .is-revealed via observer; reduced-motion safe) */
+.wll-reveal { transform: translateY(var(--wll-reveal-rise)); transition: transform var(--wll-dur-reveal) ease; }
+.wll-reveal.is-revealed { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wll-card,
+  .wll-reveal { transition: none; }
+  .wll-reveal { transform: none; }
+}

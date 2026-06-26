@@ -104,6 +104,9 @@
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
+    {%- comment -%} WLL global design tokens — shared foundation (additive). {%- endcomment -%}
+    {{ 'wll-tokens.css' | asset_url | stylesheet_tag }}
+
 
     <style>
       div#supercart a.flyout.z-50.outline-none.transform.hover\:scale-110.active\:scale-95.focus\:outline-none.focus\:ring.ring-green-700.transition.\!bg-green-500.\!text-white.border.fixed.right-0.top-1\/2.\!mr-2.\!p-4.rounded-full.svelte-wzzude, 
