@@ -14,7 +14,7 @@
       "settings": {
         "use_collection_title": true,
         "heading": "",
-        "subtitle": "Complete kits, replacement bulbs, cabochon components and colour-changing systems. UK stock. Next-day delivery.",
+        "subtitle": "Whether you're starting a new project, expanding an existing fairground display or replacing parts, find the right fairground lights, components and power supplies.",
         "btn1_label": "Shop Kits",
         "btn1_url": "/collections/fairground-and-marquee-lighting-kits",
         "btn2_label": "Shop Bulbs",
@@ -26,9 +26,9 @@
     "zone_browse_header": {
       "type": "hub-zone-header",
       "settings": {
-        "label": "BROWSE",
-        "heading": "Having a browse?",
-        "editorial": "Pick a category, or jump to the products everyone else is buying.",
+        "label": "Fairground Lights & components",
+        "heading": "Start by choosing what you need",
+        "editorial": "Complete kits, cabochon lights, replacement bulbs, RGB colour-changing systems, individual components and power supplies.",
         "bg_colour": "#f5f5f7",
         "text_colour": "#1c2135",
         "accent_colour": "#0076de",
@@ -38,61 +38,79 @@
     "choose_route": {
       "type": "hub-choose-route",
       "blocks": {
-        "card_kits": {
+        "card_YxCTK7": {
           "type": "card",
           "settings": {
             "title": "Fairground Light Kits",
-            "link": "/collections/fairground-and-marquee-lighting-kits",
+            "link": "shopify://collections/fairground-and-marquee-lighting-kits",
+            "image": "shopify://shop_images/Fairground_Kit_Test_image.png",
+            "eyebrow": "Starter Pack",
+            "description": "Complete E10 & E14 cabochon kits, with bulbs, holders & cable.",
+            "card_theme_override": "dark"
+          }
+        },
+        "card_kits": {
+          "type": "card",
+          "settings": {
+            "title": "Cabochon Fairground Lights",
+            "link": "shopify://collections/complete-units",
+            "image": "shopify://shop_images/E14-Complete-Unit.jpg",
+            "eyebrow": "traditional look",
+            "description": "Complete cabochon light units, expand or refresh your display.",
+            "card_theme_override": "inherit"
+          }
+        },
+        "card_4jexQx": {
+          "type": "card",
+          "settings": {
+            "title": "Colour-Changing Fairground Lights",
+            "link": "shopify://collections/colour-changing-fairground-lights",
+            "image": "shopify://shop_images/Colour-changing.jpg",
+            "eyebrow": "Dynamic Effects",
+            "description": "RGB cabochon lights and DMX-compatible systems.",
+            "card_theme_override": "dark"
+          }
+        },
+        "card_rWyR67": {
+          "type": "card",
+          "settings": {
+            "title": "Fairground Bulbs",
+            "link": "shopify://collections/fairground-bulbs",
+            "image": "shopify://shop_images/E14-Spike-Lampholder_-Nut-_-24v-Module.jpg",
+            "eyebrow": "REPLACEMENTS",
+            "description": "E10 and E14 replacement bulbs for fairground lights.",
             "card_theme_override": "inherit"
           }
         },
         "card_cabochon": {
           "type": "card",
           "settings": {
-            "title": "Cabochon Lights",
-            "link": "/collections/cabochon-fairground-lights",
-            "card_theme_override": "inherit"
-          }
-        },
-        "card_bulbs": {
-          "type": "card",
-          "settings": {
-            "title": "Spare Bulbs",
-            "link": "/collections/fairground-bulbs",
-            "card_theme_override": "inherit"
-          }
-        },
-        "card_colour": {
-          "type": "card",
-          "settings": {
-            "title": "Colour Changing",
-            "link": "/collections/colour-changing-fairground-lights",
-            "card_theme_override": "inherit"
-          }
-        },
-        "card_components": {
-          "type": "card",
-          "settings": {
-            "title": "Components",
-            "link": "/collections/fairground-light-components",
+            "title": "Fairground Components & Accessories",
+            "link": "shopify://collections/fairground-light-components-accessories",
+            "image": "shopify://shop_images/E14-Cabochon-Cap-_-Base.jpg",
+            "eyebrow": "build your own",
+            "description": "Cabochon caps, bases, lampholders, cables and connectors for custom lighting builds.",
             "card_theme_override": "inherit"
           }
         },
         "card_accessories": {
           "type": "card",
           "settings": {
-            "title": "Accessories",
-            "link": "/collections/fairground-light-accessories-1",
+            "title": "Power Supplies for Fairground Lights",
+            "link": "shopify://collections/power-supplies-for-fairground-lights",
+            "image": "shopify://shop_images/Power-Supply.jpg",
+            "eyebrow": "POWER",
+            "description": "Range of compatible LED drivers and power supplies",
             "card_theme_override": "inherit"
           }
         }
       },
       "block_order": [
+        "card_YxCTK7",
         "card_kits",
+        "card_4jexQx",
+        "card_rWyR67",
         "card_cabochon",
-        "card_bulbs",
-        "card_colour",
-        "card_components",
         "card_accessories"
       ],
       "settings": {
@@ -100,6 +118,7 @@
         "cta_label": "Shop Now",
         "bg_colour": "#f5f5f7",
         "accent_colour": "#0076de",
+        "card_theme": "light",
         "reveal_on_scroll": true
       }
     },
@@ -107,6 +126,7 @@
       "type": "hub-featured-products",
       "settings": {
         "heading": "Bestsellers",
+        "bestsellers_collection": "hub-fairground-best-sellers",
         "bg_colour": "#f5f5f7",
         "accent_colour": "#0076de",
         "reveal_on_scroll": true
@@ -117,7 +137,7 @@
       "settings": {
         "label": "DECIDE",
         "heading": "Uncertain what you need?",
-        "editorial": "Most projects start with one core decision: kit or components. Everything else follows from that.",
+        "editorial": "Most fairground lighting projects begin with one simple decision. Compare the options to find the right route for you.",
         "bg_colour": "#f5f5f7",
         "text_colour": "#1c2135",
         "accent_colour": "#d946ef",
@@ -127,44 +147,16 @@
     "decision_blocks": {
       "type": "hub-decision-blocks",
       "blocks": {
-        "comparison_paJXN6": {
+        "comparison_dXxTjy": {
           "type": "comparison",
           "settings": {
-            "title": "Option A vs Option B",
-            "option_a_label": "Choose Option A if…",
-            "option_a_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "title": "Complete Units vs Components",
+            "option_a_label": "Choose Complete Units if...",
+            "option_a_bullets": "You need a complete light unit\nYou are expanding or refreshing a display\nYou want a simple solution",
             "option_a_cta_url": "",
             "option_a_cta_label": "Shop Option A",
-            "option_b_label": "Choose Option B if…",
-            "option_b_bullets": "First key reason\nSecond key reason\nThird key reason",
-            "option_b_cta_url": "",
-            "option_b_cta_label": "Shop Option B"
-          }
-        },
-        "comparison_AWEMLk": {
-          "type": "comparison",
-          "settings": {
-            "title": "Option A vs Option B",
-            "option_a_label": "Choose Option A if…",
-            "option_a_bullets": "First key reason\nSecond key reason\nThird key reason",
-            "option_a_cta_url": "",
-            "option_a_cta_label": "Shop Option A",
-            "option_b_label": "Choose Option B if…",
-            "option_b_bullets": "First key reason\nSecond key reason\nThird key reason",
-            "option_b_cta_url": "",
-            "option_b_cta_label": "Shop Option B"
-          }
-        },
-        "comparison_yP9irj": {
-          "type": "comparison",
-          "settings": {
-            "title": "Option A vs Option B",
-            "option_a_label": "Choose Option A if…",
-            "option_a_bullets": "First key reason\nSecond key reason\nThird key reason",
-            "option_a_cta_url": "",
-            "option_a_cta_label": "Shop Option A",
-            "option_b_label": "Choose Option B if…",
-            "option_b_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "option_b_label": "Choose Components if...",
+            "option_b_bullets": "You want to build from scratch\nYou are replacing specific parts\nYou know exactly what you need",
             "option_b_cta_url": "",
             "option_b_cta_label": "Shop Option B"
           }
@@ -172,38 +164,81 @@
         "comparison_pranf6": {
           "type": "comparison",
           "settings": {
-            "title": "Option A vs Option B",
-            "option_a_label": "Choose Option A if…",
-            "option_a_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "title": "E10 vs E14 Fairground Lights",
+            "option_a_label": "Choose E10 if...",
+            "option_a_bullets": "Space is limited\nYou want a smaller light\nYour existing fittings are E10",
             "option_a_cta_url": "",
             "option_a_cta_label": "Shop Option A",
-            "option_b_label": "Choose Option B if…",
-            "option_b_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "option_b_label": "Choose E14 if...",
+            "option_b_bullets": "You want a larger cabochon \nYou want greater visual impact\nYour existing fittings are E14",
             "option_b_cta_url": "",
             "option_b_cta_label": "Shop Option B"
           }
         },
-        "comparison_BBbnat": {
+        "comparison_paJXN6": {
           "type": "comparison",
           "settings": {
-            "title": "Option A vs Option B",
-            "option_a_label": "Choose Option A if…",
-            "option_a_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "title": "Kits vs Components",
+            "option_a_label": "Choose Kits if...",
+            "option_a_bullets": "You want a quick, complete solution\nYou want compatibility assured\nYou are new to fairground displays",
             "option_a_cta_url": "",
             "option_a_cta_label": "Shop Option A",
-            "option_b_label": "Choose Option B if…",
-            "option_b_bullets": "First key reason\nSecond key reason\nThird key reason",
+            "option_b_label": "Choose Components if...",
+            "option_b_bullets": "You need replacement parts\nYou're expanding a display or project\nYou know exactly what you need to build a display from scratch",
+            "option_b_cta_url": "",
+            "option_b_cta_label": "Shop Option B"
+          }
+        },
+        "comparison_AWEMLk": {
+          "type": "comparison",
+          "settings": {
+            "title": "Cabochon Lights vs RGB",
+            "option_a_label": "Choose Traditional Cabochon lights if...",
+            "option_a_bullets": "You want a traditional fairground look\nYou want static colour\nYou want a simple lighting effect",
+            "option_a_cta_url": "",
+            "option_a_cta_label": "Shop Option A",
+            "option_b_label": "Choose Colour-Changing / RGB if...",
+            "option_b_bullets": "You want colour-changing effects\nYou want extra visual impact\nYou want more flexibility and control",
+            "option_b_cta_url": "",
+            "option_b_cta_label": "Shop Option B"
+          }
+        },
+        "comparison_yP9irj": {
+          "type": "comparison",
+          "settings": {
+            "title": "Complete Units vs Bulbs",
+            "option_a_label": "Choose Complete Units if...",
+            "option_a_bullets": "You need a ready-to-fit solution\nYou're replacing bulb and lampholder\nYou want assured compatibility",
+            "option_a_cta_url": "",
+            "option_a_cta_label": "Shop Option A",
+            "option_b_label": "Choose Bulbs if...",
+            "option_b_bullets": "Your existing unit is in good condition\nYou only need to replace the bulb\nYou want the most cost-effective option",
+            "option_b_cta_url": "",
+            "option_b_cta_label": "Shop Option B"
+          }
+        },
+        "comparison_7HXAUU": {
+          "type": "comparison",
+          "settings": {
+            "title": "Power Supplies vs Components",
+            "option_a_label": "Choose Power Supplies if...",
+            "option_a_bullets": "You need to power your lights\nYou're matching voltage requirements\nYou're replacing a driver or transformer",
+            "option_a_cta_url": "",
+            "option_a_cta_label": "Shop Option A",
+            "option_b_label": "Choose Components if...",
+            "option_b_bullets": "You're building a custom display\nYou need replacement parts\nYou know exactly what you need and how to fit",
             "option_b_cta_url": "",
             "option_b_cta_label": "Shop Option B"
           }
         }
       },
       "block_order": [
+        "comparison_dXxTjy",
+        "comparison_pranf6",
         "comparison_paJXN6",
         "comparison_AWEMLk",
         "comparison_yP9irj",
-        "comparison_pranf6",
-        "comparison_BBbnat"
+        "comparison_7HXAUU"
       ],
       "settings": {
         "row_label": "Side-by-side comparisons",
@@ -219,8 +254,8 @@
         "question_kit": {
           "type": "question",
           "settings": {
-            "question": "Kit or individual components?",
-            "answer": "Placeholder answer — Grey to rewrite. Explain when a complete kit beats buying components separately, and vice versa.",
+            "question": "What's the difference between fairground bulbs & cabochon lights?",
+            "answer": "Bulbs are the replacement lamps. Cabochons lights are the complete enclosed light units used in signs and displays.",
             "icon": "wrench",
             "accent_color": "grad_magenta_blue",
             "cta_label": "",
@@ -230,8 +265,8 @@
         "question_voltage": {
           "type": "question",
           "settings": {
-            "question": "What voltage do I need — 12V or 24V?",
-            "answer": "Placeholder answer — Grey to rewrite. Cover run length, voltage drop and when each voltage is the right choice.",
+            "question": "How are E10 and E14 fairground bulbs different?",
+            "answer": "E10 bulbs are smaller and suited to compact displays. E14 bulbs are larger and often used where greater visual impact is required.",
             "icon": "plug",
             "accent_color": "blue",
             "cta_label": "",
@@ -241,8 +276,8 @@
         "question_ip": {
           "type": "question",
           "settings": {
-            "question": "Are these rated for outdoor use?",
-            "answer": "Placeholder answer — Grey to rewrite. Explain IP ratings and which products suit permanent outdoor installs.",
+            "question": "Are static or colour-changing fairground lights best?",
+            "answer": "Choose static lights for a traditional look. Choose RGB lights for colour-changing effects and greater control.",
             "icon": "shield",
             "accent_color": "grad_green_blue",
             "cta_label": "",
@@ -252,8 +287,8 @@
         "question_spacing": {
           "type": "question",
           "settings": {
-            "question": "How far apart should the bulbs be spaced?",
-            "answer": "Placeholder answer — Grey to rewrite. Give typical spacing guidance for signage vs festoon vs ride fronts.",
+            "question": "What components do I need to build a fairground lighting display?",
+            "answer": "Most projects require lights, a compatible power supply and, depending on the design, lampholders, connectors and mounting accessories.",
             "icon": "target",
             "accent_color": "grad_yellow_orange",
             "cta_label": "",
@@ -263,21 +298,21 @@
         "question_dimming": {
           "type": "question",
           "settings": {
-            "question": "Can the lights be dimmed or colour-changed?",
-            "answer": "Placeholder answer — Grey to rewrite. Outline dimmable vs RGB options and the controllers required.",
+            "question": "Are fairground lights suitable for outdoor use?",
+            "answer": "Many fairground lights can be used outdoors when installed with suitable IP-rated components and power supplies.",
             "icon": "lightbulb",
             "accent_color": "orange",
             "cta_label": "",
             "cta_url": ""
           }
         },
-        "question_leadtime": {
+        "question_4fyQJB": {
           "type": "question",
           "settings": {
-            "question": "What are typical lead times and delivery?",
-            "answer": "Placeholder answer — Grey to rewrite. State UK stock position, cut-off times and next-day delivery options.",
-            "icon": "truck",
-            "accent_color": "navy",
+            "question": "How many fairground lights do I need for a sign or display?",
+            "answer": "This depends on bulb size, spacing and the overall design. Smaller lights are typically spaced more closely than larger cabochons.",
+            "icon": "help",
+            "accent_color": "magenta",
             "cta_label": "",
             "cta_url": ""
           }
@@ -289,7 +324,7 @@
         "question_ip",
         "question_spacing",
         "question_dimming",
-        "question_leadtime"
+        "question_4fyQJB"
       ],
       "settings": {
         "heading": "Quick questions",
@@ -302,9 +337,9 @@
     "zone_research_header": {
       "type": "hub-zone-header",
       "settings": {
-        "label": "RESEARCH",
-        "heading": "Still researching?",
-        "editorial": "Where these products end up, and the questions trade customers ask before placing an order.",
+        "label": "QUICK BUYING GUIDE",
+        "heading": "Already narrowed down your options?",
+        "editorial": "Use the guide below to check your choices, compare suitability, voltage, colour options and installation skill requirements.",
         "bg_colour": "#f5f5f7",
         "text_colour": "#1c2135",
         "accent_colour": "#c98e0a",
@@ -317,53 +352,53 @@
         "column_kits": {
           "type": "column",
           "settings": {
-            "col_heading": "Complete Kits",
-            "cell_1": "New builds, fastest route to finished result",
-            "cell_2": "Bulbs, caps, bases, lampholders, cable, PSU",
+            "col_heading": "Fairground Light Kits",
+            "cell_1": "New fairground light builds, first time installers",
+            "cell_2": "Bulbs, cabochon caps, bases, lampholders, cable, power supply",
             "cell_3": "24V DC",
-            "cell_4": "Beginner-friendly",
-            "cell_5": "Single or mixed, 15 colours",
-            "shop_label": "Shop Kits",
-            "shop_url": ""
+            "cell_4": "Ready-to-install",
+            "cell_5": "Single-colour or mixed-colour kits",
+            "shop_url": "",
+            "shop_label": "Shop Kits"
           }
         },
         "column_cabochons": {
           "type": "column",
           "settings": {
-            "col_heading": "Cabochons",
-            "cell_1": "Classic fairground look, permanent signage",
-            "cell_2": "Cap & base only (bulbs sold separately)",
-            "cell_3": "12V / 24V",
-            "cell_4": "Some wiring knowledge helpful",
-            "cell_5": "15 static colours inc. fluorescent",
-            "shop_label": "Shop Cabochons",
-            "shop_url": ""
-          }
-        },
-        "column_bulbs": {
-          "type": "column",
-          "settings": {
-            "col_heading": "Replacement Bulbs",
-            "cell_1": "Maintaining existing installations",
-            "cell_2": "LED module or incandescent only",
-            "cell_3": "24V or 220-240V",
-            "cell_4": "Simple swap-out",
-            "cell_5": "Warm white to ice white, coloured",
-            "shop_label": "Shop Bulbs",
-            "shop_url": ""
+            "col_heading": "Cabochon Fairground Lights",
+            "cell_1": "Extending, maintaining or changing colours of existing displays",
+            "cell_2": "Complete built unit: cap, base, bulb, lampholder",
+            "cell_3": "12V or 24V options",
+            "cell_4": "Some wiring required",
+            "cell_5": "15 static colours inc. fluorescent options",
+            "shop_url": "",
+            "shop_label": "Shop Cabochons"
           }
         },
         "column_rgb": {
           "type": "column",
           "settings": {
-            "col_heading": "Colour-Changing",
+            "col_heading": "Colour-Changing Fairground Lights",
             "cell_1": "Events, theatre, dynamic displays",
             "cell_2": "Pixel or RGB DMX cabochons",
             "cell_3": "24V DC (plug-and-play)",
             "cell_4": "Controller setup required",
-            "cell_5": "Full RGB, millions of combinations",
-            "shop_label": "Shop RGB",
-            "shop_url": ""
+            "cell_5": "Full RGB, millions of combinations of colour changing effects",
+            "shop_url": "",
+            "shop_label": "Shop RGB"
+          }
+        },
+        "column_bulbs": {
+          "type": "column",
+          "settings": {
+            "col_heading": "Fairground Bulbs",
+            "cell_1": "Maintaining and repairing existing fairground signs and installations",
+            "cell_2": "Replacement bulbs only",
+            "cell_3": "24V LED or mains voltage available",
+            "cell_4": "Simple swap-out",
+            "cell_5": "Warm white and ice white",
+            "shop_url": "",
+            "shop_label": "Shop Fairground Bulbs & Complete Units"
           }
         },
         "column_components": {
@@ -375,22 +410,27 @@
             "cell_3": "12V / 24V",
             "cell_4": "Trade / experienced installer",
             "cell_5": "Full range of individual parts",
-            "shop_label": "Shop Components",
-            "shop_url": ""
+            "shop_url": "",
+            "shop_label": "Shop Components"
           }
         }
       },
       "block_order": [
         "column_kits",
         "column_cabochons",
-        "column_bulbs",
         "column_rgb",
+        "column_bulbs",
         "column_components"
       ],
       "settings": {
         "bg_colour": "#f5f5f7",
         "accent_colour": "#d946ef",
-        "reveal_on_scroll": true
+        "reveal_on_scroll": true,
+        "row_label_1": "Suitable for",
+        "row_label_2": "Includes",
+        "row_label_3": "Voltage",
+        "row_label_4": "Skill level",
+        "row_label_5": "Colour options"
       }
     },
     "applications": {
@@ -401,7 +441,7 @@
           "settings": {
             "icon": "ti-typography",
             "title": "Illuminated Signage",
-            "description": "Fascia signs, retail shopfronts, pub and bar signage — cabochons deliver bold, bright lettering with low energy costs.",
+            "description": "Fairground lights and cabochons for fascia signs, shopfronts, pubs, bars and commercial signage projects.",
             "cta_url": "",
             "cta_label": "Learn more"
           }
@@ -411,7 +451,7 @@
           "settings": {
             "icon": "ti-confetti",
             "title": "Fairground Rides",
-            "description": "Ride fronts, carousel housings, arcade frontage and amusement borders where the traditional fairground look is essential.",
+            "description": "Traditional fairground lights for ride fronts, carousels, amusement attractions and themed entertainment installations.",
             "cta_url": "",
             "cta_label": "Learn more"
           }
@@ -421,7 +461,7 @@
           "settings": {
             "icon": "ti-sparkles",
             "title": "Events & Weddings",
-            "description": "Marquee borders, dance floor surrounds, photo walls and themed event installations. Plug-and-play kits ideal for fast setup.",
+            "description": "Marquee lighting and plug-and-play fairground lights for weddings, events, dance floors and temporary installations.",
             "cta_url": "",
             "cta_label": "Learn more"
           }
@@ -431,7 +471,7 @@
           "settings": {
             "icon": "ti-shopping-bag",
             "title": "Retail Displays",
-            "description": "Window features, hospitality venues, pop-up shops and branded displays where statement lighting draws attention.",
+            "description": "Cabochon lighting for retail displays, window features, pop-ups and branded environments that need to stand out.",
             "cta_url": "",
             "cta_label": "Learn more"
           }
@@ -441,7 +481,7 @@
           "settings": {
             "icon": "ti-movie",
             "title": "Theatre & Film",
-            "description": "Set dressing, period productions, studio builds and portable exhibition stands. RGB options give full performance control.",
+            "description": "Fairground and marquee lighting for theatre productions, film sets, exhibitions and immersive experiences.",
             "cta_url": "",
             "cta_label": "Learn more"
           }
@@ -466,7 +506,7 @@
         "app_6"
       ],
       "settings": {
-        "row_label": "",
+        "row_label": "Popular Applications",
         "reveal_animation": true,
         "bg_colour": "#f5f5f7",
         "accent_colour": "#c98e0a"
@@ -510,26 +550,18 @@
             "link_label": "LED Tools & Signage Accessories",
             "link_url": "/collections/tools-accessories"
           }
-        },
-        "link_signage": {
-          "type": "link",
-          "settings": {
-            "link_label": "Finished Signage",
-            "link_url": "/collections/finished-signage"
-          }
         }
       },
       "block_order": [
         "link_psu",
         "link_controllers",
         "link_cables",
-        "link_tools",
-        "link_signage"
+        "link_tools"
       ],
       "settings": {
         "heading": "Complete your setup.",
-        "heading_muted": "Everything else you need for a professional installation.",
-        "intro": "",
+        "heading_muted": "Everything else you need for a professional fairground lighting installation.",
+        "intro": "Compatible LED power supplies, controllers, and dimmers, cables, connectors and installation tools.",
         "bg_colour": "#f5f5f7"
       }
     },

@@ -13,10 +13,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "0eb90945-8d1b-4447-beae-e796e154c6cd": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "⭐⭐⭐⭐⭐ 4.9 | 1.9 Million Happy Customers",
             "tc": "#ffffff",
             "b1_label": "",
@@ -39,10 +39,10 @@
           }
         },
         "4705c8dc-f5fe-46dd-b007-3c43e5ab7e6c": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "🚚 Free Shipping Over $100",
             "tc": "#ffffff",
             "b1_label": "",
@@ -65,10 +65,10 @@
           }
         },
         "5f3a6e0b-ee30-4b49-930b-d1e405b451e2": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "↩️ FREE RETURNS UP TO 30 days",
             "tc": "#ffffff",
             "b1_label": "",
@@ -192,10 +192,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "4e86d941-36f6-4cf7-b6ea-bc7f050c2336": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "above_the_fold",
             "t": "<h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3><h2></h2>",
+            "above_the_fold": "above_the_fold",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "Shop Now",
@@ -219,10 +219,10 @@
           }
         },
         "ed05797f-027f-4bfd-80df-72fc6477d267": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "above_the_fold",
             "t": "<h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3><h2></h2>",
+            "above_the_fold": "above_the_fold",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -246,10 +246,10 @@
           }
         },
         "998d5a8c-1a04-41da-b284-dd0286d34bae": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "above_the_fold",
             "t": "<h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3><h2></h2>",
+            "above_the_fold": "above_the_fold",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -374,10 +374,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "016b5256-b5a8-40cc-802a-b756f8ff3258": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<h2>Talk about your brand</h2>",
+            "above_the_fold": "lazy",
             "html": "<div>\nShare Information\n</div>",
             "tc": "#242833",
             "b1_label": "",
@@ -499,10 +499,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "554859bc-cde4-4e98-80c1-f7c2996f5b83": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<h2>Talk about your brand</h2>",
+            "above_the_fold": "lazy",
             "html": "<div>\nShare Information\n</div>",
             "tc": "#242833",
             "b1_label": "",
@@ -624,10 +624,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "f853d374-68b8-4fd2-9df9-1daa257319cf": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<h2>Talk about your brand</h2>",
+            "above_the_fold": "lazy",
             "html": "<div>\nShare Information\n</div>",
             "tc": "#242833",
             "b1_label": "",
@@ -749,10 +749,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "7b6996f2-628e-4a1f-812b-e5b37b2a9214": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#333333",
             "b1_label": "",
@@ -776,10 +776,10 @@
           }
         },
         "2162617c-ffa5-4a9c-bbd0-cbdfe2e75a65": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#333333",
             "b1_label": "",
@@ -803,10 +803,10 @@
           }
         },
         "28f618bf-8232-463d-9f45-797b8b2a217d": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#333333",
             "b1_label": "",
@@ -830,10 +830,10 @@
           }
         },
         "b208a1ab-5340-4364-8db0-06f7e9a118ae": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#333333",
             "b1_label": "",
@@ -959,10 +959,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "7ee2983e-b021-4a37-983a-91ab0194235b": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -986,10 +986,10 @@
           }
         },
         "14f790e1-1c69-4c4a-8194-93cceebf0bf2": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1113,10 +1113,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "8d5c6b97-1847-4c8c-9ede-4c4e4c958705": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1140,10 +1140,10 @@
           }
         },
         "c00dd099-e4ae-458e-aca8-d71677c70b1f": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1167,10 +1167,10 @@
           }
         },
         "bb7156a5-c537-43f4-8782-cf1780334901": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1295,10 +1295,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "bd01423f-1a77-45eb-ab56-05b56a5bdfab": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1322,10 +1322,10 @@
           }
         },
         "21ae30c6-07e2-4804-b556-dad1723c7124": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1349,10 +1349,10 @@
           }
         },
         "cd852884-1dae-4759-834a-4bc2242ea702": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1376,10 +1376,10 @@
           }
         },
         "78d9d16b-91a7-487d-8731-28d67f06175c": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1505,10 +1505,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "fcce7f92-594a-4983-aeea-34c3f7d0aa9a": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1532,10 +1532,10 @@
           }
         },
         "38abe705-3168-46be-9eb5-ec747d053205": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1559,10 +1559,10 @@
           }
         },
         "ca8bc57c-1c4f-4f8e-bcb9-cc3905f8401c": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1586,10 +1586,10 @@
           }
         },
         "1df10531-0573-42ad-aed4-83d856e4bfbd": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1613,10 +1613,10 @@
           }
         },
         "923e2587-048e-4540-a520-b69557474ffd": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Savings</p>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1743,10 +1743,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "cc31055d-ba24-4da2-a73e-403560905706": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3><h2></h2>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1869,10 +1869,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "ef2ece1d-ab7d-4d01-ae58-d52e44d81200": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -1896,10 +1896,10 @@
           }
         },
         "958d74d4-8d4f-4913-ac9c-b20fbe3792a6": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p><h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#242833",
             "b1_label": "Shop Now!",
@@ -2022,10 +2022,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "69ed2fbc-6da7-4785-9747-b2860f2006de": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "<p>Real Results, Real Engagement:</p><h2>Talk about your brand</h2><h3>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</h3>",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#242833",
             "b1_label": "Shop Now!",
@@ -2048,10 +2048,10 @@
           }
         },
         "a9c4072a-5aec-487f-9f67-f2cd06a7fea4": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2175,10 +2175,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "a61cf8cd-0d3b-48f5-adf6-bbb627bd712a": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2202,10 +2202,10 @@
           }
         },
         "2c806053-354c-43e6-bfec-e8332b0d75a7": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2229,7 +2229,7 @@
           }
         },
         "614e8b29-8cc9-4041-b9f2-af39ef88c7ea": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
             "title": "",
             "title_css": "",
@@ -2348,10 +2348,10 @@
       "type": "superspeed-apps",
       "blocks": {
         "82084215-ed06-4299-b713-8d70a23fae6e": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2375,10 +2375,10 @@
           }
         },
         "a69384c0-1993-4e9c-a1a2-d68a8f4db27a": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2402,10 +2402,10 @@
           }
         },
         "d2b2d7f1-6733-4778-b257-c0471e6f9a43": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2429,10 +2429,10 @@
           }
         },
         "ae1722e6-b2ad-416a-be67-a241940815c0": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2456,10 +2456,10 @@
           }
         },
         "a19b4cc0-d05e-41d1-8edf-1da9bca6cddc": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-content/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
-            "above_the_fold": "lazy",
             "t": "",
+            "above_the_fold": "lazy",
             "html": "",
             "tc": "#ffffff",
             "b1_label": "",
@@ -2586,7 +2586,7 @@
       "type": "superspeed-apps",
       "blocks": {
         "e6cf7793-b690-4877-b9fb-0a499630062a": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
             "title": "",
             "title_css": "",
@@ -2604,7 +2604,7 @@
           }
         },
         "8965353a-d007-4da9-90bc-7be441404812": {
-          "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+          "type": "shopify://apps/superspeed-web-vitals/blocks/ss-tiny-yt/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
           "settings": {
             "title": "",
             "title_css": "",
