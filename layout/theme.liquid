@@ -104,8 +104,9 @@
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
 
-    {%- comment -%} WLL global design tokens — shared foundation (additive). {%- endcomment -%}
+    {%- comment -%} WLL global design tokens + hub component toolkit (additive). {%- endcomment -%}
     {{ 'wll-tokens.css' | asset_url | stylesheet_tag }}
+    {{ 'wll-hub-reference.css' | asset_url | stylesheet_tag }}
 
 
     <style>
@@ -822,12 +823,4 @@ Last updated: November 13, 2024
 })();
 </script>
 
-{% if template.name == 'page' and template.suffix == 'terms-sticky' %}
-  <script src="{{ 'terms-toc.js' | asset_url }}" defer></script>
-{% endif %}
-
-
-{% section 'festive-snowfall-wll' %}
-{% render 'whatsapp-float' %}
-  </body>
-</html>
+{% if template

@@ -1,0 +1,367 @@
+/* =============================================================================
+   WLL HUB REFERENCE — component toolkit
+   -----------------------------------------------------------------------------
+   The reusable building blocks taken from the fairground hub, so any page
+   (collections, products, homepage) can be re-skinned to match without
+   reinventing CSS. Builds on wll-tokens.css (the variables) — load this AFTER it.
+
+   These classes mirror the hub's own sections (hub-hero, hub-zone-header,
+   hub-choose-route, hub-featured-products, hub-cross-sell, hub-final-cta, etc.)
+   but are generic and namespaced `wll-`. Apply them when restyling a section.
+
+   ZONE ACCENT SYSTEM — the hub is a three-act journey on one #f5f5f7 canvas:
+     BROWSE   → --wll-accent-blue   (#0076DE)
+     DECIDE   → --wll-accent-magenta(#d946ef)
+     RESEARCH → gold #c98e0a
+   Set --wll-zone-accent on a section wrapper to colour its eyebrow + arrows.
+
+   Created 2026-06-27.
+   ========================================================================== */
+
+/* === Section shell ======================================================= */
+/* Full-bleed band on the consistent canvas; content padded in by the rail. */
+.wll-section {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 0 1.5rem 4rem;
+  background: var(--wll-bg, #f5f5f7);
+  font-family: var(--wll-font, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
+  color: var(--wll-text, #1B2034);
+}
+.wll-section__inner {
+  padding-left: var(--wll-rail);
+  padding-right: var(--wll-rail);
+}
+@media (max-width: 600px) {
+  .wll-section { padding: 0 1.25rem 2.5rem; }
+}
+
+/* === Eyebrow + heading (zone header) ===================================== */
+.wll-zone {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 2.5rem 1.5rem 1.5rem;
+  background: var(--wll-bg, #f5f5f7);
+  font-family: var(--wll-font);
+}
+.wll-zone__inner { padding-left: var(--wll-rail); padding-right: var(--wll-rail); }
+.wll-zone__eyebrow {
+  font-size: var(--wll-fs-eyebrow, 0.75rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--wll-tracking-eyebrow, 0.14em);
+  color: var(--wll-zone-accent, var(--wll-accent-blue, #0076DE));
+  margin: 0 0 1rem;
+}
+.wll-zone__heading {
+  font-size: var(--wll-fs-zone, clamp(1.25rem, 2vw, 1.625rem));
+  font-weight: 600;
+  letter-spacing: var(--wll-tracking-tight, -0.025em);
+  line-height: 1.2;
+  margin: 0;
+  color: var(--wll-text, #1B2034);
+}
+.wll-zone__heading .muted { color: var(--wll-text-muted, #6e6e73); font-weight: 400; }
+@media (max-width: 749px) {
+  .wll-zone { padding: 2rem 1.25rem 1.75rem; }
+  .wll-zone__inner { padding: 0 0.5rem; }
+}
+
+/* The standalone lead paragraph (first line of body copy, confident) */
+.wll-lead {
+  font-size: 1.1875rem;
+  font-weight: 600;
+  letter-spacing: var(--wll-tracking-snug, -0.018em);
+  line-height: 1.4;
+  margin: 0 0 0.75rem;
+  color: var(--wll-text, #1B2034);
+}
+
+/* === Navy hero / CTA block (the bookends) =============================== */
+.wll-hero {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  background-color: var(--wll-navy, #1B2034);
+  background-image: var(--wll-navy-gradient, linear-gradient(135deg, #0a1530 0%, #1c2135 50%, #1d2236 100%));
+  font-family: var(--wll-font);
+  overflow: hidden;
+}
+.wll-hero::before,
+.wll-hero::after { content: ''; position: absolute; pointer-events: none; }
+.wll-hero::before {
+  top: -50%; right: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--wll-glow-magenta, rgba(217,70,239,0.12)) 0%, rgba(217,70,239,0) 70%);
+}
+.wll-hero::after {
+  bottom: -30%; left: -10%; width: 500px; height: 500px;
+  background: radial-gradient(circle, var(--wll-glow-blue, rgba(0,118,222,0.15)) 0%, rgba(0,118,222,0) 70%);
+}
+.wll-hero__inner {
+  position: relative;
+  z-index: 1;
+  padding: 3rem calc(var(--wll-rail) + 1.5rem);
+  max-width: 980px;
+}
+.wll-hero__heading {
+  font-size: var(--wll-fs-display, clamp(1.75rem, 3.5vw, 2.5rem));
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: var(--wll-tracking-tight, -0.025em);
+  line-height: 1.05;
+  margin: 0 0 1.5rem;
+}
+.wll-hero__subtitle {
+  font-size: var(--wll-fs-lead, clamp(1.125rem, 1.8vw, 1.375rem));
+  color: rgba(255,255,255,0.78);
+  line-height: 1.5;
+  margin: 0 0 2.5rem;
+  max-width: 680px;
+}
+.wll-hero__buttons { display: flex; flex-wrap: wrap; gap: 0.875rem; }
+/* Compact variant for collection/product page headers (shorter than the hub hero) */
+.wll-hero--compact .wll-hero__inner { padding-top: 2.25rem; padding-bottom: 2.25rem; }
+.wll-hero--compact .wll-hero__heading { margin-bottom: 1rem; }
+.wll-hero--compact .wll-hero__subtitle { margin-bottom: 1.5rem; }
+@media (max-width: 749px) {
+  .wll-hero__inner { padding: 2rem 1.25rem 1.75rem; }
+  .wll-hero__buttons { flex-direction: column; align-items: stretch; }
+}
+
+/* === Pill buttons ======================================================== */
+.wll-pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  padding: 0.9375rem 1.75rem;
+  border-radius: var(--wll-radius-pill, 999px);
+  font-family: var(--wll-font); font-size: 1rem; font-weight: 600;
+  letter-spacing: -0.005em; text-decoration: none; cursor: pointer;
+  border: 1px solid transparent;
+  transition: background var(--wll-dur-fast, 0.2s) ease, color var(--wll-dur-fast, 0.2s) ease,
+              transform var(--wll-dur-fast, 0.2s) ease, border-color var(--wll-dur-fast, 0.2s) ease;
+}
+.wll-pill--primary { background: #ffffff; color: var(--wll-navy, #1B2034); }
+.wll-pill--primary:hover { background: var(--wll-accent-yellow, #fdcd6a); color: var(--wll-navy, #1B2034); transform: translateY(var(--wll-lift-hover, -2px)); }
+.wll-pill--accent { background: var(--wll-accent-yellow, #fdcd6a); color: var(--wll-navy, #1B2034); }
+.wll-pill--accent:hover { background: #ffffff; color: var(--wll-navy, #1B2034); transform: translateY(var(--wll-lift-hover, -2px)); }
+.wll-pill--ghost { background: transparent; color: #ffffff; border-color: rgba(255,255,255,0.4); }
+.wll-pill--ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); transform: translateY(var(--wll-lift-hover, -2px)); }
+.wll-pill--whatsapp { background: #25D366; color: #fff; border-color: #25D366; }
+.wll-pill--whatsapp:hover { background: #1ebe57; border-color: #1ebe57; }
+
+/* Outline link-pill (the cross-sell pattern) — white, reverses to navy */
+.wll-linkpill {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  background: #ffffff; border: 0.5px solid var(--wll-card-border, rgba(28,33,53,0.12));
+  border-radius: var(--wll-radius-pill, 999px);
+  font-family: var(--wll-font); font-size: 0.875rem; font-weight: 500; letter-spacing: -0.005em;
+  color: var(--wll-text, #1B2034); text-decoration: none;
+  transition: background var(--wll-dur-fast, 0.2s) ease, color var(--wll-dur-fast, 0.2s) ease,
+              border-color var(--wll-dur-fast, 0.2s) ease, transform var(--wll-dur-fast, 0.2s) ease;
+}
+.wll-linkpill:hover { background: var(--wll-navy, #1B2034); border-color: var(--wll-navy, #1B2034); color: #fff; transform: translateY(var(--wll-lift-hover, -2px)); }
+.wll-linkpill__icon { width: 12px; height: 12px; flex-shrink: 0; transition: transform 0.2s ease; }
+.wll-linkpill:hover .wll-linkpill__icon { transform: translateX(3px); }
+
+/* === Edge-bleed carousel ================================================ */
+/* Heading row (title left, arrows right) over the rail. */
+.wll-carousel__head {
+  padding-left: var(--wll-rail);
+  padding-right: var(--wll-rail);
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.wll-carousel__nav { display: flex; gap: 0.5rem; flex: 0 0 auto; }
+.wll-arrow {
+  width: var(--wll-arrow-size, 40px); height: var(--wll-arrow-size, 40px);
+  border-radius: 999px; background: #ffffff;
+  border: 1px solid var(--wll-card-border, rgba(28,33,53,0.12));
+  color: var(--wll-text, #1B2034);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; cursor: pointer; padding: 0;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+.wll-arrow:hover { border-color: var(--wll-zone-accent, var(--wll-accent-blue, #0076DE)); color: var(--wll-zone-accent, var(--wll-accent-blue, #0076DE)); }
+.wll-arrow:active { transform: scale(0.95); }
+.wll-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* Scroll track — first item aligns to rail, items run off the right edge */
+.wll-track {
+  display: flex; gap: 1.25rem; margin: 0;
+  overflow-x: auto; overflow-y: hidden;
+  scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding: 1rem 1.5rem 2rem var(--wll-rail);
+  scroll-padding-left: var(--wll-rail);
+}
+.wll-track::-webkit-scrollbar { display: none; }
+.wll-track > * { scroll-snap-align: start; flex: 0 0 auto; }
+@media (max-width: 990px) { .wll-carousel__nav { display: none; } }
+
+/* === Magazine card (image + scrim + overlaid title) ===================== */
+.wll-mcard {
+  position: relative; display: block; aspect-ratio: 4 / 5; overflow: hidden;
+  border-radius: var(--wll-radius-card, 22px);
+  background: var(--wll-navy, #1B2034); text-decoration: none;
+  box-shadow: var(--wll-shadow-rest);
+  transition: transform var(--wll-dur-card, 0.25s) var(--wll-ease), box-shadow var(--wll-dur-card, 0.25s) ease;
+}
+.wll-mcard:hover { transform: translateY(var(--wll-lift-card, -4px)); box-shadow: var(--wll-shadow-hover); }
+.wll-mcard__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s var(--wll-ease); }
+.wll-mcard:hover .wll-mcard__img { transform: scale(1.04); }
+.wll-mcard__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--wll-navy-deep, #0a1530) 88%, transparent) 0%,
+    color-mix(in srgb, var(--wll-navy-deep, #0a1530) 40%, transparent) 36%,
+    transparent 68%);
+}
+.wll-mcard__placeholder { position: absolute; inset: 0; background: var(--wll-navy-gradient, linear-gradient(135deg, #0a1530, #1c2135 55%, #1d2236)); }
+.wll-mcard__text { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.1rem 1.15rem; z-index: 1; }
+.wll-mcard__eyebrow { display: block; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.85); margin: 0 0 0.35rem; }
+.wll-mcard__title { color: #fff; font-size: 1.0625rem; font-weight: 600; letter-spacing: var(--wll-tracking-snug, -0.018em); line-height: 1.2; margin: 0; }
+.wll-mcard__desc {
+  color: rgba(255,255,255,0.82); font-size: 0.8125rem; line-height: 1.3; margin: 0.35rem 0 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+@media (max-width: 600px) { .wll-mcard { border-radius: var(--wll-radius-card-mobile, 18px); } }
+
+/* === Auto-fit card grid + application card ============================= */
+.wll-cardgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  padding: 1rem 0 2rem;   /* breathing room for the hover lift + shadow */
+  margin: 0;
+  list-style: none;
+}
+/* The applications card — distinct 18px-radius card (icon, title, desc, CTA). */
+.wll-appcard {
+  display: flex; flex-direction: column; height: 100%;
+  background: var(--wll-card-bg, #fff); border: 1px solid rgba(28,33,53,0.06);
+  border-radius: 18px; padding: 1.5rem; box-shadow: var(--wll-shadow-rest);
+  transition: transform var(--wll-dur-card, 0.25s) var(--wll-ease), box-shadow var(--wll-dur-card, 0.25s) ease;
+}
+.wll-appcard:hover { transform: translateY(var(--wll-lift-card, -4px)); box-shadow: var(--wll-shadow-hover); }
+.wll-appcard__icon { font-size: 24px; line-height: 1; color: var(--wll-zone-accent, var(--wll-accent-gold, #c98e0a)); margin-bottom: 0.875rem; display: inline-block; }
+.wll-appcard__title { font-size: 1.0625rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.005em; margin: 0 0 0.5rem; color: var(--wll-text, #1B2034); }
+.wll-appcard__desc { font-size: 0.9375rem; line-height: 1.5; margin: 0; flex: 1; color: var(--wll-text, #1B2034); }
+.wll-appcard__cta { margin-top: 1rem; text-decoration: none; color: var(--wll-zone-accent, var(--wll-accent-gold, #c98e0a)); font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.375rem; align-self: flex-start; transition: opacity 0.2s ease; }
+.wll-appcard__cta:hover { opacity: 0.75; }
+@media (max-width: 600px) { .wll-appcard { padding: 1.25rem; border-radius: 16px; } }
+
+/* === FAQ / accordion card =============================================== */
+.wll-faqcard {
+  background: var(--wll-card-bg, #fff);
+  border: 1px solid rgba(28,33,53,0.06);
+  border-radius: 14px;
+  box-shadow: var(--wll-shadow-rest);
+  padding: 2.5rem;
+}
+.wll-faq__q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  padding: 1.5rem 0.75rem; background: none; border: none; cursor: pointer;
+  font-family: var(--wll-font); font-size: 1.0625rem; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--wll-text, #1B2034); text-align: left;
+}
+.wll-faq__q:hover { color: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); }
+.wll-faq__item { border-bottom: 1px solid rgba(28,33,53,0.08); }
+.wll-faq__item.is-open { background-color: color-mix(in srgb, var(--wll-zone-accent, #d946ef) 6%, transparent); }
+/* Chevron rotates + accent-tints on open */
+.wll-faq__icon { width: 22px; height: 22px; flex: 0 0 auto; color: #999; transition: transform 0.3s var(--wll-ease), color 0.3s ease; }
+.wll-faq__item.is-open .wll-faq__icon { transform: rotate(180deg); color: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); }
+/* Answer collapses by height (JS sets the open height to scrollHeight) */
+.wll-faq__answer-wrap { height: 0; overflow: hidden; transition: height 0.35s var(--wll-ease, cubic-bezier(0.4,0,0.2,1)); }
+@media (max-width: 600px) { .wll-faqcard { padding: 1.5rem 1.25rem; } }
+
+/* === Product card (content top, contained image bottom) ================ */
+/* The Bestsellers pattern. White card; title + price + CTA on top, the product
+   photo sits in a padded well below it, object-fit: contain (not cover). */
+.wll-pcard {
+  display: flex; flex-direction: column; aspect-ratio: 4 / 5; overflow: hidden;
+  background: var(--wll-card-bg, #fff); color: var(--wll-text, #1B2034);
+  border-radius: var(--wll-radius-card, 22px); text-decoration: none;
+  box-shadow: var(--wll-shadow-rest);
+  transition: transform var(--wll-dur-card, 0.25s) var(--wll-ease), box-shadow var(--wll-dur-card, 0.25s) ease;
+}
+.wll-pcard:hover { transform: translateY(var(--wll-lift-card, -4px)); box-shadow: var(--wll-shadow-hover); }
+.wll-pcard__head { padding: clamp(0.875rem, calc(0.5rem + 0.5vw), 1.5rem); display: flex; flex-direction: column; gap: 0.5rem; flex-shrink: 0; }
+.wll-pcard__title {
+  font-size: clamp(0.875rem, calc(0.625rem + 0.4vw), 1.125rem); font-weight: 600;
+  letter-spacing: -0.018em; line-height: 1.25; margin: 0;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.wll-pcard__price { font-size: clamp(0.8125rem, calc(0.625rem + 0.3vw), 1rem); color: var(--wll-text-muted, #6e6e73); font-weight: 400; line-height: 1.4; margin: 0; }
+.wll-pcard__cta { display: inline-flex; align-items: center; gap: 0.375rem; font-size: clamp(0.75rem, calc(0.625rem + 0.2vw), 0.875rem); font-weight: 600; color: var(--wll-zone-accent, var(--wll-accent-blue, #0076DE)); margin-top: 0.5rem; transition: gap 0.2s ease; }
+.wll-pcard:hover .wll-pcard__cta { gap: 0.625rem; }
+.wll-pcard__media { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; padding: clamp(0.75rem, calc(0.5rem + 0.3vw), 1.5rem); overflow: hidden; }
+.wll-pcard__media img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform 0.4s var(--wll-ease); }
+.wll-pcard:hover .wll-pcard__media img { transform: scale(1.04); }
+@media (max-width: 600px) { .wll-pcard { border-radius: var(--wll-radius-card-mobile, 18px); } }
+
+/* === vs-card (side-by-side decision card) ============================== */
+.wll-vscard {
+  display: flex; flex-direction: column; height: 480px; padding: 1.5rem;
+  background: var(--wll-card-bg, #fff); border: 1px solid rgba(28,33,53,0.06);
+  border-radius: var(--wll-radius-card, 22px); box-shadow: var(--wll-shadow-rest);
+  transition: transform var(--wll-dur-card, 0.25s) var(--wll-ease), box-shadow var(--wll-dur-card, 0.25s) ease;
+}
+.wll-vscard:hover { transform: translateY(var(--wll-lift-card, -4px)); box-shadow: var(--wll-shadow-hover); }
+.wll-vscard__eyebrow { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); margin: 0 0 0.5rem; }
+.wll-vscard__title { font-size: 1.125rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; margin: 0 0 1rem; color: var(--wll-text); }
+.wll-vscard__option-label { font-size: 0.875rem; font-weight: 600; margin: 0; padding-bottom: 0.5rem; border-bottom: 2px solid var(--wll-accent-yellow, #fdcd6a); }
+.wll-vscard__bullets { list-style: none; padding: 0; margin: 0.625rem 0 0; display: flex; flex-direction: column; gap: 0.375rem; }
+.wll-vscard__bullets li { font-size: 0.875rem; line-height: 1.45; padding-left: 1rem; position: relative; }
+.wll-vscard__bullets li::before { content: ''; position: absolute; left: 0; top: 0.55em; width: 4px; height: 4px; border-radius: 50%; background: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); }
+.wll-vscard__divider { height: 1px; background: rgba(28,33,53,0.08); margin: 1.25rem 0; }
+.wll-vscard__cta { margin-top: 0.25rem; text-decoration: none; color: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); font-size: 0.875rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.375rem; align-self: flex-start; transition: gap 0.2s ease; }
+.wll-vscard__cta:hover { gap: 0.625rem; }
+@media (max-width: 600px) { .wll-vscard { height: 460px; padding: 1.25rem; border-radius: var(--wll-radius-card-mobile, 18px); } }
+
+/* === Q&A card + modal ================================================== */
+/* Card is a reset <button>; clicking opens a per-card modal (JS toggles .is-open). */
+.wll-qcard {
+  appearance: none; -webkit-appearance: none; text-align: left; font-family: inherit;
+  width: 100%; margin: 0; cursor: pointer;
+  background: var(--wll-card-bg, #fff); border: 1px solid rgba(28,33,53,0.06);
+  border-radius: var(--wll-radius-card, 22px); box-shadow: var(--wll-shadow-rest);
+  padding: 1.25rem 1.5rem; min-height: 110px;
+  display: flex; flex-direction: column; align-items: flex-start;
+  transition: transform var(--wll-dur-card, 0.25s) var(--wll-ease), box-shadow var(--wll-dur-card, 0.25s) ease;
+}
+.wll-qcard:hover { transform: translateY(var(--wll-lift-card, -4px)); box-shadow: var(--wll-shadow-hover); }
+.wll-qcard:focus-visible { outline: 2px solid var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); outline-offset: 2px; }
+.wll-qcard__main { display: flex; align-items: flex-start; gap: 1rem; width: 100%; }
+.wll-qcard__icon { width: 52px; height: 52px; flex: 0 0 auto; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; color: #fff; background: var(--wll-zone-accent, var(--wll-accent-magenta, #d946ef)); }
+.wll-qcard__icon svg { width: 56%; height: 56%; }
+.wll-qcard__question { flex: 1; font-size: 1.0625rem; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; margin: 0; }
+
+.wll-modal[hidden] { display: none; }
+.wll-modal { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.wll-modal__backdrop { position: absolute; inset: 0; background: rgba(15,18,30,0.55); opacity: 0; transition: opacity 0.25s ease; }
+.wll-modal__dialog {
+  position: relative; background: #fff; border-radius: 20px; max-width: 640px; width: 100%;
+  max-height: 85vh; overflow-y: auto; padding: 2.5rem; box-shadow: 0 24px 60px rgba(15,18,30,0.25);
+  opacity: 0; transform: translateY(12px) scale(0.98);
+  transition: opacity 0.25s ease, transform 0.25s var(--wll-ease);
+}
+.wll-modal.is-open .wll-modal__backdrop { opacity: 1; }
+.wll-modal.is-open .wll-modal__dialog { opacity: 1; transform: translateY(0) scale(1); }
+.wll-modal__close { position: absolute; top: 1rem; right: 1rem; width: 36px; height: 36px; border: 0; border-radius: 999px; background: rgba(28,33,53,0.06); color: var(--wll-text); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s ease; }
+.wll-modal__close:hover { background: rgba(28,33,53,0.12); }
+
+/* === Boxed navy CTA (the closing bookend — rounded inset card, NOT full-bleed) === */
+.wll-cta {
+  background-color: var(--wll-navy, #1B2034);
+  ba
