@@ -37,6 +37,7 @@
   --wll-accent-yellow-text: #c98a10;
   --wll-accent-green: #10b981;
   --wll-accent-orange: #f97316;
+  --wll-accent-gold: #c98e0a;      /* RESEARCH zone accent (darkened yellow for white) */
   --wll-whatsapp: #25D366;
 
   /* Soft colour glows used behind the navy hero / final-cta */
@@ -48,6 +49,7 @@
   --wll-radius-card-mobile: 18px;
   --wll-radius-lg: 24px;            /* big blocks (final-cta inner)         */
   --wll-radius-pill: 999px;
+  --wll-arrow-size: 40px;          /* carousel arrow chip (36px on dense carousels) */
 
   /* --- Shadow (two-tier, barely-there) ------------------------------------ */
   --wll-shadow-rest: 0 1px 3px rgba(28, 33, 53, 0.04), 0 4px 10px rgba(28, 33, 53, 0.05);

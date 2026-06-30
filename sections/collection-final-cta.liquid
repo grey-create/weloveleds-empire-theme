@@ -1,0 +1,33 @@
+{%- liquid
+  assign heading = section.settings.heading
+  assign subtitle = section.settings.subtitle
+  assign btn_label = section.settings.btn_label
+  assign btn_url = section.settings.btn_url
+-%}
+
+{% if heading != blank or btn_label != blank %}
+<section class="wll-section collection-final-cta" data-section-id="{{ section.id }}">
+  <div class="wll-section__inner">
+    <div class="wll-cta">
+      {% if heading != blank %}<h2 class="wll-cta__heading">{{ heading | escape }}</h2>{% endif %}
+      {% if subtitle != blank %}<p class="wll-cta__subtitle">{{ subtitle | escape }}</p>{% endif %}
+      {% if btn_label != blank %}
+        <a href="{{ btn_url | default: '#' }}" class="wll-pill wll-pill--primary wll-cta__btn"{% if btn_url contains 'wa.me' %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ btn_label | escape }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Final CTA",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Need help choosing?" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Speak to our team for product advice, trade quotes and technical help." },
+    { "type": "text", "id": "btn_label", "label": "Button label", "default": "Contact us" },
+    { "type": "url", "id": "btn_url", "label": "Button URL" }
+  ],
+  "presets": [ { "name": "Collection Final CTA" } ]
+}
+{% endschema %}

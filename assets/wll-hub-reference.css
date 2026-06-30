@@ -364,4 +364,25 @@
 /* === Boxed navy CTA (the closing bookend — rounded inset card, NOT full-bleed) === */
 .wll-cta {
   background-color: var(--wll-navy, #1B2034);
-  ba
+  background-image: var(--wll-navy-gradient, linear-gradient(135deg, #0a1530, #1c2135 50%, #1d2236));
+  border-radius: var(--wll-radius-lg, 24px);
+  padding: 4.5rem 2rem; text-align: center; position: relative; overflow: hidden;
+  font-family: var(--wll-font);
+}
+.wll-cta::before, .wll-cta::after { content: ''; position: absolute; width: 400px; height: 400px; pointer-events: none; }
+.wll-cta::before { top: -30%; right: -10%; background: radial-gradient(circle, rgba(217,70,239,0.15) 0%, rgba(217,70,239,0) 70%); }
+.wll-cta::after { bottom: -30%; left: -10%; background: radial-gradient(circle, rgba(0,118,222,0.15) 0%, rgba(0,118,222,0) 70%); }
+.wll-cta__heading { position: relative; z-index: 1; font-size: var(--wll-fs-display, clamp(1.75rem, 3.5vw, 2.5rem)); font-weight: 600; color: #fff; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 1rem; }
+.wll-cta__subtitle { position: relative; z-index: 1; font-size: clamp(1.0625rem, 1.4vw, 1.1875rem); color: rgba(255,255,255,0.8); line-height: 1.55; max-width: 580px; margin: 0 auto 2rem; }
+.wll-cta__btn { position: relative; z-index: 1; }
+@media (max-width: 749px) { .wll-cta { padding: 3rem 1.5rem; border-radius: 20px; } }
+
+/* === Reveal on scroll =================================================== */
+.wll-fade { transform: translateY(var(--wll-reveal-rise, 24px)); transition: transform var(--wll-dur-reveal, 0.7s) ease; }
+.wll-fade.is-revealed { transform: translateY(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wll-mcard, .wll-mcard__img, .wll-fade, .wll-pill, .wll-linkpill,
+  .wll-pcard, .wll-pcard__media img, .wll-vscard, .wll-qcard, .wll-appcard { transition: none; }
+  .wll-fade { transform: none; }
+}

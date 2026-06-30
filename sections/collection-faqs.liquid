@@ -1,0 +1,70 @@
+{%- liquid
+  assign has_faqs = false
+  if collection.metafields.custom.faq_sets.value
+    for fs in collection.metafields.custom.faq_sets.value
+      if fs.active and fs.faqs
+        assign has_faqs = true
+      endif
+    endfor
+  endif
+-%}
+
+{% if has_faqs %}
+<section class="wll-section collection-faqs" data-section-id="{{ section.id }}" style="--wll-zone-accent: {{ section.settings.accent_colour }};">
+  <div class="wll-section__inner">
+    {% if section.settings.eyebrow != blank %}<p class="wll-zone__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+    {% if section.settings.heading != blank %}<h2 class="wll-zone__heading" style="margin-bottom:1.5rem;">{{ section.settings.heading | escape }}</h2>{% endif %}
+    <div class="wll-faqcard">
+      {% for fs in collection.metafields.custom.faq_sets.value %}
+        {% if fs.active and fs.faqs %}
+          {% assign faqs = fs.faqs | parse_json %}
+          {% for faq in faqs %}
+            <div class="wll-faq__item">
+              <button type="button" class="wll-faq__q" aria-expanded="false">
+                <span>{{ faq.question }}</span>
+                <svg class="wll-faq__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div class="wll-faq__answer-wrap"><div class="wll-faq__answer">{{ faq.answer }}</div></div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<style>
+.collection-faqs .wll-faq__answer { padding: 0 0.75rem 1.5rem; color: var(--wll-text-muted, #6e6e73); line-height: 1.6; }
+.collection-faqs .wll-faq__answer p { margin: 0 0 0.75rem; }
+.collection-faqs .wll-faq__answer :last-child { margin-bottom: 0; }
+</style>
+
+<script>
+(function() {
+  var root = document.querySelector('.collection-faqs[data-section-id="{{ section.id }}"]');
+  if (!root) return;
+  root.querySelectorAll('.wll-faq__item').forEach(function(item) {
+    var btn = item.querySelector('.wll-faq__q');
+    var wrap = item.querySelector('.wll-faq__answer-wrap');
+    if (!btn || !wrap) return;
+    btn.addEventListener('click', function() {
+      var open = item.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', open);
+      wrap.style.height = open ? wrap.firstElementChild.scrollHeight + 'px' : '0px';
+    });
+  });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection FAQs",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FAQs" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "color", "id": "accent_colour", "label": "Accent colour", "default": "#c98e0a", "info": "Used for the eyebrow + open-item highlight. Gold = the hub's RESEARCH accent." }
+  ],
+  "presets": [ { "name": "Collection FAQs" } ]
+}
+{% endschema %}

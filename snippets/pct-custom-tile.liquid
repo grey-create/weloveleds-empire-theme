@@ -1,0 +1,21 @@
+{%- comment -%}
+  Bespoke promo / upsell tile for the parent collection tiles slider.
+  Mixed in among the auto child-category tiles. Pass: block
+{%- endcomment -%}
+{%- assign accent = block.settings.accent_colour | default: '#0076DE' -%}
+<a href="{{ block.settings.link | default: '#' }}" class="pct-tile pct-tile--custom" style="--pct-tile-accent: {{ accent }};" {{ block.shopify_attributes }}>
+  <div class="pct-tile__image-wrap">
+    {%- if block.settings.image -%}
+      <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.title | escape }}" class="pct-tile__image" loading="lazy">
+    {%- else -%}
+      <div class="pct-tile__placeholder pct-tile__placeholder--accent"></div>
+    {%- endif -%}
+    <div class="pct-tile__scrim"></div>
+    {%- if block.settings.badge != blank -%}<div class="pct-tile__badge">{{ block.settings.badge }}</div>{%- endif -%}
+  </div>
+  <div class="pct-tile__text">
+    {%- if block.settings.eyebrow != blank -%}<span class="pct-tile__eyebrow">{{ block.settings.eyebrow }}</span>{%- endif -%}
+    {%- if block.settings.title != blank -%}<h3 class="pct-tile__title">{{ block.settings.title }}</h3>{%- endif -%}
+    {%- if block.settings.description != blank -%}<p class="pct-tile__desc">{{ block.settings.description }}</p>{%- endif -%}
+  </div>
+</a>

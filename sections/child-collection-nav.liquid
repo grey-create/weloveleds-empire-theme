@@ -3,278 +3,303 @@
 
 {% if sibling_menu and sibling_menu.links.size > 0 %}
 
-<div class="ccn-section">
-  <div class="ccn-outer">
-    <button class="ccn-arrow ccn-arrow--prev" aria-label="Previous">&#8249;</button>
-    <div class="ccn-track-wrap">
-      <div class="ccn-track" id="ccn-track-{{ section.id }}">
-        {% for link in sibling_menu.links %}
-          {% assign sibling = link.object %}
-          {% if sibling %}
-            {% assign is_current = false %}
-            {% if sibling.handle == collection.handle %}
-              {% assign is_current = true %}
-            {% endif %}
+{%- liquid
+  assign ccn_eyebrow = section.settings.eyebrow
+  assign ccn_heading = section.settings.heading | default: sibling_menu.title
+  assign bg_colour = section.settings.bg_colour
+  assign heading_colour = section.settings.heading_colour
+  assign accent_colour = section.settings.accent_colour
+  assign scrim_colour = section.settings.scrim_colour
+  assign reveal = section.settings.reveal_on_scroll
+  assign link_count = sibling_menu.links.size
+-%}
 
-            {% assign tile_image = '' %}
-            {% if sibling.image %}
-              {% assign tile_image = sibling.image | img_url: '400x' %}
-            {% elsif sibling.products.first.featured_image %}
-              {% assign tile_image = sibling.products.first.featured_image | img_url: '400x' %}
-            {% endif %}
-
-            {% assign tile_title = sibling.metafields.custom.tile_title | default: sibling.title %}
-            {% assign tile_desc = sibling.metafields.custom.tile_description %}
-
-            <a href="{{ link.url }}" class="ccn-tile{% if is_current %} ccn-tile--active{% endif %}">
-              <div class="ccn-tile__image-wrap">
-                {% if tile_image != '' %}
-                  <img
-                    src="{{ tile_image }}"
-                    alt="{{ tile_title }}"
-                    class="ccn-tile__image"
-                    loading="lazy"
-                  >
-                {% endif %}
-                {% if is_current %}
-                  <div class="ccn-tile__current-badge">Viewing</div>
-                {% endif %}
-              </div>
-              <div class="ccn-tile__text">
-                <h3 class="ccn-tile__title">{{ tile_title }}</h3>
-                {% if tile_desc != blank %}
-                  <p class="ccn-tile__desc">{{ tile_desc }}</p>
-                {% endif %}
-              </div>
-            </a>
-          {% endif %}
-        {% endfor %}
-      </div>
+<div class="ccn-section"
+     data-section-id="{{ section.id }}"
+     style="background: {{ bg_colour }}; --ccn-accent: {{ accent_colour }}; --ccn-heading: {{ heading_colour }}; --ccn-scrim: {{ scrim_colour }};">
+  <div class="ccn-head">
+    <div class="ccn-headings">
+      {% if ccn_eyebrow != blank %}<p class="ccn-eyebrow">{{ ccn_eyebrow }}</p>{% endif %}
+      {% if ccn_heading != blank %}<h2 class="ccn-heading">{{ ccn_heading }}</h2>{% endif %}
     </div>
-    <button class="ccn-arrow ccn-arrow--next" aria-label="Next">&#8250;</button>
+    <div class="ccn-nav">
+      <button class="ccn-arrow ccn-arrow--prev" aria-label="Previous"><span aria-hidden="true">&#8592;</span></button>
+      <button class="ccn-arrow ccn-arrow--next" aria-label="Next"><span aria-hidden="true">&#8594;</span></button>
+    </div>
+  </div>
+
+  <div class="ccn-track{% if reveal %} ccn-reveal{% endif %}" id="ccn-track-{{ section.id }}">
+    {% for link in sibling_menu.links %}
+      {% assign pos = forloop.index %}
+
+      {%- comment -%} bespoke tiles set to insert before this position {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'custom_tile' and block.settings.position == pos %}
+          {% render 'ccn-custom-tile', block: block %}
+        {% endif %}
+      {% endfor %}
+
+      {% assign sibling = link.object %}
+      {% if sibling %}
+        {% assign is_current = false %}
+        {% if sibling.handle == collection.handle %}{% assign is_current = true %}{% endif %}
+
+        {% assign tile_image = '' %}
+        {% if sibling.image %}
+          {% assign tile_image = sibling.image | img_url: '500x' %}
+        {% elsif sibling.products.first.featured_image %}
+          {% assign tile_image = sibling.products.first.featured_image | img_url: '500x' %}
+        {% endif %}
+
+        {% assign tile_title = sibling.metafields.custom.tile_title | default: sibling.title %}
+        {% assign tile_desc = sibling.metafields.custom.tile_description %}
+
+        <a href="{{ link.url }}" class="ccn-tile{% if is_current %} ccn-tile--active{% endif %}">
+          <div class="ccn-tile__image-wrap">
+            {% if tile_image != '' %}
+              <img src="{{ tile_image }}" alt="{{ tile_title | escape }}" class="ccn-tile__image" loading="lazy">
+            {% else %}
+              <div class="ccn-tile__placeholder"></div>
+            {% endif %}
+            <div class="ccn-tile__scrim"></div>
+            {% if is_current %}<div class="ccn-tile__current-badge">Viewing</div>{% endif %}
+          </div>
+          <div class="ccn-tile__text">
+            <h3 class="ccn-tile__title">{{ tile_title }}</h3>
+            {% if tile_desc != blank %}<p class="ccn-tile__desc">{{ tile_desc }}</p>{% endif %}
+          </div>
+        </a>
+      {% endif %}
+    {% endfor %}
+
+    {%- comment -%} bespoke tiles at the end (position 0 or beyond the list) {%- endcomment -%}
+    {% for block in section.blocks %}
+      {% if block.type == 'custom_tile' %}
+        {% if block.settings.position == 0 or block.settings.position > link_count %}
+          {% render 'ccn-custom-tile', block: block %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
   </div>
 </div>
 
 <style>
 .ccn-section {
+  width: 100vw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
   margin-right: -50vw;
-  width: 100vw;
-  background: #f5f5f7;
-  padding: 1.25rem 0;
+  background: var(--wll-bg, #f5f5f7);
+  padding: 2.5rem 0 3rem;
+  font-family: var(--wll-font, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
   box-sizing: border-box;
 }
 
-.ccn-outer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+/* Heading row — title left, arrows right, aligned to the page rail */
+.ccn-head {
+  padding-left: var(--wll-rail, clamp(1.5rem, 8vw, 200px));
+  padding-right: var(--wll-rail, clamp(1.5rem, 8vw, 200px));
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.ccn-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--wll-tracking-eyebrow, 0.14em);
+  color: var(--ccn-accent, var(--wll-accent-blue, #0076DE));
+  margin: 0 0 0.5rem;
+}
+.ccn-heading {
+  font-size: clamp(1.25rem, 2vw, 1.625rem);
+  font-weight: 600;
+  letter-spacing: var(--wll-tracking-tight, -0.025em);
+  color: var(--ccn-heading, var(--wll-text, #1B2034));
+  line-height: 1.2;
+  margin: 0;
+}
+.ccn-nav { display: flex; gap: 0.5rem; flex: 0 0 auto; }
+.ccn-arrow {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid var(--wll-card-border, rgba(28, 33, 53, 0.12));
+  color: var(--wll-text, #1B2034);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  padding: 0;
+  transition: border-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
 }
+.ccn-arrow:hover { border-color: var(--ccn-accent, var(--wll-accent-blue, #0076DE)); color: var(--ccn-accent, var(--wll-accent-blue, #0076DE)); }
+.ccn-arrow:active { transform: scale(0.95); }
+.ccn-arrow:disabled { opacity: 0.35; cursor: not-allowed; }
 
-.ccn-track-wrap {
-  flex: 1;
-  overflow: hidden;
-}
-
+/* Edge-bleed scroll track — first card aligns to the rail, cards run off the right edge */
 .ccn-track {
   display: flex;
-  gap: 10px;
+  gap: 1.25rem;
+  margin: 0;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
   scroll-behavior: smooth;
-  padding-bottom: 2px;
+  padding: 1rem var(--wll-rail, clamp(1.5rem, 8vw, 200px)) 2rem;
+  padding-right: 1.5rem;
+  scroll-padding-left: var(--wll-rail, clamp(1.5rem, 8vw, 200px));
 }
+.ccn-track::-webkit-scrollbar { display: none; }
 
-.ccn-track::-webkit-scrollbar {
-  display: none;
-}
+/* Reveal on scroll */
+.ccn-reveal { transform: translateY(24px); transition: transform 0.7s ease; }
+.ccn-reveal.is-revealed { transform: translateY(0); }
 
+/* Magazine card — 4:5, full-bleed image, navy scrim, overlaid title (mirrors hub choose-route) */
 .ccn-tile {
-  display: flex;
-  flex-direction: column;
-  flex: 0 0 160px;
-  background: #ffffff;
-  border-radius: 10px;
+  flex: 0 0 clamp(153px, 13vw, 227px);
+  scroll-snap-align: start;
+  position: relative;
+  display: block;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--wll-radius-card, 22px);
   overflow: hidden;
   text-decoration: none;
-  scroll-snap-align: start;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
-  border: 2px solid transparent;
+  background: transparent;
+  box-shadow: var(--wll-shadow-rest, 0 1px 3px rgba(28,33,53,0.04), 0 4px 10px rgba(28,33,53,0.05));
+  transition: transform 0.25s var(--wll-ease, cubic-bezier(0.4,0,0.2,1)), box-shadow 0.25s ease;
 }
-
 .ccn-tile:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-4px);
+  box-shadow: var(--wll-shadow-hover, 0 2px 6px rgba(28,33,53,0.05), 0 6px 14px rgba(28,33,53,0.08));
 }
-
-.ccn-tile--active {
-  border-color: #1d2236;
-  box-shadow: 0 0 0 1px #1d2236;
-}
-
-.ccn-tile--active:hover {
-  transform: none;
-}
-
-.ccn-tile__image-wrap {
-  position: relative;
-  height: 100px;
-  overflow: hidden;
-  background: #f9f9f9;
-}
-
+.ccn-tile__image-wrap { position: absolute; inset: 0; overflow: hidden; border-radius: var(--wll-radius-card, 22px); }
 .ccn-tile__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s var(--wll-ease, cubic-bezier(0.4,0,0.2,1));
 }
-
-.ccn-tile:hover .ccn-tile__image {
-  transform: scale(1.03);
+.ccn-tile:hover .ccn-tile__image { transform: scale(1.04); }
+.ccn-tile__placeholder {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0a1530 0%, #1c2135 55%, #1d2236 100%);
 }
-
-.ccn-tile--active .ccn-tile__image {
-  opacity: 0.85;
+.ccn-tile__placeholder--accent { background: var(--ccn-tile-accent, #0a1530); }
+.ccn-tile__scrim {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top,
+    color-mix(in srgb, var(--ccn-scrim, #0a1530) 88%, transparent) 0%,
+    color-mix(in srgb, var(--ccn-scrim, #0a1530) 40%, transparent) 36%,
+    transparent 68%);
 }
-
-.ccn-tile__current-badge {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: #1d2236;
-  color: #ffffff;
-  font-size: 0.65rem;
-  font-weight: 600;
+.ccn-tile__text { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.1rem 1.15rem; z-index: 1; }
+.ccn-tile__eyebrow {
+  display: block;
+  font-size: 0.625rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 7px;
-  border-radius: 20px;
-  font-family: Inter, sans-serif;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.85);
+  margin: 0 0 0.35rem;
 }
-
-.ccn-tile__text {
-  padding: 8px 10px 10px 10px;
-}
-
 .ccn-tile__title {
-  color: #1d2236;
-  font-size: 0.8rem;
-  font-weight: 600;
-  margin: 0 0 2px 0;
-  line-height: 1.3;
-  font-family: Inter, sans-serif;
-}
-
-.ccn-tile--active .ccn-tile__title {
-  color: #1d2236;
-}
-
-.ccn-tile__desc {
-  color: #666;
-  font-size: 0.7rem;
-  margin: 0;
-  line-height: 1.3;
-  font-family: Inter, sans-serif;
-}
-
-/* Arrows */
-.ccn-arrow {
-  flex: 0 0 auto;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid #ddd;
-  background: #ffffff;
-  color: #1d2236;
-  font-size: 1.3rem;
-  line-height: 1;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s ease, border-color 0.2s ease;
-  padding: 0;
-}
-
-.ccn-arrow:hover {
-  background: #1d2236;
   color: #ffffff;
-  border-color: #1d2236;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: var(--wll-tracking-snug, -0.018em);
+  line-height: 1.2;
+  margin: 0;
 }
-
-.ccn-arrow:disabled {
-  opacity: 0.3;
-  cursor: default;
-  pointer-events: none;
+.ccn-tile__desc {
+  color: rgba(255,255,255,0.82);
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  margin: 0.35rem 0 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
+.ccn-tile__current-badge {
+  position: absolute; top: 0.75rem; right: 0.75rem; z-index: 2;
+  background: #ffffff; color: var(--wll-navy, #1B2034);
+  font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  padding: 4px 9px; border-radius: 999px;
+}
+.ccn-tile__badge {
+  position: absolute; top: 0.75rem; left: 0.75rem; z-index: 2;
+  background: var(--ccn-tile-accent, #0076DE); color: #ffffff;
+  font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 4px 9px; border-radius: 999px;
+}
+.ccn-tile--active { outline: 2px solid var(--wll-navy, #1B2034); outline-offset: 2px; }
 
-@media (max-width: 680px) {
-  .ccn-arrow {
-    display: none;
-  }
-  .ccn-outer {
-    padding: 0 16px;
-  }
-  .ccn-tile {
-    flex: 0 0 130px;
-  }
-  .ccn-tile__image-wrap {
-    height: 80px;
-  }
-  .ccn-tile__desc {
-    display: none;
-  }
+@media (max-width: 990px) {
+  .ccn-nav { display: none; }
+}
+@media (max-width: 600px) {
+  .ccn-section { padding: 2rem 0 2.5rem; }
+  .ccn-head { padding-left: 1.25rem; padding-right: 1.25rem; margin-bottom: 1rem; }
+  .ccn-track { padding: 1rem 1.25rem 1.75rem; scroll-padding-left: 1.25rem; }
+  .ccn-tile { flex-basis: clamp(122px, 36vw, 170px); border-radius: var(--wll-radius-card-mobile, 18px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ccn-tile, .ccn-tile__image { transition: none; }
+  .ccn-reveal { transform: none; transition: none; }
 }
 </style>
 
 <script>
 (function() {
   var track = document.getElementById('ccn-track-{{ section.id }}');
-  var outer = track.closest('.ccn-outer');
-  var prevBtn = outer.querySelector('.ccn-arrow--prev');
-  var nextBtn = outer.querySelector('.ccn-arrow--next');
+  if (!track) return;
+  var section = track.closest('.ccn-section');
+  var prevBtn = section.querySelector('.ccn-arrow--prev');
+  var nextBtn = section.querySelector('.ccn-arrow--next');
 
   function getScrollAmount() {
     var tile = track.querySelector('.ccn-tile');
-    return tile ? tile.offsetWidth + 10 : 170;
+    return tile ? tile.offsetWidth + 20 : 240;
   }
-
   function updateArrows() {
-    prevBtn.disabled = track.scrollLeft <= 0;
+    if (!prevBtn || !nextBtn) return;
+    prevBtn.disabled = track.scrollLeft <= 2;
     nextBtn.disabled = track.scrollLeft + track.offsetWidth >= track.scrollWidth - 2;
   }
-
-  prevBtn.addEventListener('click', function() {
-    track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' });
-  });
-
-  nextBtn.addEventListener('click', function() {
-    track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' });
-  });
-
+  if (prevBtn) prevBtn.addEventListener('click', function() { track.scrollBy({ left: -getScrollAmount(), behavior: 'smooth' }); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { track.scrollBy({ left: getScrollAmount(), behavior: 'smooth' }); });
   track.addEventListener('scroll', updateArrows);
 
-  // Scroll active tile into view on load
   var activeTile = track.querySelector('.ccn-tile--active');
   if (activeTile) {
     setTimeout(function() {
       activeTile.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-    }, 100);
+    }, 150);
   }
-
   updateArrows();
+
+  // Reveal on scroll
+  if (track.classList.contains('ccn-reveal') && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) { entry.target.classList.add('is-revealed'); io.unobserve(entry.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    io.observe(track);
+  }
 })();
 </script>
 
@@ -283,6 +308,34 @@
 {% schema %}
 {
   "name": "Child Collection Nav",
-  "settings": []
+  "max_blocks": 8,
+  "settings": [
+    { "type": "header", "content": "Heading row" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow tag", "default": "EXPLORE THE RANGE", "info": "Tiny uppercase label above the heading. Leave blank to hide." },
+    { "type": "text", "id": "heading", "label": "Heading", "info": "Defaults to the parent menu title if left blank." },
+    { "type": "header", "content": "Colours & gradient" },
+    { "type": "color", "id": "bg_colour", "label": "Section background", "default": "#f5f5f7" },
+    { "type": "color", "id": "heading_colour", "label": "Heading colour", "default": "#1B2034" },
+    { "type": "color", "id": "accent_colour", "label": "Accent (eyebrow + arrows)", "default": "#0076DE" },
+    { "type": "color", "id": "scrim_colour", "label": "Card gradient colour", "default": "#0a1530", "info": "The gradient over each card image that keeps the title readable." },
+    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Fade in on scroll", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "custom_tile",
+      "name": "Bespoke tile",
+      "settings": [
+        { "type": "paragraph", "content": "A custom tile mixed in with the auto child-collection tiles — for a promo, upsell, or a link elsewhere on the site." },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Optional. If blank, the accent colour fills the tile." },
+        { "type": "text", "id": "badge", "label": "Corner badge", "info": "e.g. OFFER, NEW. Leave blank to hide." },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Custom tile" },
+        { "type": "text", "id": "description", "label": "Description" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "color", "id": "accent_colour", "label": "Accent colour", "default": "#0076DE", "info": "Colours the badge and the no-image background." },
+        { "type": "range", "id": "position", "label": "Insert at position", "min": 0, "max": 20, "step": 1, "default": 0, "info": "1 = before the first child tile, 2 = before the second, and so on. 0 = at the end." }
+      ]
+    }
+  ]
 }
 {% endschema %}

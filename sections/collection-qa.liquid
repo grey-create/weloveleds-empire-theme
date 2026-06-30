@@ -1,0 +1,123 @@
+{%- liquid
+  assign accent = section.settings.accent_colour
+  assign card_eyebrow = section.settings.card_eyebrow
+  assign icons = 'ruler,package,plug,layers,lightbulb,help' | split: ','
+  assign accents = '#d946ef,#0076DE,#10b981,#c98e0a,#f97316' | split: ','
+
+  # Source: manual blocks override; otherwise the collection's faq_sets metafield
+  assign use_blocks = false
+  if section.blocks.size > 0
+    assign use_blocks = true
+  endif
+
+  assign has_metafield = false
+  if collection.metafields.custom.faq_sets.value
+    for fs in collection.metafields.custom.faq_sets.value
+      if fs.active and fs.faqs
+        assign has_metafield = true
+      endif
+    endfor
+  endif
+-%}
+
+{% if use_blocks or has_metafield %}
+<section class="wll-section collection-qa" data-section-id="{{ section.id }}" style="--wll-zone-accent: {{ accent }};">
+  <div class="wll-section__inner">
+    {% if section.settings.eyebrow != blank %}<p class="wll-zone__eyebrow">{{ section.settings.eyebrow | escape }}</p>{% endif %}
+    {% if section.settings.heading != blank %}<h2 class="wll-zone__heading collection-qa__heading">{{ section.settings.heading | escape }}</h2>{% endif %}
+    <div class="collection-qa__grid">
+      {%- if use_blocks -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'qa' -%}
+            {%- assign bacc = block.settings.accent_colour | default: accent -%}
+            {% render 'collection-qa-card', uid: block.id, question: block.settings.question, answer: block.settings.answer, icon: block.settings.icon, accent: bacc, eyebrow: card_eyebrow, cta_label: block.settings.cta_label, cta_url: block.settings.cta_url %}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign card_i = 0 -%}
+        {%- for fs in collection.metafields.custom.faq_sets.value -%}
+          {%- if fs.active and fs.faqs -%}
+            {%- assign faqs = fs.faqs | parse_json -%}
+            {%- for faq in faqs -%}
+              {%- assign ic_idx = card_i | modulo: 6 -%}
+              {%- assign ac_idx = card_i | modulo: 5 -%}
+              {% render 'collection-qa-card', uid: faq.question | handleize | append: '-' | append: card_i, question: faq.question, answer: faq.answer, icon: icons[ic_idx], accent: accents[ac_idx], eyebrow: card_eyebrow %}
+              {%- assign card_i = card_i | plus: 1 -%}
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+.collection-qa__heading { margin-bottom: 1.5rem; }
+.collection-qa__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+@media (max-width: 900px) { .collection-qa__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .collection-qa__grid { grid-template-columns: 1fr; } }
+.wll-qcard__eyebrow-mini {
+  display: block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--wll-zone-accent, #d946ef); margin: 0 0 0.75rem;
+}
+.collection-qa__modal-icon { margin-bottom: 1rem; }
+.collection-qa__modal-q { font-family: var(--wll-font, 'Inter', sans-serif); font-size: 1.375rem; font-weight: 600; letter-spacing: -0.02em; color: var(--wll-text, #1B2034); margin: 0 0 0.75rem; }
+.collection-qa__answer { font-family: var(--wll-font, 'Inter', sans-serif); color: var(--wll-text-muted, #6e6e73); line-height: 1.6; }
+.collection-qa__answer a { color: var(--wll-accent-blue, #0076DE); text-underline-offset: 3px; }
+.collection-qa__cta { margin-top: 1.25rem; }
+</style>
+
+<script>
+(function() {
+  var root = document.querySelector('.collection-qa[data-section-id="{{ section.id }}"]');
+  if (!root) return;
+  function close(m) { m.classList.remove('is-open'); setTimeout(function(){ m.hidden = true; }, 250); }
+  root.querySelectorAll('[data-qa-open]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var m = document.getElementById(btn.getAttribute('data-qa-open'));
+      if (m) { m.hidden = false; requestAnimationFrame(function(){ m.classList.add('is-open'); }); }
+    });
+  });
+  root.querySelectorAll('.wll-modal').forEach(function(m) {
+    m.querySelectorAll('[data-qa-close]').forEach(function(c) { c.addEventListener('click', function(){ close(m); }); });
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') root.querySelectorAll('.wll-modal:not([hidden])').forEach(close); });
+})();
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Collection Q&A",
+  "max_blocks": 9,
+  "settings": [
+    { "type": "paragraph", "content": "By default this reads the collection's faq_sets metafield (per-collection, editable in admin). Adding blocks below overrides the metafield for this template only." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Buying guide" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Choosing the right kit" },
+    { "type": "text", "id": "card_eyebrow", "label": "Card eyebrow", "default": "Q&A" },
+    { "type": "color", "id": "accent_colour", "label": "Default accent", "default": "#d946ef" }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question (manual override)",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" },
+        { "type": "select", "id": "icon", "label": "Icon", "default": "help", "options": [
+          { "value": "ruler", "label": "Ruler / size" },
+          { "value": "package", "label": "Package / kit" },
+          { "value": "plug", "label": "Plug / power" },
+          { "value": "layers", "label": "Layers / expand" },
+          { "value": "lightbulb", "label": "Lightbulb" },
+          { "value": "help", "label": "Help" }
+        ] },
+        { "type": "color", "id": "accent_colour", "label": "Accent (icon + eyebrow)" },
+        { "type": "text", "id": "cta_label", "label": "CTA label (optional)" },
+        { "type": "url", "id": "cta_url", "label": "CTA link" }
+      ]
+    }
+  ],
+  "presets": [ { "name": "Collection Q&A" } ]
+}
+{% endschema %}
