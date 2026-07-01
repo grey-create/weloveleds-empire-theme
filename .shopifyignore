@@ -1,0 +1,9 @@
+# === HARD BLOCK — do not let `shopify theme push` overwrite these ===
+# The nine category hub templates are maintained in the Shopify THEME EDITOR.
+# Editor changes do NOT sync back to git, so any CLI push would clobber them.
+# Listing them here makes `shopify theme push` skip them entirely, so the
+# editor versions are safe.
+#
+# To intentionally re-sync ONE of these from the repo, temporarily comment out
+# the line below, push that single file, then restore it.
+templates/collection.hub-*.json
