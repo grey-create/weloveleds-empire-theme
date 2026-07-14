@@ -973,6 +973,50 @@ header.site-header { border: none; outline: none; position: relative; }
   a.mobile-nav-close:hover {
     background: rgba(255, 255, 255, 0.08) !important;
   }
+
+  /* ============================================================
+     FIX (2026-07-14): Globo mega-menu content legibility in the
+     mobile drawer.
+
+     Globo's real mobile root class is .gm-menu-mobile (the earlier
+     rules keyed off .gm-mobile-menu never matched). When a header is
+     expanded, Globo renders mega content with .gm-mega / .gm-grid /
+     .gm-heading / .gm-description / .gm-image / .gm-icon / .gm-badge —
+     none of which were styled, so on the forced-navy drawer the
+     headings stayed navy (invisible), descriptions stayed grey
+     (barely visible), and mega images rendered full-size (giant icon).
+
+     Restore Globo's intended white sub-panels + readable text inside
+     the drawer, and cap oversized mega images. Scoped to the confirmed
+     drawer wrapper (.site-mobile-nav) so desktop is untouched.
+     ============================================================ */
+  .site-mobile-nav .gm-menu-mobile .gm-submenu,
+  .site-mobile-nav .gm-menu-mobile .gm-mega,
+  .site-mobile-nav .gm-menu-mobile .gm-grid,
+  .site-mobile-nav .gm-menu-mobile .gm-grid-item {
+    background-color: #ffffff !important;
+  }
+  .site-mobile-nav .gm-menu-mobile .gm-mega,
+  .site-mobile-nav .gm-menu-mobile .gm-heading,
+  .site-mobile-nav .gm-menu-mobile .gm-heading a,
+  .site-mobile-nav .gm-menu-mobile .gm-grid-item,
+  .site-mobile-nav .gm-menu-mobile .gm-grid-item a,
+  .site-mobile-nav .gm-menu-mobile .gm-links a,
+  .site-mobile-nav .gm-menu-mobile .gm-label {
+    color: #1B2034 !important;
+  }
+  .site-mobile-nav .gm-menu-mobile .gm-description {
+    color: #555555 !important;
+  }
+  /* Cap oversized mega images/icons so they don't blow out the drawer */
+  .site-mobile-nav .gm-menu-mobile .gm-image img,
+  .site-mobile-nav .gm-menu-mobile .gm-icon img,
+  .site-mobile-nav .gm-menu-mobile img.gm-icon-img {
+    max-width: 44px !important;
+    max-height: 44px !important;
+    width: auto !important;
+    height: auto !important;
+  }
 }
 </style>
 
