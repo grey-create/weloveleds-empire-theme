@@ -10,7 +10,6 @@
 
 <section class="hub-zone"
          data-section-id="{{ section.id }}"
-         {%- if section.settings.anchor_id != blank %} id="{{ section.settings.anchor_id | handleize }}"{% endif %}
          style="background: {{ bg_colour }}; --zone-text: {{ text_colour }}; --zone-accent: {{ accent_colour }};">
   <div class="hub-zone__container{% if reveal %} hub-zone--reveal{% endif %}">
     {%- if label != blank -%}
@@ -27,7 +26,6 @@
 <style>
 .hub-zone {
   width: 100vw;
-  scroll-margin-top: 6rem; /* so an anchored jump lands below the sticky header */
   position: relative;
   left: 50%;
   right: 50%;
@@ -114,8 +112,7 @@
     { "type": "color", "id": "bg_colour", "label": "Background colour", "default": "#f5f5f7" },
     { "type": "color", "id": "text_colour", "label": "Heading colour", "default": "#1c2135" },
     { "type": "color", "id": "accent_colour", "label": "Eyebrow accent colour", "default": "#0076DE" },
-    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Fade in on scroll", "default": true },
-    { "type": "text", "id": "anchor_id", "label": "Anchor ID", "info": "Optional. e.g. buying-guide — lets a hero button scroll here with #buying-guide." }
+    { "type": "checkbox", "id": "reveal_on_scroll", "label": "Fade in on scroll", "default": true }
   ],
   "presets": [ { "name": "Hub Zone Header" } ]
 }

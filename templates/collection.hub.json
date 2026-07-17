@@ -46,7 +46,7 @@
             "image": "shopify://shop_images/Fairground_Kit_Test_image.png",
             "eyebrow": "Starter Pack",
             "description": "Complete E10 & E14 cabochon kits, with bulbs, holders & cable.",
-            "card_theme_override": "dark"
+            "card_theme_override": "light"
           }
         },
         "card_kits": {
@@ -76,7 +76,7 @@
           "settings": {
             "title": "Fairground Bulbs",
             "link": "shopify://collections/fairground-bulbs",
-            "image": "shopify://shop_images/E14-Spike-Lampholder_-Nut-_-24v-Module.jpg",
+            "image": "shopify://shop_images/Bulbs.jpg",
             "eyebrow": "REPLACEMENTS",
             "description": "E10 and E14 replacement bulbs for fairground lights.",
             "card_theme_override": "inherit"
@@ -85,11 +85,11 @@
         "card_cabochon": {
           "type": "card",
           "settings": {
-            "title": "Fairground Components & Accessories",
+            "title": "Fairground Lighting Components",
             "link": "shopify://collections/fairground-light-components-accessories",
             "image": "shopify://shop_images/E14-Cabochon-Cap-_-Base.jpg",
             "eyebrow": "build your own",
-            "description": "Cabochon caps, bases, lampholders, cables and connectors for custom lighting builds.",
+            "description": "Caps, bases, lampholders, cables, connectors & installation accessories.",
             "card_theme_override": "inherit"
           }
         },

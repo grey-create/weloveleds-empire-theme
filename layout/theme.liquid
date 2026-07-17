@@ -1,29 +1,29 @@
 <!doctype html>
 <html class="no-js no-touch" lang="{{ request.locale.iso_code }}">
   <head>
-    <!-- OpenAI Ads Measurement Pixel -->
-    <script>
-      (function (w, d, s, u) {
-        if (w.oaiq) return;
-        var q = function () {
-          q.q.push(arguments);
-        };
-        q.q = [];
-        w.oaiq = q;
-        var js = d.createElement(s);
-        js.async = true;
-        js.src = u;
-        var f = d.getElementsByTagName(s)[0];
-        f.parentNode.insertBefore(js, f);
-      })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
+<!-- OpenAI Ads Measurement Pixel -->
+<script>
+  (function (w, d, s, u) {
+    if (w.oaiq) return;
+    var q = function () {
+      q.q.push(arguments);
+    };
+    q.q = [];
+    w.oaiq = q;
+    var js = d.createElement(s);
+    js.async = true;
+    js.src = u;
+    var f = d.getElementsByTagName(s)[0];
+    f.parentNode.insertBefore(js, f);
+  })(window, document, "script", "https://bzrcdn.openai.com/sdk/oaiq.min.js");
 
-      oaiq("init", {
-        pixelId: "66wHJTchgfWkZRkQoc3voU",
-      });
-    </script>
-    <!-- End OpenAI Ads Measurement Pixel -->
+  oaiq("init", {
+    pixelId: "66wHJTchgfWkZRkQoc3voU",
+  });
+</script>
+<!-- End OpenAI Ads Measurement Pixel -->
 
-
+    
     <meta name="p:domain_verify" content="b00d2590168280c1525b2630745c3e7e"/>
   <meta name="p:domain_verify" content="76af96e51fba79081e64ca006147532a"/>
   <script>
@@ -123,11 +123,6 @@
     {{ content_for_header }}
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
-
-    {%- comment -%} WLL global design tokens + hub component toolkit (additive). {%- endcomment -%}
-    {{ 'wll-tokens.css' | asset_url | stylesheet_tag }}
-    {{ 'wll-hub-reference.css' | asset_url | stylesheet_tag }}
-    {{ 'wll-collection-skin.css' | asset_url | stylesheet_tag }}
 
 
     <style>

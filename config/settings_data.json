@@ -184,37 +184,6 @@
     },
     "content_for_index": [],
     "blocks": {
-      "6480035358908009760": {
-        "type": "shopify://apps/superspeed-googles-page-speed/blocks/ss-sonar/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
-        "disabled": false,
-        "settings": {}
-      },
-      "6897698614501909729": {
-        "type": "shopify://apps/superspeed-googles-page-speed/blocks/app-embed/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
-        "disabled": false,
-        "settings": {
-          "boost_level": 3,
-          "enable_app_control": true,
-          "defer_bg_images": true,
-          "add_helpers": true,
-          "slow_network_quality": 30,
-          "font_1": "sans-serif",
-          "preload_font_1": false,
-          "font_1_display": "block",
-          "font_2": "sans-serif",
-          "preload_font_2": false,
-          "font_2_display": "block",
-          "font_3": "sans-serif",
-          "preload_font_3": false,
-          "font_3_display": "block",
-          "optimization_level": "worker"
-        }
-      },
-      "10384935893930344104": {
-        "type": "shopify://apps/seoant-redirects/blocks/brokenlink-404/cc7b1996-e567-42d0-8862-356092041863",
-        "disabled": false,
-        "settings": {}
-      },
       "855628211100114053": {
         "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
         "disabled": false,
@@ -246,21 +215,6 @@
           "debug_mode": ""
         }
       },
-      "14060646107696862457": {
-        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "15181020662106344915": {
-        "type": "shopify://apps/judge-me-reviews/blocks/popup_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "7924418359578431505": {
-        "type": "shopify://apps/seoant-ai-seo/blocks/seoant-core/8e57283b-dcb0-4f7b-a947-fb5c57a0d59d",
-        "disabled": false,
-        "settings": {}
-      },
       "6097499278999377719": {
         "type": "shopify://apps/globo-mega-menu/blocks/app-embed/7a00835e-fe40-45a5-a615-2eb4ab697b58",
         "disabled": false,
@@ -275,6 +229,61 @@
         "type": "shopify://apps/contentsquare-analytics/blocks/csq_tag_snippet_script/019a7cb2-3ace-7c1e-bb5d-112ee54f5310",
         "disabled": true,
         "settings": {}
+      },
+      "15181020662106344915": {
+        "type": "shopify://apps/judge-me-reviews/blocks/popup_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {}
+      },
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {}
+      },
+      "7924418359578431505": {
+        "type": "shopify://apps/seowill-seoant-ai-seo/blocks/seoant-core/8e57283b-dcb0-4f7b-a947-fb5c57a0d59d",
+        "disabled": true,
+        "settings": {}
+      },
+      "10384935893930344104": {
+        "type": "shopify://apps/seowill-redirects/blocks/brokenlink-404/cc7b1996-e567-42d0-8862-356092041863",
+        "disabled": true,
+        "settings": {}
+      },
+      "6897698614501909729": {
+        "type": "shopify://apps/superspeed-web-vitals/blocks/app-embed/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+        "disabled": false,
+        "settings": {
+          "boost_level": 3,
+          "enable_app_control": true,
+          "defer_bg_images": true,
+          "prefetch_pages": false,
+          "rendering_mode": "none",
+          "rendering_eagerness": "moderate",
+          "add_helpers": true,
+          "add_workers": false,
+          "editor2": false,
+          "slow_network_quality": 30,
+          "font_1": "system_ui_n4",
+          "preload_font_1": false,
+          "font_1_display": "block",
+          "font_2": "system_ui_n4",
+          "preload_font_2": false,
+          "font_2_display": "block",
+          "font_3": "system_ui_n4",
+          "preload_font_3": false,
+          "font_3_display": "block",
+          "optimization_level": "worker"
+        }
+      },
+      "6480035358908009760": {
+        "type": "shopify://apps/superspeed-web-vitals/blocks/ss-sonar/ea1b2c2c-4644-44b9-b10b-fdb914884a8c",
+        "disabled": false,
+        "settings": {
+          "add_helpers": false,
+          "rendering_mode": "none",
+          "rendering_ai": "none"
+        }
       }
     }
   },
@@ -557,7 +566,7 @@
   },
   "platform_customizations": {
     "custom_css": [
-      "html {overflow-x: clip; }",
+      "html {overflow-x: clip;}",
       " /* Fix for promo slider overflow */.promo-slider-track-desktop {max-width: 100%;}",
       " /* RGB Rainbow Gradient */[data-swatch-tooltip=\"RGB\"] > div,[data-swatch-tooltip=\"RGB\"].options-selection__option-swatch-wrapper .options-selection__option-swatch {background: linear-gradient( 90deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff ) !important; background-image: linear-gradient( 90deg, #ff0000, #ff9900, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff ) !important;}"
     ]
