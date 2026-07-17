@@ -1,0 +1,52 @@
+{%- liquid
+  assign eyebrow = section.settings.eyebrow
+  assign subtitle = section.settings.subtitle
+  if subtitle == blank
+    assign subtitle = collection.description | strip_html | truncate: 200
+  endif
+  assign b1l = section.settings.btn1_label
+  assign b1u = section.settings.btn1_url
+  assign b2l = section.settings.btn2_label
+  assign b2u = section.settings.btn2_url
+-%}
+
+<section class="wll-hero wll-hero--compact collection-hero" data-section-id="{{ section.id }}">
+  <div class="wll-hero__inner">
+    {% if eyebrow != blank %}<p class="collection-hero__eyebrow">{{ eyebrow | escape }}</p>{% endif %}
+    <h1 class="wll-hero__heading">{{ collection.title | escape }}</h1>
+    {% if subtitle != blank %}<p class="wll-hero__subtitle">{{ subtitle }}</p>{% endif %}
+    {% if b1l != blank or b2l != blank %}
+      <div class="wll-hero__buttons">
+        {% if b1l != blank %}<a href="{{ b1u | default: '#' }}" class="wll-pill wll-pill--primary">{{ b1l | escape }}</a>{% endif %}
+        {% if b2l != blank %}<a href="{{ b2u | default: '#' }}" class="wll-pill wll-pill--ghost"{% if b2u contains 'wa.me' %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ b2l | escape }}</a>{% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+.collection-hero__eyebrow {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.14em; color: rgba(255,255,255,0.7); margin: 0 0 0.75rem;
+}
+/* Keep the collection title on one line (smaller than the hub hero, wider inner) */
+.collection-hero .wll-hero__inner { max-width: 1240px; padding-left: var(--wll-rail); padding-right: var(--wll-rail); }
+.collection-hero .wll-hero__heading { font-size: clamp(1.4rem, 2.3vw, 1.95rem); }
+</style>
+
+{% schema %}
+{
+  "name": "Collection Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "info": "Tiny uppercase label above the title (e.g. the parent category). Blank to hide." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "info": "Leave blank to auto-use the collection description (trimmed)." },
+    { "type": "header", "content": "Button 1 — Primary" },
+    { "type": "text", "id": "btn1_label", "label": "Button 1 label" },
+    { "type": "url", "id": "btn1_url", "label": "Button 1 URL" },
+    { "type": "header", "content": "Button 2 — Ghost (use for WhatsApp / help)" },
+    { "type": "text", "id": "btn2_label", "label": "Button 2 label" },
+    { "type": "url", "id": "btn2_url", "label": "Button 2 URL (wa.me opens in new tab)" }
+  ],
+  "presets": [ { "name": "Collection Hero" } ]
+}
+{% endschema %}

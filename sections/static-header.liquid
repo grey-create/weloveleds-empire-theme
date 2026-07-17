@@ -973,66 +973,6 @@ header.site-header { border: none; outline: none; position: relative; }
   a.mobile-nav-close:hover {
     background: rgba(255, 255, 255, 0.08) !important;
   }
-
-  /* ============================================================
-     FIX (2026-07-14, rev 2): Globo mega-menu legibility in the
-     mobile drawer.
-
-     Globo's real mobile root class is .gm-menu-mobile. When a header
-     is expanded, Globo renders the submenu entirely as nested
-     <ul>/<li> (.gm-submenu > .gm-grid > .gm-grid-item > .gm-links >
-     .gm-item/.gm-heading). The drawer has a blanket rule
-     ".site-mobile-nav ul, .mobile-nav-panel ul { navy }" (and the
-     same for li) that repaints every one of those lists navy, so the
-     expanded panel showed navy blocks with invisible navy text.
-
-     Fix: force the ENTIRE expanded submenu — every ul, li, link and
-     container within it — to a clean white panel with dark text, at
-     higher specificity than the blanket navy list rule, and cap any
-     oversized mega images. Scoped to .gm-submenu so the top-level
-     navy menu items are untouched, and to .site-mobile-nav so desktop
-     is untouched.
-     ============================================================ */
-  /* White backgrounds for every list/item/link in the panel.
-     Prefix uses the full drawer ancestor chain so these outrank both
-     the blanket ".site-mobile-nav ul/li { navy }" rule (spec 0-1-1)
-     AND the top-level link rule ".mobile-nav-panel a:not(...)..."
-     (spec 0-5-1) that was keeping the <a> links navy. */
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu ul,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu li,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-mega,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-grid,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-grid-item,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-links,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-target,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu a {
-    background-color: #ffffff !important;
-  }
-  /* Readable dark text throughout the expanded panel */
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu a,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-target,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-heading,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-text,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-label {
-    color: #1B2034 !important;
-  }
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-description {
-    color: #555555 !important;
-  }
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu a:hover,
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu .gm-target:hover {
-    color: #d946ef !important;
-    background-color: #ffffff !important;
-  }
-  /* Cap oversized mega images/icons so they don't blow out the drawer */
-  .site-mobile-nav .mobile-nav-panel .mobile-nav-content .gm-menu-mobile .gm-submenu img {
-    max-width: 40px !important;
-    max-height: 40px !important;
-    width: auto !important;
-    height: auto !important;
-  }
 }
 </style>
 

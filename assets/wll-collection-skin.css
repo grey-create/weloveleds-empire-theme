@@ -1,0 +1,291 @@
+/* =============================================================================
+   WLL COLLECTION SKIN — Empire product-grid cards to the hub look
+   -----------------------------------------------------------------------------
+   ADDITIVE + SCOPED. Overrides only the collection product card to match the
+   hub product card (.wll-pcard): white surface, 22px radius, soft two-tier
+   shadow, -4px hover lift, Inter title. Targets confirmed Empire hooks
+   (.productgrid--item / .productitem). Deliberately does NOT set overflow:hidden
+   on the whole card, so quick-shop / add-to-cart overlays are never clipped —
+   the image corners are rounded separately.
+
+   ⚠ NEEDS VISUAL QA on the dev theme across product states: sale badges,
+   swatches, sold-out, quick-shop, list view, second-image hover. Remove the
+   load line in theme.liquid to disable instantly.
+   Created 2026-06-27.
+   ========================================================================== */
+
+.productgrid--item .productitem {
+  background: var(--wll-card-bg, #ffffff);
+  border-radius: var(--wll-radius-card, 22px);
+  box-shadow: var(--wll-shadow-rest, 0 1px 3px rgba(28,33,53,0.04), 0 4px 10px rgba(28,33,53,0.05));
+  transition: transform 0.25s var(--wll-ease, cubic-bezier(0.4,0,0.2,1)), box-shadow 0.25s ease;
+}
+.productgrid--item .productitem:hover {
+  /* NB: no transform here on purpose. A transform promotes the card to a GPU layer that
+     paints over the sticky header during scroll (Chrome compositing bug). The shadow-grow
+     gives the same "lift" feel without a transform. */
+  box-shadow: var(--wll-shadow-hover, 0 2px 6px rgba(28,33,53,0.05), 0 6px 14px rgba(28,33,53,0.08));
+}
+
+/* Square image area (uniform card height) + round the top corners. object-fit:contain so
+   non-square images fit inside the square (shrink width-wise) instead of stretching. */
+.productgrid--item .productitem--image-link,
+.productgrid--item .productitem--image {
+  border-radius: var(--wll-radius-card, 22px) var(--wll-radius-card, 22px) 0 0;
+  overflow: hidden;
+  aspect-ratio: 1 / 1;
+  height: auto;
+}
+.productgrid--item .productitem--image img,
+.productgrid--item .productitem--image-primary { object-fit: contain !important; width: 100%; height: 100%; }
+
+/* Text block — give it breathing room inside the rounded card */
+.productgrid--item .productitem--info {
+  padding: 0.875rem 1rem 1.125rem;
+}
+
+/* Title in Inter, hub tracking */
+.productgrid--item .productitem--title {
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  font-weight: 600;
+  letter-spacing: -0.018em;
+  line-height: 1.25;
+  /* Clamp to 3 lines + reserve the space, so every card is the same height
+     regardless of title length (full title shows on the product page). */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  min-height: 3.9em;
+}
+
+/* Hide the bottom description band when it has no content (it was rendering an empty white gap) */
+body.template-collection .collection-bottom-section:not(:has(.rich-text--container *)) { display: none !important; }
+/* Keep the sticky header above the redesigned collection content.
+   The theme puts #site-main at z:500, but the scroll-state .site-header is only z:100 —
+   so the content was painting OVER the header (hovered cards on desktop, the sticky
+   filter/sort bar on mobile). Lift the header above the content, but keep it below the
+   mobile slide-out nav (z:1200) so the burger menu still overlays correctly. */
+body.template-collection #site-main { isolation: isolate; }
+body.template-collection .site-header { z-index: 600 !important; }
+
+/* Subtle: image zoom on hover (matches the hub cards), reduced-motion safe */
+.productgrid--item .productitem--image-primary { transition: transform 0.4s var(--wll-ease, cubic-bezier(0.4,0,0.2,1)); }
+
+/* Wider product grid — Empire caps the grid at the page-width via a parent
+   container, so a max-width on .productgrid--outer alone can't win. Instead break
+   it out to full-bleed and pad by the rail, exactly like the hub sections — this
+   can't be capped by a parent. */
+.productgrid--outer {
+  max-width: none !important;
+  width: 100vw;
+  margin-left: calc(50% - 50vw) !important;
+  margin-right: calc(50% - 50vw) !important;
+  padding-left: var(--wll-rail, clamp(1.5rem, 8vw, 200px));
+  padding-right: var(--wll-rail, clamp(1.5rem, 8vw, 200px));
+  box-sizing: border-box;
+}
+
+/* Hub canvas — grey background, scoped to collection pages so the rest of the site is untouched */
+body.template-collection { background: var(--wll-bg, #f5f5f7); }
+
+/* Auto-fill the product grid so cards stay a consistent ~270px on any screen.
+   (Empire's fixed per-row makes cards huge on a wide monitor at full width.) */
+.productgrid--items {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)) !important;
+  gap: 1.25rem !important;
+  align-items: start !important;
+}
+.productgrid--items .productgrid--item {
+  width: auto !important; max-width: none !important; flex: initial !important; margin: 0 !important;
+}
+
+/* === Faceted filters (Type / Colours / Wattage…) — on-brand =========== */
+.collection-filters__filter-title {
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  font-weight: 600; letter-spacing: -0.01em; color: var(--wll-text, #1B2034);
+}
+.collection-filters__filter-group { border-bottom: 1px solid var(--wll-card-border, rgba(28,33,53,0.12)); }
+.collection-filters__filter-list-item-text { color: var(--wll-text-muted, #6e6e73); transition: color 0.2s ease; }
+.collection-filters__filter-link:hover .collection-filters__filter-list-item-text { color: var(--wll-accent-blue, #0076DE); }
+/* Sort + view controls in the utility bar */
+.productgrid--utils select {
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  border-radius: var(--wll-radius-pill, 999px);
+  border: 1px solid var(--wll-card-border, rgba(28,33,53,0.12));
+}
+
+/* Top intro band — left-align to the rail (in line with the header), readable width */
+body.template-collection .collection-top-section {
+  padding-left: var(--wll-rail, clamp(1.5rem, 8vw, 200px)) !important;
+  padding-right: var(--wll-rail, clamp(1.5rem, 8vw, 200px)) !important;
+}
+body.template-collection .collection-top-section .rich-text--container {
+  max-width: none !important; margin: 0 !important; padding: 0 !important;
+  font-size: 1.0625rem !important; line-height: 1.6 !important;
+  color: var(--wll-text-muted, #6e6e73) !important; font-weight: 400 !important;
+}
+/* Lead line = first paragraph: navy, larger, weight 600. Body below = grey 400.
+   This is the hierarchy (emphasis + muted) the hub uses, and overrides the metafield's
+   blanket-bold so the block reads as a description, not a heading. */
+/* All description paragraphs = grey, readable, weight 400. Targets <p> (not the wrapping
+   <div> the metafield uses, which was making the whole block inherit bold navy). */
+body.template-collection .collection-top-section .rich-text--container p {
+  font-size: 1.0625rem !important; font-weight: 400 !important;
+  color: var(--wll-text-muted, #6e6e73) !important; line-height: 1.6 !important; margin: 0 0 0.875rem !important;
+}
+/* Lead = the FIRST paragraph only — navy, larger, 600. */
+body.template-collection .collection-top-section .collection-intro-wrap > p:first-child,
+body.template-collection .collection-top-section .collection-intro-wrap > div:not(.collection-intro-more) > p:first-child {
+  font-size: 1.1875rem !important; font-weight: 500 !important;
+  color: var(--wll-text, #1B2034) !important; line-height: 1.45 !important; margin: 0 0 1rem !important;
+}
+body.template-collection .collection-intro-toggle { color: var(--wll-navy, #1B2034) !important; }
+/* Separate the description paragraphs so they don't merge into one block */
+body.template-collection .collection-top-section .collection-intro-wrap p,
+body.template-collection .collection-top-section .collection-intro-more p { margin: 0 0 0.875rem !important; }
+body.template-collection .collection-top-section .collection-intro-more { margin-top: 0.875rem !important; }
+/* Tame the heavy inline-bold lead, and style the read-more body (h3 headings, links)
+   via CSS so the metafield HTML needs no changes — same approach as the bottom band. */
+body.template-collection .collection-top-section strong { font-weight: 600 !important; }
+body.template-collection .collection-top-section h3 {
+  font-family: var(--wll-font, 'Inter', sans-serif) !important;
+  font-size: 1.1875rem !important; font-weight: 600 !important;
+  letter-spacing: -0.012em !important; color: var(--wll-text, #1B2034) !important;
+  margin: 1.75rem 0 0.5rem !important;
+}
+body.template-collection .collection-top-section a {
+  color: var(--wll-accent-blue, #0076DE) !important; font-weight: 500; text-underline-offset: 3px;
+}
+/* Help-note callout (use <div class="collection-note"> in the metafield, no inline styles needed) */
+body.template-collection .collection-top-section .collection-note {
+  background: #ffffff;
+  border: 1px solid var(--wll-card-border, rgba(28,33,53,0.1));
+  border-left: 4px solid var(--wll-accent-blue, #0076DE);
+  border-radius: 12px; padding: 1.125rem 1.375rem; margin-top: 1.75rem;
+  box-shadow: var(--wll-shadow-rest, 0 1px 3px rgba(28,33,53,0.05), 0 4px 10px rgba(28,33,53,0.05));
+}
+body.template-collection .collection-top-section .collection-note p { margin: 0 0 0.5rem !important; }
+body.template-collection .collection-top-section .collection-note p:last-child { margin: 0 !important; }
+body.template-collection .collection-top-section .collection-note strong { color: var(--wll-text, #1B2034) !important; }
+
+/* Sort / filter utility bar — match the page background instead of white */
+.productgrid--utils-container, .productgrid--utils-sticky, .productgrid--utils { background: transparent !important; }
+
+/* Align everything to the rail: the .wll-section blocks (Q&A, cross-sell, final CTA)
+   carry an extra 1.5rem gutter, and the breadcrumb section has only 25px — pull both
+   onto the rail so they line up with the header, slider, filters and grid. */
+body.template-collection .wll-section { padding-left: 0 !important; padding-right: 0 !important; }
+/* Breadcrumb: hide Empire's (top of grid); show our own section above the description */
+body.template-collection .breadcrumbs-container { display: none; }
+body.template-collection .collection-breadcrumb { padding: 2rem 0 1.5rem; }
+body.template-collection .collection-breadcrumb .breadcrumbs-container {
+  display: block !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding-left: calc(var(--wll-rail, clamp(1.5rem, 8vw, 200px)) - 8px) !important;
+  padding-right: var(--wll-rail, clamp(1.5rem, 8vw, 200px)) !important;
+}
+
+/* Consistent vertical rhythm — a 4rem gap between sections, matching the Q&A / cross-sell / CTA spacing.
+   The top sections were stacking top+bottom paddings (and the grid added 3vw margins), making the
+   sub-collections look over-important. Normalise to: no top padding, 4rem bottom. */
+body.template-collection .collection-top-section { padding-top: 0 !important; padding-bottom: 2.5rem !important; }
+body.template-collection .ccn-section,
+body.template-collection .pct-section { padding-top: 0 !important; padding-bottom: 1rem !important; }
+body.template-collection .section--canonical { margin-top: 0 !important; }
+body.template-collection .productgrid--masthead { margin-bottom: 1.5rem !important; }
+/* Clear split between the browse zone (sub-collections) and the products — the stars of the page.
+   A hairline + tighter, balanced gaps so the products read as the start of the shopping area. */
+body.template-collection .productgrid--outer {
+  border-top: 1px solid var(--wll-card-border, rgba(28,33,53,0.12)) !important;
+  padding-top: 1.75rem !important;
+  padding-bottom: 2rem !important;
+}
+
+/* ============================================================================
+   Bottom SEO band ("How to choose…") — hub treatment: grey (consistent with the
+   page), wider, hub typography, a hub-style table, mobile-safe. Overrides the
+   inline white/1200px styling baked into the template's custom-liquid.
+   ========================================================================== */
+body.template-collection .collection-bottom-section {
+  background: var(--wll-bg, #f5f5f7) !important;            /* grey, not white */
+  border-top: 1px solid var(--wll-card-border, rgba(28,33,53,0.12));
+  padding-top: 3.5rem !important;
+  padding-bottom: 4rem !important;
+  /* Align to the rail so it matches the product grid + the "Need help choosing" bar */
+  padding-left: var(--wll-rail, clamp(1.5rem, 8vw, 200px)) !important;
+  padding-right: var(--wll-rail, clamp(1.5rem, 8vw, 200px)) !important;
+}
+body.template-collection .collection-bottom-section .rich-text--container {
+  max-width: none !important;                               /* full content width (rail-to-rail) */
+  margin: 0 !important;
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  font-size: 1.0625rem !important;
+  line-height: 1.62 !important;
+  color: var(--wll-text-muted, #4a4f5c) !important;
+}
+body.template-collection .collection-bottom-section h2 {
+  color: var(--wll-text, #1B2034) !important; font-weight: 700 !important;
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem) !important;
+  letter-spacing: -0.022em !important; line-height: 1.2 !important;
+  margin: 0 0 1rem !important;
+}
+body.template-collection .collection-bottom-section h3 {
+  color: var(--wll-text, #1B2034) !important; font-weight: 600 !important;
+  font-size: 1.1875rem !important; letter-spacing: -0.012em !important;
+  margin: 2rem 0 0.5rem !important;
+}
+body.template-collection .collection-bottom-section p { margin: 0 0 1rem !important; }
+body.template-collection .collection-bottom-section a {
+  color: var(--wll-accent-blue, #0076DE) !important; font-weight: 500;
+  text-underline-offset: 3px;
+}
+
+/* The comparison table -> hub card: rounded white panel, navy header row,
+   hairline row separators, zebra. !important neutralises the inline cell styles. */
+body.template-collection .collection-bottom-section table {
+  width: 100% !important; border-collapse: separate !important; border-spacing: 0 !important;
+  margin: 1.5rem 0 2rem !important;
+  background: #fff !important;
+  border-radius: var(--wll-radius-card, 16px) !important; overflow: hidden !important;
+  box-shadow: var(--wll-shadow-rest, 0 1px 3px rgba(28,33,53,0.05), 0 4px 10px rgba(28,33,53,0.05)) !important;
+  font-size: 0.95rem !important;
+}
+body.template-collection .collection-bottom-section thead th {
+  background: var(--wll-navy, #1B2034) !important; color: #fff !important;
+  text-align: left !important; font-weight: 600 !important; letter-spacing: -0.01em !important;
+  padding: 0.9rem 1.1rem !important; border: none !important;
+}
+body.template-collection .collection-bottom-section tbody td {
+  padding: 0.85rem 1.1rem !important; vertical-align: top !important;
+  color: var(--wll-text, #1B2034) !important;
+  border: none !important;
+  border-top: 1px solid var(--wll-card-border, rgba(28,33,53,0.1)) !important;
+}
+body.template-collection .collection-bottom-section tbody tr:nth-child(even) td {
+  background: rgba(28,33,53,0.025) !important;
+}
+
+/* Mobile: turn the table into a horizontal-scroll panel so it never breaks the page */
+@media (max-width: 768px) {
+  body.template-collection .collection-bottom-section table {
+    display: block !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch;
+  }
+  body.template-collection .collection-bottom-section thead,
+  body.template-collection .collection-bottom-section tbody { display: table !important; width: 100% !important; min-width: 560px; }
+  body.template-collection .collection-bottom-section tr { display: table-row !important; }
+  body.template-collection .collection-bottom-section th,
+  body.template-collection .collection-bottom-section td { display: table-cell !important; }
+}
+
+@media (max-width: 600px) {
+  .productgrid--item .productitem { border-radius: var(--wll-radius-card-mobile, 18px); }
+  .productgrid--item .productitem--image-link,
+  .productgrid--item .productitem--image { border-radius: var(--wll-radius-card-mobile, 18px) var(--wll-radius-card-mobile, 18px) 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .productgrid--item .productitem,
+  .productgrid--item .productitem--image-primary { transition: none; }
+}

@@ -1,0 +1,20 @@
+{%- comment -%}
+  One Q&A card + its modal. Pass: question, answer, icon, accent, eyebrow, uid, cta_label, cta_url
+{%- endcomment -%}
+<button type="button" class="wll-qcard" data-qa-open="qa-{{ uid }}" style="--wll-zone-accent: {{ accent }};">
+  <span class="wll-qcard__eyebrow-mini">{{ eyebrow | default: 'Q&amp;A' }}</span>
+  <span class="wll-qcard__main">
+    <span class="wll-qcard__icon">{% render 'collection-qa-icon', name: icon %}</span>
+    <span class="wll-qcard__question">{{ question | escape }}</span>
+  </span>
+</button>
+<div class="wll-modal" id="qa-{{ uid }}" hidden>
+  <div class="wll-modal__backdrop" data-qa-close></div>
+  <div class="wll-modal__dialog" role="dialog" aria-modal="true" aria-label="{{ question | escape }}">
+    <button type="button" class="wll-modal__close" data-qa-close aria-label="Close">&times;</button>
+    <span class="wll-qcard__icon collection-qa__modal-icon" style="--wll-zone-accent: {{ accent }};">{% render 'collection-qa-icon', name: icon %}</span>
+    <h3 class="collection-qa__modal-q">{{ question | escape }}</h3>
+    <div class="collection-qa__answer">{{ answer }}</div>
+    {% if cta_label != blank %}<a href="{{ cta_url | default: '#' }}" class="wll-pill wll-pill--primary collection-qa__cta">{{ cta_label | escape }}</a>{% endif %}
+  </div>
+</div>

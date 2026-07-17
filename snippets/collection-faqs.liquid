@@ -1,100 +1,120 @@
-{% comment %} Collection FAQ Display - WeLoveLeds Brand Style {% endcomment %}
-{% assign faq_sets = collection.metafields.custom.faq_sets.value %}
+{% comment %}
+  Collection FAQ — hub POP-UP CARD style (click a card → answer pops up in a modal),
+  derived from the collection's custom.faq_sets metafield. Rendered globally by
+  sections/static-collection.liquid, so every collection gets the hub FAQ automatically.
+  Self-contained: base .wll-qcard / .wll-modal styles are in the global toolkit
+  (wll-hub-reference.css); the grid + modal-content styles + open/close JS live here.
+  Hides itself when the collection has no FAQs.
+{% endcomment %}
+{%- assign faq_sets = collection.metafields.custom.faq_sets.value -%}
+{%- assign icons = 'ruler,package,plug,layers,lightbulb,help' | split: ',' -%}
+{%- assign accents = '#d946ef,#0076DE,#10b981,#c98e0a,#f97316' | split: ',' -%}
 
-{% if faq_sets %}
-  {% for faq_set in faq_sets %}
-    {% assign faq_json = faq_set.faqs.value | default: faq_set.faqs %}
-    {% assign parsed_faqs = faq_json | parse_json %}
-    
-    {% if parsed_faqs %}
-      <div class="faq-section" style="max-width: 1200px; margin: 60px auto 40px; padding: 0 20px;">
-        <h2 style="text-align: center; margin-bottom: 40px; font-size: 28px; font-weight: 400; color: #333; font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;">
-          Frequently Asked Questions
-        </h2>
-        
-        <div class="faq-container" style="max-width: 900px; margin: 0 auto;">
-          {% for faq in parsed_faqs %}
-            <details class="faq-item" style="margin-bottom: 2px; border: none; background: white;">
-              <summary style="cursor: pointer; padding: 20px 25px; background: #f8f8f8; border-left: 3px solid transparent; transition: all 0.3s ease; display: flex; justify-content: space-between; align-items: center; font-size: 16px; color: #333; list-style: none;">
-                <span style="flex: 1; font-weight: 500;">{{ faq.question }}</span>
-                <svg class="faq-arrow" style="width: 20px; height: 20px; transition: transform 0.3s ease; flex-shrink: 0; margin-left: 20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </summary>
-              <div style="padding: 20px 25px 25px 28px; background: white; color: #666; line-height: 1.7; font-size: 15px; border-left: 3px solid #FDCD6A;">
-                {{ faq.answer }}
-              </div>
-            </details>
-          {% endfor %}
-        </div>
-      </div>
+{%- comment -%} Count FAQs so we only render when there's something to show {%- endcomment -%}
+{%- assign total = 0 -%}
+{%- if faq_sets -%}
+  {%- for faq_set in faq_sets -%}
+    {%- assign faq_json = faq_set.faqs.value | default: faq_set.faqs -%}
+    {%- assign parsed = faq_json | parse_json -%}
+    {%- if parsed -%}{%- assign total = total | plus: parsed.size -%}{%- endif -%}
+  {%- endfor -%}
+{%- endif -%}
 
-      <!-- FAQ Schema Markup -->
-      <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        "mainEntity": [
-          {% for faq in parsed_faqs %}
-          {
-            "@type": "Question",
-            "name": {{ faq.question | json }},
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": {{ faq.answer | json }}
-            }
-          }{% unless forloop.last %},{% endunless %}
-          {% endfor %}
-        ]
-      }
-      </script>
+{%- if total > 0 -%}
+<section class="collection-faq-hub" data-faq-hub>
+  <div class="collection-faq-hub__inner">
+    <p class="collection-faq-hub__eyebrow">Buying guide</p>
+    <h2 class="collection-faq-hub__heading">Frequently asked questions</h2>
+    <div class="collection-qa__grid">
+      {%- assign card_i = 0 -%}
+      {%- for faq_set in faq_sets -%}
+        {%- assign faq_json = faq_set.faqs.value | default: faq_set.faqs -%}
+        {%- assign parsed = faq_json | parse_json -%}
+        {%- if parsed -%}
+          {%- for faq in parsed -%}
+            {%- assign ic = card_i | modulo: 6 -%}
+            {%- assign ac = card_i | modulo: 5 -%}
+            {% render 'collection-qa-card', uid: faq.question | handleize | append: '-' | append: card_i, question: faq.question, answer: faq.answer, icon: icons[ic], accent: accents[ac], eyebrow: 'Q&A' %}
+            {%- assign card_i = card_i | plus: 1 -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
 
-      <style>
-        .faq-item summary::-webkit-details-marker {
-          display: none;
-        }
-        
-        .faq-item summary:hover {
-          background: #f0f0f0;
-          border-left-color: #FDCD6A;
-        }
-        
-        .faq-item[open] summary {
-          background: white;
-          border-left-color: #FDCD6A;
-        }
-        
-        .faq-item[open] summary .faq-arrow {
-          transform: rotate(180deg);
-        }
-        
-        .faq-section {
-          border-top: 1px solid #e5e5e5;
-          padding-top: 60px !important;
-        }
-        
-        @media (max-width: 768px) {
-          .faq-section h2 {
-            font-size: 24px;
-            margin-bottom: 30px;
-          }
-          
-          .faq-item summary {
-            font-size: 15px;
-            padding: 15px 20px;
-          }
-          
-          .faq-item div {
-            padding: 15px 20px 20px 23px;
-            font-size: 14px;
-          }
-          
-          .faq-arrow {
-            width: 18px !important;
-            height: 18px !important;
-          }
-        }
-      </style>
-    {% endif %}
-  {% endfor %}
-{% endif %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {%- assign s_i = 0 -%}
+    {%- for faq_set in faq_sets -%}
+      {%- assign faq_json = faq_set.faqs.value | default: faq_set.faqs -%}
+      {%- assign parsed = faq_json | parse_json -%}
+      {%- if parsed -%}
+        {%- for faq in parsed -%}
+          {%- if s_i > 0 -%},{%- endif -%}
+          { "@type": "Question", "name": {{ faq.question | json }}, "acceptedAnswer": { "@type": "Answer", "text": {{ faq.answer | json }} } }
+          {%- assign s_i = s_i | plus: 1 -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+<style>
+.collection-faq-hub {
+  width: 100vw; margin-left: calc(50% - 50vw);
+  /* tighter on top, more room below, so the section sits evenly between products + the SEO band */
+  padding: 1.5rem var(--wll-rail, clamp(1.5rem, 8vw, 200px)) 3.25rem;
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  box-sizing: border-box;
+}
+.collection-faq-hub__inner { max-width: none; margin: 0; }
+.collection-faq-hub__eyebrow {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--wll-accent-magenta, #d946ef); margin: 0 0 0.4rem;
+}
+.collection-faq-hub__heading {
+  font-family: var(--wll-font, 'Inter', sans-serif);
+  font-size: clamp(1.4rem, 2.3vw, 1.875rem); font-weight: 600;
+  letter-spacing: -0.022em; color: var(--wll-text, #1B2034); margin: 0 0 1.5rem;
+}
+.collection-faq-hub .collection-qa__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+@media (max-width: 900px) { .collection-faq-hub .collection-qa__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .collection-faq-hub .collection-qa__grid { grid-template-columns: 1fr; } }
+/* Modal content styling (the base .wll-qcard / .wll-modal come from the global toolkit) */
+.collection-faq-hub .wll-qcard__eyebrow-mini {
+  display: block; font-size: 0.6875rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.12em; color: var(--wll-zone-accent, #d946ef); margin: 0 0 0.75rem;
+}
+.collection-qa__modal-icon { margin-bottom: 1rem; }
+.collection-qa__modal-q {
+  font-family: var(--wll-font, 'Inter', sans-serif); font-size: 1.375rem; font-weight: 600;
+  letter-spacing: -0.02em; color: var(--wll-text, #1B2034); margin: 0 0 0.75rem;
+}
+.collection-qa__answer { font-family: var(--wll-font, 'Inter', sans-serif); color: var(--wll-text-muted, #6e6e73); line-height: 1.6; }
+.collection-qa__answer a { color: var(--wll-accent-blue, #0076DE); text-underline-offset: 3px; }
+</style>
+
+<script>
+(function() {
+  var root = document.querySelector('.collection-faq-hub[data-faq-hub]');
+  if (!root || root.dataset.bound) return;
+  root.dataset.bound = '1';
+  function close(m) { m.classList.remove('is-open'); setTimeout(function(){ m.hidden = true; }, 250); }
+  root.querySelectorAll('[data-qa-open]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var m = document.getElementById(btn.getAttribute('data-qa-open'));
+      if (m) { m.hidden = false; requestAnimationFrame(function(){ m.classList.add('is-open'); }); }
+    });
+  });
+  root.querySelectorAll('.wll-modal').forEach(function(m) {
+    m.querySelectorAll('[data-qa-close]').forEach(function(c) { c.addEventListener('click', function(){ close(m); }); });
+  });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') root.querySelectorAll('.wll-modal:not([hidden])').forEach(close); });
+})();
+</script>
+{%- endif -%}

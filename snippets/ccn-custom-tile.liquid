@@ -1,0 +1,21 @@
+{%- comment -%}
+  Bespoke promo / upsell tile for the collection nav slider (child-collection-nav).
+  Mixed in among the auto child-collection tiles. Pass: block
+{%- endcomment -%}
+{%- assign accent = block.settings.accent_colour | default: '#0076DE' -%}
+<a href="{{ block.settings.link | default: '#' }}" class="ccn-tile ccn-tile--custom" style="--ccn-tile-accent: {{ accent }};" {{ block.shopify_attributes }}>
+  <div class="ccn-tile__image-wrap">
+    {%- if block.settings.image -%}
+      <img src="{{ block.settings.image | image_url: width: 500 }}" alt="{{ block.settings.title | escape }}" class="ccn-tile__image" loading="lazy">
+    {%- else -%}
+      <div class="ccn-tile__placeholder ccn-tile__placeholder--accent"></div>
+    {%- endif -%}
+    <div class="ccn-tile__scrim"></div>
+    {%- if block.settings.badge != blank -%}<div class="ccn-tile__badge">{{ block.settings.badge }}</div>{%- endif -%}
+  </div>
+  <div class="ccn-tile__text">
+    {%- if block.settings.eyebrow != blank -%}<span class="ccn-tile__eyebrow">{{ block.settings.eyebrow }}</span>{%- endif -%}
+    {%- if block.settings.title != blank -%}<h3 class="ccn-tile__title">{{ block.settings.title }}</h3>{%- endif -%}
+    {%- if block.settings.description != blank -%}<p class="ccn-tile__desc">{{ block.settings.description }}</p>{%- endif -%}
+  </div>
+</a>
